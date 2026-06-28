@@ -39,7 +39,7 @@ export const Footer = () => {
     "group flex justify-center items-center rounded-full text-xl cursor-pointer",
     "h-12 w-12 bg-accent/20 border border-border transition-all duration-500 ease-out",
     "text-foreground", 
-    "hover:text-primary hover:border-primary hover:bg-primary/10 hover:-translate-y-2",
+    "hover:text-accent hover:border-accent hover:bg-accent/10 hover:-translate-y-2",
     "hover:shadow-[0_0_20px_rgba(var(--color-primary),0.3)]", 
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
   );

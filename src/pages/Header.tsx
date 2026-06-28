@@ -8,7 +8,7 @@ import clsx from "clsx";
 const navData = [
   {
     id: "Paginas",
-    label: "k_toker",
+    label: "AI Planner",
     links: [
       { to: "/", label: "Inicio" },
       { to: "/pagina1", label: "Pagina1" },
@@ -74,8 +74,8 @@ export const Header: React.FC = () => {
   const menuTriggerStyle = clsx(
     "flex h-10 items-center gap-2 px-3 rounded-lg font-medium transition-all",
     "hover:bg-accent dark:hover:bg-accent hover:text-hoverHeader font-sans",
-    "focus-visible:ring-2 focus-visible:ring-ring outline-none dark:bg-accent/30",
-    "bg-accent-foreground/20 shadow-sm shadow-accent/40 dark:shadow-accent/70 backdrop-blur-[1px]"
+    "focus-visible:ring-2 focus-visible:ring-ring outline-none ",
+    "dark:bg-aprimary/20  ring ring-accent/50"
   );
 
   const menuDropdownStyle = clsx(

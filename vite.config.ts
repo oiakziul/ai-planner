@@ -20,9 +20,9 @@ export default defineConfig({
       injectRegister: "auto",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
       manifest: {
-        name: "Educador Financeiro Inteligente",
-        short_name: "EDU-FIN",
-        description: "Educador Financeiro Inteligente com IA Generativa",
+        name: "AI Planner - Inteligência Financeira",
+        short_name: "AI-PLANNER",
+        description: "Planejador Financeiro Inteligente com IA Generativa",
         theme_color: "#15080E", 
         background_color: "#15080E",
         display: "standalone",
