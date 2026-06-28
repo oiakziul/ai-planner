@@ -65,7 +65,7 @@ export const Header: React.FC = () => {
   const headerStyle = clsx(
     "mx-auto flex items-center justify-center w-[95%] md:w-72 h-16 gap-6",
     "z-50 rounded-lg sticky top-4 transition-all duration-300 ease-in-out ",
-    "text-card-foreground font-sans select-none",
+    "text-card-foreground  select-none",
     isAtTop
       ? "opacity-100 translate-y-0"
       : "opacity-0 -translate-y-10 pointer-events-none"
@@ -73,7 +73,7 @@ export const Header: React.FC = () => {
 
   const menuTriggerStyle = clsx(
     "flex h-10 items-center gap-2 px-3 rounded-lg font-medium transition-all",
-    "hover:bg-accent dark:hover:bg-accent hover:text-hoverHeader font-sans",
+    "hover:bg-accent dark:hover:bg-accent hover:text-hoverHeader ",
     "focus-visible:ring-2 focus-visible:ring-ring outline-none ",
     "dark:bg-aprimary/20  ring ring-accent/50"
   );
@@ -81,43 +81,43 @@ export const Header: React.FC = () => {
   const menuDropdownStyle = clsx(
     "absolute top-full left-0 mt-3.5 w-48 rounded-md border border-border",
     "shadow-xl transition-all duration-200",
-    "bg-popover/90 text-popover-foreground font-sans backdrop-blur-3xl",
+    "bg-popover/90 text-popover-foreground  backdrop-blur-3xl",
     !isCatOpen && "hidden"
   );
 
   const menuItemStyle = clsx(
     "relative px-4 py-2 flex justify-between items-center",
     "cursor-pointer rounded-md transition-all duration-200",
-    "hover:bg-accent font-sans hover:text-hoverHeader"
+    "hover:bg-accent  hover:text-hoverHeader"
   );
 
   const submenuStyle = (id: string) => clsx(
     "absolute -top-2.5 left-full ml-0.5 md:w-48 w-34.5", 
     "font-medium rounded-md border border-border shadow-xl transition-all duration-200",
-    "bg-popover/90 text-popover-foreground font-sans backdrop-blur-3xl ",
+    "bg-popover/90 text-popover-foreground  backdrop-blur-3xl ",
     activeSubmenu !== id && "hidden"
   );
 
   const submenuLinkStyle = clsx(
     "block px-4 py-2 mt-1.5 rounded-md text-sm transition-all duration-200",
-    "hover:bg-accent font-sans hover:text-hoverHeader"
+    "hover:bg-accent  hover:text-hoverHeader"
   );
 
   const langDropdownStyle = clsx(
     "absolute top-full left-0 mt-2 w-48 z-50 rounded-md py-2 border", 
     "border-border shadow-xl transition-all duration-200",
-    "bg-popover/90  text-popover-foreground font-sans backdrop-blur-3xl",
+    "bg-popover/90  text-popover-foreground  backdrop-blur-3xl",
     !isLangOpen && "hidden"
   );
 
   const langItemStyle = clsx(
     "flex items-center gap-3 px-4 py-2 cursor-pointer", 
     "rounded-md transition-all duration-200",
-    "hover:bg-accent hover:text-accent-foreground font-sans "
+    "hover:bg-accent hover:text-accent-foreground  "
   );
 
   return (
-    <header className={clsx(headerStyle,'font-sans')}>
+    <header className={clsx(headerStyle,'')}>
       <div className="flex items-center gap-4">
         {/* MENU */}
         <div

@@ -2,9 +2,9 @@
   "style": "radix-mira",
   "rsc": false,
   "tsx": true,
-  "tailwind": {
+ "tailwind": {
     "config": "",
-    "css": "src/assets/styles/components/index.css",
+    "css": "src/assets/styles/index.css", 
     "baseColor": "mist",
     "cssVariables": true,
     "prefix": ""
