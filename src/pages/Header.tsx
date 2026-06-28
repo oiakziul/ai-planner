@@ -4,7 +4,6 @@ import { US, BR, ES } from "country-flag-icons/react/3x2";
 import { Link } from "react-router-dom";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
 import clsx from "clsx";
-import ButtonAnimatedBorderDemo from "@/components/shadcn-space/button/button-06";
 
 const navData = [
   {
