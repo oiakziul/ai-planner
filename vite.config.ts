@@ -28,12 +28,6 @@ export default defineConfig({
         scope: "/",
         start_url: "/",
         icons: [
-          // Mantemos APENAS os ícones reais que você possui fisicamente na pasta public!
-          {
-            src: "favicon.ico",
-            sizes: "64x64 32x32 24x24 16x16",
-            type: "image/x-icon",
-          },
           {
             src: "logo192.png",
             type: "image/png",
@@ -48,7 +42,7 @@ export default defineConfig({
             src: "logo512.png",
             type: "image/png",
             sizes: "512x512",
-            purpose: "any maskable",
+            purpose: "any maskable", // Garante o recorte perfeito no Android
           },
         ],
       },
