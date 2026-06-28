@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { ScrollToTop } from "./componentes/ScrollToTop";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { ScrollProgress } from "../assets/styles/components/ScrollProgress";
+import { ScrollProgress } from "../assets/styles/componentes/ScrollProgress";
 
 const getScrollColor = (pathname: string) => {
   const path = pathname.toLowerCase();
