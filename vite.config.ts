@@ -18,7 +18,8 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       injectRegister: "auto",
-      includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
+      // [CORRIGIDO]: Removido o mask-icon.svg que não existe na pasta public
+      includeAssets: ["favicon.ico", "apple-touch-icon.png"],
       manifest: {
         name: "AI Planner - Inteligência Financeira",
         short_name: "AI-PLANNER",
@@ -28,12 +29,24 @@ export default defineConfig({
         display: "standalone",
         scope: "/",
         start_url: "/",
+        // [CORRIGIDO]: Deixamos apenas os ícones reais que existem na pasta public
         icons: [
-          { src: "android-launchericon-48-48.png", sizes: "48x48", type: "image/png" },
-          { src: "android-launchericon-96-96.png", sizes: "96x96", type: "image/png" },
-          { src: "favicon.ico", sizes: "64x64 32x32 24x24 16x16", type: "image/x-icon" },
-          { src: "logo192.png", type: "image/png", sizes: "192x192" },
-          { src: "logo512.png", type: "image/png", sizes: "512x512", purpose: "any maskable" },
+          { 
+            src: "logo192.png", 
+            type: "image/png", 
+            sizes: "192x192" 
+          },
+          { 
+            src: "logo512.png", 
+            type: "image/png", 
+            sizes: "512x512" 
+          },
+          { 
+            src: "logo512.png", 
+            type: "image/png", 
+            sizes: "512x512", 
+            purpose: "any maskable" // Garante o recorte perfeito do diamante no Android
+          },
         ],
       },
       workbox: {
