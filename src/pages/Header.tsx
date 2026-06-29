@@ -195,7 +195,7 @@ export const Header: React.FC = () => {
         </div>
       </div>
       <div className="focus:outline-none focus:ring-0 focus:ring-offset-0">
-        <AnimatedThemeToggler variant="circle" duration={600} fromCenter />
+        <AnimatedThemeToggler variant="circle" duration={500} fromCenter />
       </div>
     </header>
   );

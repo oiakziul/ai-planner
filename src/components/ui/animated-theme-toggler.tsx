@@ -129,7 +129,7 @@ export const AnimatedThemeToggler = ({
         type="button"
         ref={buttonRef}
         onClick={handleToggle}
-        className="hover:scale-110 hover:text-textHoverHeader transition-all duration-300"
+        className="hover:scale-110 hover:text-textHoverHeader transition-all duration-100"
         {...props}
       >
         {isDark ? <RiSunCloudyFill className="" /> : <RiMoonCloudyLine />}
