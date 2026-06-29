@@ -1,17 +1,16 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
-import tailwindcss from "@tailwindcss/vite"; 
-import { fileURLToPath, URL } from "node:url"; // [ESM COMPATÍVEL]: Evita erros de __dirname no Vite moderno
+import tailwindcss from "@tailwindcss/vite";
+// [ALTERAÇÃO 1] Importação correta para resolver caminhos em ESM
+import { fileURLToPath, URL } from "node:url"; 
 
 export default defineConfig({
   plugins: [
-    tailwindcss(), 
+    tailwindcss(),
     react({
       babel: {
-        plugins: [
-          ["babel-plugin-react-compiler", {}], 
-        ],
+        plugins: [["babel-plugin-react-compiler", {}]],
       },
     }),
     VitePWA({
@@ -19,14 +18,18 @@ export default defineConfig({
       injectRegister: "inline", // Força a ativação do Service Worker no HTML de produção
       includeAssets: ["favicon.ico", "apple-touch-icon.png"],
       manifest: {
+        lang: "pt-BR",
+        id: "/",
+        orientation: "any",
         name: "AI Planner - Inteligência Financeira",
         short_name: "AI-PLANNER",
         description: "Planejador Financeiro Inteligente com IA Generativa",
-        theme_color: "#15080E",       // Nova cor Obsidiana
-        background_color: "#15080E",  // Nova cor Obsidiana
+        theme_color: "#15080E", // Nova cor Obsidiana
+        background_color: "#15080E", // Nova cor Obsidiana
         display: "standalone",
         scope: "/",
         start_url: "/",
+        categories: ["finance", "productivity", "business"],
         icons: [
           {
             src: "logo192.png",
@@ -100,16 +103,20 @@ export default defineConfig({
   resolve: {
     alias: {
       // Resolve caminhos em projetos modernos com "type: module" no package.json
-      "@": fileURLToPath(new URL("./src", import.meta.url)), 
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
   base: "/",
+  server: {
+    port: 3000,
+    open: true,
+  },
   build: {
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
+          "react-vendor": ["react", "react-dom"],
         },
       },
     },
