@@ -79,7 +79,7 @@ export const Header: React.FC = () => {
   );
 
   const menuDropdownStyle = clsx(
-    "absolute top-full left-0 mt-3.5 w-48 rounded-md border border-border",
+    "absolute top-full left-0 mt-3.5 w-40 rounded-md border border-border",
     "shadow-xl transition-all duration-200",
     "bg-popover/90 text-popover-foreground  backdrop-blur-3xl",
     !isCatOpen && "hidden"
