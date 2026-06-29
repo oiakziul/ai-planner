@@ -14,12 +14,12 @@ export default defineConfig({
     }),
     VitePWA({
       registerType: "autoUpdate",
-      injectRegister: "auto", 
+      injectRegister: "auto",
       includeAssets: ["favicon.ico", "apple-touch-icon.png"],
       manifest: {
         lang: "pt-BR",
         id: "/",
-        orientation: "portrait", 
+        orientation: "portrait",
         name: "AI Planner - Inteligência Financeira",
         short_name: "AI-PLANNER",
         description: "Planejador Financeiro Inteligente com IA Generativa",
@@ -47,9 +47,26 @@ export default defineConfig({
             purpose: "maskable",
           },
         ],
+        // ↓ cola aqui
+        screenshots: [
+          {
+            src: "screenshot-mobile.png",
+            sizes: "390x844",
+            type: "image/png",
+            form_factor: "narrow",
+            label: "AI Planner - Inteligência Financeira",
+          },
+          {
+            src: "screenshot-desktop.png",
+            sizes: "1280x800",
+            type: "image/png",
+            form_factor: "wide",
+            label: "AI Planner - Dashboard",
+          },
+        ],
       },
       workbox: {
-        navigateFallback: "index.html", 
+        navigateFallback: "index.html",
         navigateFallbackDenylist: [/^\/sitemap\.xml$/, /^\/robots\.txt$/],
         maximumFileSizeToCacheInBytes: 20 * 1024 * 1024,
         globPatterns: [
