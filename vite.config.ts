@@ -42,7 +42,7 @@ export default defineConfig({
             src: "logo512.png",
             type: "image/png",
             sizes: "512x512",
-            purpose: "any maskable", // Garante o recorte perfeito no Android
+            purpose: "maskable", // Garante o recorte perfeito no Android
           },
         ],
       },
