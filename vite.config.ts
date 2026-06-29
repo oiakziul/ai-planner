@@ -2,8 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 import tailwindcss from "@tailwindcss/vite";
-// [ALTERAÇÃO 1] Importação correta para resolver caminhos em ESM
-import { fileURLToPath, URL } from "node:url"; 
+import { fileURLToPath, URL } from "node:url";
 
 export default defineConfig({
   plugins: [
@@ -15,17 +14,17 @@ export default defineConfig({
     }),
     VitePWA({
       registerType: "autoUpdate",
-      injectRegister: "inline", // Força a ativação do Service Worker no HTML de produção
+      injectRegister: "auto", 
       includeAssets: ["favicon.ico", "apple-touch-icon.png"],
       manifest: {
         lang: "pt-BR",
         id: "/",
-        orientation: "any",
+        orientation: "portrait", 
         name: "AI Planner - Inteligência Financeira",
         short_name: "AI-PLANNER",
         description: "Planejador Financeiro Inteligente com IA Generativa",
-        theme_color: "#15080E", // Nova cor Obsidiana
-        background_color: "#15080E", // Nova cor Obsidiana
+        theme_color: "#15080E",
+        background_color: "#15080E",
         display: "standalone",
         scope: "/",
         start_url: "/",
@@ -45,11 +44,12 @@ export default defineConfig({
             src: "logo512.png",
             type: "image/png",
             sizes: "512x512",
-            purpose: "maskable", // Garante o recorte perfeito no Android
+            purpose: "maskable",
           },
         ],
       },
       workbox: {
+        navigateFallback: "index.html", 
         navigateFallbackDenylist: [/^\/sitemap\.xml$/, /^\/robots\.txt$/],
         maximumFileSizeToCacheInBytes: 20 * 1024 * 1024,
         globPatterns: [
@@ -102,7 +102,6 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      // Resolve caminhos em projetos modernos com "type: module" no package.json
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
