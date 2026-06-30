@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { ChevronsUp, Mail } from "lucide-react";
+import { ChevronsUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const Footer = () => {
@@ -67,9 +67,9 @@ export const Footer = () => {
     "transition-transform duration-700 ease-in-out"
   );
 
-  const iconeMailAnimado = cn(
-    "h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors"
-  );
+  // const iconeMailAnimado = cn(
+  //   "h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors"
+  // );
 
   // ==========================================
   // ESTRUTURA VISUAL (JSX)
@@ -102,8 +102,7 @@ export const Footer = () => {
           <section className={emailSection}>
             <a className={eMailLink} href="mailto:kaioaac3@gmail.com">
               <div className={shineEffect} />
-              <Mail className={iconeMailAnimado} />
-              <span>{t("email_label") || "E-mail"}</span>
+              
             </a>
           </section>
         </div>
