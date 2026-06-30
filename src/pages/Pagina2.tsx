@@ -5,10 +5,10 @@ export const Pagina2 = () => {
   const { t } = useTranslation("pagina2");
 
   const base = clsx(
-    "relative h-96 w-96 overflow-hidden transition-all duration-300", 
+    "relative h-screen w-full overflow-hidden transition-all duration-300",
     "flex items-center justify-center mx-auto rounded-2xl",
-    "border-2 border-border bg-card shadow-xl font-sans", 
-    "text-card-foreground text-3xl font-bold" 
+    "border-2 border-border bg-card/50 shadow-xl font-sans",
+    "text-card-foreground text-3xl font-bold"
   );
 
   return (

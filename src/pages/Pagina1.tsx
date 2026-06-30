@@ -1,8 +1,8 @@
 import clsx from "clsx";
-// import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 export const Pagina1 = () => {
-  // const { t } = useTranslation("pagina1");
+  const { t } = useTranslation("pagina1");
 
   const base = clsx(
     "relative h-screen w-full overflow-hidden transition-all duration-300",
@@ -13,10 +13,10 @@ export const Pagina1 = () => {
 
   return (
     <div id="inicio" className={base}>
-      {/* <h1 className="drop-shadow-sm text-center px-4 font-sans">
+      <h1 className="drop-shadow-sm text-center px-4 font-sans">
         {t('msg')}
-      </h1> */}
-      {/* <RechartsTest /> */}
+      </h1> 
+
     </div>
   );
 };

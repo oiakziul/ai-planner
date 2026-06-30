@@ -1,19 +1,22 @@
 // src/pages/Inicio.tsx
-import { cn } from "@/lib/utils";
+import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 
 export const Inicio = () => {
-  const pageContainer = cn(
-    "relative overflow-hidden flex flex-col md:flex-row items-center justify-center gap-6 p-10 max-w-4xl mx-auto rounded-3xl",
-    "bg-card/30 border border-border/40 backdrop-blur-xl shadow-2xl font-sans bg-card"
+  const { t } = useTranslation("inicio");
+  const base = clsx(
+    "relative h-screen w-full overflow-hidden transition-all duration-300",
+    "flex items-center justify-center mx-auto rounded-2xl",
+    "border-2 border-border bg-card/50 shadow-xl font-sans",
+    "text-card-foreground text-3xl font-bold"
   );
 
+
   return (
-    <div id="inicio" className={pageContainer}>
-
-   
-
-
-
+    <div id="inicio" className={base}>
+      <h1 className="drop-shadow-sm text-center px-4 font-sans">
+        {t('msg')}
+      </h1>
     </div>
   );
 };
