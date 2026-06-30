@@ -7,7 +7,7 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-    /* Bundler mode */
+    /* Bundler */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
@@ -21,7 +21,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    /* 👇 CONFIGURAÇÃO DO ALIAS (@) E DO JSON 👇 */
+    /*  ALIAS (@)  */
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {

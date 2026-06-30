@@ -47,7 +47,6 @@ export default defineConfig({
             purpose: "maskable",
           },
         ],
-        // ↓ cola aqui
         screenshots: [
           {
             src: "screenshot-mobile.png",
