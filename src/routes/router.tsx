@@ -4,7 +4,7 @@ import { Home } from '@/pages/Home';
 import { Footer } from '@/pages/Footer';
 import clsx from 'clsx';
 
-const Inicio = lazy(() => import('@/pages/Inicio').then(m => ({ default: m.Inicio })));
+const SimulationFormPage = lazy(() => import('@/pages/SimulationFormPage').then(m => ({ default: m.SimulationFormPage })));
 const Pagina1 = lazy(() => import('@/pages/Pagina1').then(m => ({ default: m.Pagina1 })));
 const Pagina2 = lazy(() => import('@/pages/Pagina2').then(m => ({ default: m.Pagina2 })));
 const Pagina3 = lazy(() => import('@/pages/Pagina3').then(m => ({ default: m.Pagina3 })));
@@ -22,13 +22,13 @@ export const AppRoutes = () => {
     }>
       <Routes>
         <Route path="/" element={<Home />}>
-          <Route index element={<Inicio />} />
+          <Route index element={<SimulationFormPage />} />
           <Route path="pagina1" element={<Pagina1 />} />
           <Route path="pagina2" element={<Pagina2 />} />
           <Route path="pagina3" element={<Pagina3 />} />
           <Route path="footer" element={<Footer />} />
 
-          <Route path="*" element={<Inicio />} />
+          <Route path="*" element={<SimulationFormPage />} />
         </Route>
       </Routes>
     </Suspense>

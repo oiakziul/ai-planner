@@ -66,9 +66,6 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      {/* ══════════════════════════════════════
-          HEADER PRINCIPAL (RESPONSIVO)
-      ══════════════════════════════════════ */}
       <header
         className={cn(
           "mx-auto flex items-center justify-between w-[95%] max-w-7xl h-16 px-4 md:px-6",
@@ -78,7 +75,6 @@ export const Header: React.FC = () => {
             : "opacity-0 -translate-y-10 pointer-events-none"
         )}
       >
-        {/* LOGO */}
         <Link
           to="/"
           className="flex items-center gap-2.5 font-bold text-lg text-foreground tracking-tight shrink-0"
@@ -87,7 +83,6 @@ export const Header: React.FC = () => {
           <span className="hidden sm:inline-block">AI Planner</span>
         </Link>
 
-        {/* CENTRO: cápsula de links — só visível no PC (lg+) */}
         <nav className="hidden lg:flex items-center gap-1 bg-accent/20 border border-border/40 px-1.5 py-1 rounded-full">
           {navLinks.map((link) => {
             const active = location.pathname === link.to;
@@ -108,10 +103,8 @@ export const Header: React.FC = () => {
           })}
         </nav>
 
-        {/* DIREITA */}
         <div className="flex items-center gap-2 md:gap-3">
 
-          {/* MENU — [CORRIGIDO]: Escondido no PC (lg:hidden), visível apenas no Android/Tablet */}
           <div className="relative lg:hidden" ref={menuRef}>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -125,7 +118,6 @@ export const Header: React.FC = () => {
               <span className="hidden lg:inline text-xs">{t("Páginas")}</span>
             </button>
 
-            {/* DROPDOWN — links diretos */}
             {isMenuOpen && (
               <div className={dropdownBase}>
                 <div className="px-4 py-2.5 border-b border-border/40">
@@ -164,7 +156,6 @@ export const Header: React.FC = () => {
             )}
           </div>
 
-          {/* DIVISOR — [CORRIGIDO]: Escondido no PC (lg:hidden) para acompanhar a ocultação do menu */}
           <div className="h-5 w-px bg-border/50 lg:hidden" />
 
           {/* IDIOMA */}
@@ -209,10 +200,9 @@ export const Header: React.FC = () => {
             )}
           </div>
 
-          {/* TEMA */}
+   
           <AnimatedThemeToggler variant="circle" duration={500} fromCenter />
 
-          {/* BOTÕES DE PC — visíveis apenas em telas grandes (lg+) */}
           <div className="hidden lg:flex items-center gap-2">
             <div className="h-5 w-px bg-border/50" />
             <InteractiveHoverButton
@@ -233,9 +223,6 @@ export const Header: React.FC = () => {
         </div>
       </header>
 
-      {/* ══════════════════════════════════════
-          BOTTOM BAR — só visível no mobile (< lg)
-      ══════════════════════════════════════ */}
       <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
         <div className="mx-3 mb-3 flex items-center gap-2 px-3 py-2.5 rounded-2xl border border-border/60 bg-background/95 backdrop-blur-xl shadow-2xl">
           <div className="flex-1">

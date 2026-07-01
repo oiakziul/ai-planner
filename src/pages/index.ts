@@ -7,7 +7,7 @@ export * from './Footer'
 
 
 //Paginas
-export * from './Inicio';
+export * from './SimulationFormPage';
 
 export * from './Pagina1';
 export * from './Pagina2';
