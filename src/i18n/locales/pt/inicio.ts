@@ -1,23 +1,27 @@
 export const inicioPT = () => ({
   // Tela de Introdução
   msg_1: "Vamos planejar seu futuro",
-  msg_2: "Responda algumas questões para ter insights financeiros personalizados.",
-  
+  msg_2:
+    "Responda algumas questões para ter insights financeiros personalizados.",
+
   // Passo 1: Renda Mensal Bruta
   income_title: "Renda mensal bruta",
-  income_question: "Quanto é depositado na sua conta todo mês (somando todas as fontes)?",
+  income_question:
+    "Quanto é depositado na sua conta todo mês (somando todas as fontes)?",
   income_placeholder: "ex: 5.000,00",
   income_prefix: "R$",
 
   // Passo 2: Custos Fixos de Vida
   expenses_title: "Custos fixos de vida",
-  expenses_question: "Quanto você gasta mensalmente com custos fixos (aluguel, contas, etc)?",
+  expenses_question:
+    "Quanto você gasta mensalmente com custos fixos (aluguel, contas, etc)?",
   expenses_placeholder: "ex: 2.000,00",
   expenses_prefix: "R$",
 
   // Passo 3: Dívidas / Parcelas
   debts_title: "Dívidas / parcelas",
-  debts_question: "Você tem algum valor comprometido com parcelas ou empréstimos mensalmente?",
+  debts_question:
+    "Você tem algum valor comprometido com parcelas ou empréstimos mensalmente?",
   debts_placeholder: "ex: 500,00",
   debts_prefix: "R$",
 
@@ -37,5 +41,11 @@ export const inicioPT = () => ({
   goalDeadline_question: "Em quantos meses você planeja atingir esse objetivo?",
   goalDeadline_placeholder: "ex: 12",
   goalDeadline_suffix: "meses",
-  goalDeadline_submit_label: "Gerar simulação"
+  goalDeadline_submit_label: "Gerar simulação",
+
+  passo: "Passo",
+  de: "de",
+
+  goalDeadline_suffix_years: "anos",
+  goalDeadline_suffix_months: "meses",
 });

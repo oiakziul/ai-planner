@@ -1,9 +1,10 @@
+// src/pages/componentes/shared/Input.tsx
 import type { InputHTMLAttributes } from 'react'
 import { Divider } from './Divider'
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   prefix?: string
-  suffix?: string
+  suffix?: string | React.ReactNode 
 }
 
 export function Input({ prefix, suffix, ...rest }: InputProps) {
@@ -25,9 +26,9 @@ export function Input({ prefix, suffix, ...rest }: InputProps) {
       {suffix && (
         <>
           <Divider orientation="vertical" />
-          <span className="text-muted-foreground ml-3 text-sm font-medium">
+          <div className="text-muted-foreground flex items-center text-sm font-medium">
             {suffix}
-          </span>
+          </div>
         </>
       )}
     </div>

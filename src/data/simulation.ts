@@ -15,15 +15,16 @@ export const simulationFormSteps: FormStepProps[] = [
   {
     id: "income",
     icon: PiggyBank,
-    title: "income_title", // Passando a chave de tradução em vez de texto fixo!
+    title: "income_title",
     question: "income_question",
     inputProps: {
       placeholder: "income_placeholder",
       prefix: "income_prefix",
-      maxLength: 12,
+      maxLength: 15,
     },
   },
-  // Passo 2: Custos Fixos
+
+  // Passo 2: Custos Fixos de Vida
   {
     id: "expenses",
     icon: CreditCard,
@@ -32,10 +33,11 @@ export const simulationFormSteps: FormStepProps[] = [
     inputProps: {
       placeholder: "expenses_placeholder",
       prefix: "expenses_prefix",
-      maxLength: 12,
+      maxLength: 15,
     },
   },
-  // Passo 3: Dívidas
+
+  // Passo 3: Dívidas / Parcelas
   {
     id: "debts",
     icon: Landmark,
@@ -44,9 +46,10 @@ export const simulationFormSteps: FormStepProps[] = [
     inputProps: {
       placeholder: "debts_placeholder",
       prefix: "debts_prefix",
-      maxLength: 12,
+      maxLength: 15,
     },
   },
+
   // Passo 4: Nome da Meta
   {
     id: "goalName",
@@ -58,6 +61,7 @@ export const simulationFormSteps: FormStepProps[] = [
       maxLength: 50,
     },
   },
+
   // Passo 5: Custo da Meta
   {
     id: "goalAmount",
@@ -67,9 +71,10 @@ export const simulationFormSteps: FormStepProps[] = [
     inputProps: {
       placeholder: "goalAmount_placeholder",
       prefix: "goalAmount_prefix",
-      maxLength: 12,
+      maxLength: 15,
     },
   },
+
   // Passo 6: Prazo Desejado
   {
     id: "goalDeadline",
@@ -81,7 +86,7 @@ export const simulationFormSteps: FormStepProps[] = [
       placeholder: "goalDeadline_placeholder",
       suffix: "goalDeadline_suffix",
       min: 1,
-      max: 120,
+      max: 99,
     },
     submitButtonProps: {
       label: "goalDeadline_submit_label",

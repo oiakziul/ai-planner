@@ -1,22 +1,22 @@
 // src/components/features/Simulation/FormStep.tsx
-import { useTranslation } from "react-i18next" 
-import { ArrowLeft, ArrowRight, type LucideIcon } from 'lucide-react'
-import { Input, type InputProps } from '@/pages/componentes/shared/Input'
-import ButtonRipple from '@/components/shadcn-space/button/button-16'
-import { cn } from '@/lib/utils'
+import { useTranslation } from "react-i18next";
+import { ArrowLeft, ArrowRight, type LucideIcon } from 'lucide-react';
+import { Input, type InputProps } from '@/pages/componentes/shared/Input';
+import ButtonRipple from '@/components/shadcn-space/button/button-16';
+import { cn } from '@/lib/utils';
 
 export interface FormStepProps {
-  id: string
-  icon: LucideIcon
-  title: string
-  question: string
-  inputProps: InputProps
+  id: string;
+  icon: LucideIcon;
+  title: string;
+  question: string;
+  inputProps: InputProps;
   submitButtonProps?: {
-    label: string
-    emojiIcon?: string
-  }
-  onBack?: () => void
-  onSubmit?: () => void
+    label: string;
+    emojiIcon?: string;
+  };
+  onBack?: () => void;
+  onSubmit?: () => void;
 }
 
 export function FormStep({
@@ -34,8 +34,11 @@ export function FormStep({
   // CONFIGURAÇÃO DE CLASSES (DESIGN TOKENS)
   // ==========================================
 
+  // [AJUSTADO]: Adicionamos largura máxima (max-w-lg), margem automática para centralizar (mx-auto),
+  // altura mínima estável (min-h-[380px] md:min-h-[400px]) e flex-col para estabilizar e alinhar o design!
   const formStepContainer = cn(
-    "bg-card rounded-2xl p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] sm:p-8"
+    "bg-card rounded-2xl p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] sm:p-8",
+    "w-full max-w-lg mx-auto min-h-[380px] md:min-h-[400px] flex flex-col justify-between"
   );
 
   const iconContainer = cn(
@@ -51,7 +54,7 @@ export function FormStep({
   );
 
   const formStyle = cn(
-    "flex flex-col gap-4"
+    "flex flex-col gap-4 mt-auto" // mt-auto garante que o formulário empurre as ações para o fundo
   );
 
   const buttonContainer = cn(
@@ -66,38 +69,49 @@ export function FormStep({
     "w-full sm:flex-1 ring ring-primary/20 shadow-lg h-11 py-0 cursor-pointer"
   );
 
-  // ==========================================
-  // ESTRUTURA VISUAL (JSX)
-  // ==========================================
-
   return (
     <div className={formStepContainer}>
+      
+      {/* Topo do Card (Ícone + Título + Pergunta) */}
+      <div>
+        {/* Ícone */}
+        <div className={iconContainer}>
+          <Icon size={32} className="text-primary-foreground" />
+        </div>
 
-      {/* Ícone */}
-      <div className={iconContainer}>
-        <Icon size={32} className="text-primary-foreground" />
+        {/* Título */}
+        <h2 className={titleStyle}>{t(title)}</h2>
+
+        {/* Pergunta */}
+        <h3 className={questionStyle}>{t(question)}</h3>
       </div>
 
-      {/* Título Traduzido */}
-      <h2 className={titleStyle}>{t(title)}</h2>
-
-      {/* Pergunta Traduzida */}
-      <h3 className={questionStyle}>{t(question)}</h3>
-
-      {/* Formulário */}
+      {/* Formulário (Sempre alinhado ao fundo do card estável) */}
       <form 
         className={formStyle} 
         onSubmit={(e) => {
           e.preventDefault();
-          onSubmit?.(); // [CORRIGIDO]: Dispara o avanço de etapa no Enter ou Clique!
+          onSubmit?.();
         }}
       >
-        {/* Tradução automática de placeholders, prefixos ($ ou R$) e sufixos */}
+   {/* [CORRIGIDO]: Verificação de tipo typeof garante que o tradutor t() seja chamado apenas se o valor for uma string! */}
         <Input
           {...inputProps}
-          placeholder={inputProps.placeholder ? t(inputProps.placeholder) : undefined}
-          prefix={inputProps.prefix ? t(inputProps.prefix) : undefined}
-          suffix={inputProps.suffix ? t(inputProps.suffix) : undefined}
+          placeholder={
+            typeof inputProps.placeholder === "string" 
+              ? t(inputProps.placeholder) 
+              : undefined
+          }
+          prefix={
+            typeof inputProps.prefix === "string" 
+              ? t(inputProps.prefix) 
+              : inputProps.prefix
+          }
+          suffix={
+            typeof inputProps.suffix === "string" 
+              ? t(inputProps.suffix) 
+              : inputProps.suffix // Se já for o elemento <select>, passa ele direto sem traduzir!
+          }
         />
 
         <div className={buttonContainer}>
@@ -111,7 +125,7 @@ export function FormStep({
             className={btnProximoStyle}
           >
             <span className="inline-flex items-center justify-center gap-1.5 leading-none">
-              {submitButtonProps?.label ? t(submitButtonProps.label) : t("Próximo", "Próximo")}
+              {submitButtonProps?.label ? t(submitButtonProps.label) : t("Próximo")}
 
               {submitButtonProps?.emojiIcon ? (
                 <span className="text-base leading-none">
@@ -123,24 +137,26 @@ export function FormStep({
             </span>
           </ButtonRipple>
 
-          {/* Botão Voltar */}
-          <ButtonRipple
-            type="button"
-            variant="ghost"
-            size="default"
-            disabled={false}
-            onClick={onBack}
-            className={btnVoltarStyle}
-          >
-            <span className="inline-flex items-center justify-center gap-1.5 leading-none">
-              <ArrowLeft className="h-4 w-4 shrink-0 translate-y-px transition-transform group-hover:-translate-x-1" />
-              {t("Voltar", "Voltar")}
-            </span>
-          </ButtonRipple>
+          {/* [CONDICIONAL]: Botão Voltar só renderiza se onBack for fornecido (Ocultado no Passo 0) */}
+          {onBack && (
+            <ButtonRipple
+              type="button"
+              variant="ghost"
+              size="default"
+              disabled={false}
+              onClick={onBack}
+              className={btnVoltarStyle}
+            >
+              <span className="inline-flex items-center justify-center gap-1.5 leading-none">
+                <ArrowLeft className="h-4 w-4 shrink-0 translate-y-px transition-transform group-hover:-translate-x-1" />
+                {t("Voltar")}
+              </span>
+            </ButtonRipple>
+          )}
 
         </div>
       </form>
 
     </div>
-  )
+  );
 }
