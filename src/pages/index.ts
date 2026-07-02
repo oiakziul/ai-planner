@@ -11,4 +11,4 @@ export * from './SimulationFormPage';
 
 export * from './SimulationHistoryPage';
 export * from './SimulationResultsPage';
-export * from './Pagina3';
+

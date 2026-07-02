@@ -10,7 +10,6 @@ import {
 
 import type { FormStepProps } from "@/pages/componentes/features/Simulation/FormStep";
 
-// [CORRIGIDO]: Removido o ": FormStepProps[]" estático para permitir que o "satisfies" preserve os IDs literais [1]
 export const simulationFormSteps = [
   // Passo 1: Renda Mensal Bruta
   {
@@ -76,7 +75,7 @@ export const simulationFormSteps = [
     },
   },
 
-  // Passo 6: Prazo Desejado
+  // Passo 6: Prazo Desejado (Anos e 2 dígitos)
   {
     id: "goalDeadline",
     icon: CalendarClock,
@@ -94,9 +93,12 @@ export const simulationFormSteps = [
       emojiIcon: "✨",
     },
   },
-] satisfies FormStepProps[]; 
+] satisfies FormStepProps[];
 
 export type SimulationFormData = Record<
   (typeof simulationFormSteps)[number]["id"],
   string
 >;
+
+// [NOVO]: Tipagem para os registros salvos no histórico (Dados do formulário + ID único) [1]
+export type SimulationRecord = SimulationFormData & { id: string };
