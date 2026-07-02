@@ -48,4 +48,6 @@ export const inicioPT = () => ({
 
   goalDeadline_suffix_years: "anos",
   goalDeadline_suffix_months: "meses",
+
+  campo_obrigatorio: "Este campo é obrigatório!",
 });

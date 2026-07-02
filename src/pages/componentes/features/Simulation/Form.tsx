@@ -5,6 +5,8 @@ import { simulationFormSteps } from "@/data/simulation";
 import { FormStep } from "./FormStep";
 import { StepProgress } from "./Progress";
 import { formatCurrencyMask, type Currency } from "@/utils/currency";
+// Importamos o tipo correto para evitar o erro de inferência estrita de caminhos do TypeScript [1]
+import { type InputProps } from "@/pages/componentes/shared/Input";
 
 const getCurrencyByLanguage = (langCode: string): Currency => {
   const lang = langCode.split("-")[0].toLowerCase();
@@ -19,18 +21,26 @@ export const SimulationForm = () => {
   const totalSteps = simulationFormSteps.length;
   const currentStep = simulationFormSteps[currentStepIndex];
 
-
   const [timeUnit, setTimeUnit] = useState<"years" | "months">("years");
 
-  const [formData, setFormData] = useState<Record<string, string>>({
-    income: "",
-    expenses: "",
-    debts: "",
-    goalName: "",
-    goalAmount: "",
-    goalDeadline: "",
+  // Estados para controlar o alerta de erro e o tremor físico do input
+  const [showError, setShowError] = useState(false);
+  const [shake, setShake] = useState(false);
+
+  const [formData, setFormData] = useState<Record<string, string>>(() => {
+    if (typeof window === "undefined") return { income: "", expenses: "", debts: "", goalName: "", goalAmount: "", goalDeadline: "" };
+    const savedData = localStorage.getItem("ai_planner_simulation_data");
+    return savedData ? JSON.parse(savedData) : {
+      income: "", expenses: "", debts: "", goalName: "", goalAmount: "", goalDeadline: "",
+    };
   });
 
+  // Gravação automática das respostas
+  useEffect(() => {
+    localStorage.setItem("ai_planner_simulation_data", JSON.stringify(formData));
+  }, [formData]);
+
+  // Sincronização de idioma
   useEffect(() => {
     setFormData((prev) => {
       const updated = { ...prev };
@@ -47,10 +57,15 @@ export const SimulationForm = () => {
 
       return updated;
     });
-  }, [i18n.language]); 
+  }, [i18n.language]);
 
+  // Handler para capturar a digitação
   const handleInputChange = (value: string) => {
     let finalValue = value;
+
+    // Se o usuário começar a digitar, removemos os avisos de erro e tremor imediatamente!
+    setShowError(false);
+    setShake(false);
 
     if (currentStep.id === "goalDeadline") {
       if (value.length > 2) return;
@@ -69,8 +84,22 @@ export const SimulationForm = () => {
     }));
   };
 
-  // Handler para avançar
+  // Handler para avançar de etapa
   const handleNextStep = () => {
+    const valorEtapaAtual = formData[currentStep.id];
+
+    // [VALIDAÇÃO]: Se estiver vazio, ativa a borda vermelha e faz o input tremer!
+    if (!valorEtapaAtual || valorEtapaAtual.trim() === "") {
+      setShowError(true);
+      setShake(true);
+      
+      // Reseta o estado do tremor após 500ms para permitir que trema novamente no próximo clique vazio
+      setTimeout(() => setShake(false), 500); 
+      return;
+    }
+
+    setShowError(false); // Reseta o erro para o próximo passo
+
     if (currentStepIndex + 1 > totalSteps - 1) {
       console.log("Formulário concluído! Dados para a IA:", { ...formData, timeUnit });
       return;
@@ -79,13 +108,18 @@ export const SimulationForm = () => {
   };
 
   const handlePreviousStep = () => {
+    // Se o usuário clicar em voltar, removemos os avisos de erro da tela anterior
+    setShowError(false);
+    setShake(false);
+
     if (currentStepIndex === 0) {
       return;
     }
     setCurrentStepIndex((prev) => prev - 1);
   };
 
-  const inputPropsDynamic = {
+  // [CORRIGIDO]: Tipagem explícita de `: InputProps` garante compatibilidade total com o select dinâmico [1, 3]
+  const inputPropsDynamic: InputProps = {
     ...currentStep.inputProps,
     value: formData[currentStep.id] || "",
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e.target.value),
@@ -112,8 +146,11 @@ export const SimulationForm = () => {
         key={currentStep.id}
         {...currentStep}
         inputProps={inputPropsDynamic}
-        onBack={currentStepIndex > 0 ? handlePreviousStep : undefined}
-        onSubmit={handleNextStep}
+        onBack={handlePreviousStep}
+        onNext={handleNextStep}
+        hideBackButton={currentStepIndex === 0}
+        hasError={showError} 
+        shake={shake} 
       />
     </>
   );

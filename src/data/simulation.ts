@@ -10,7 +10,8 @@ import {
 
 import type { FormStepProps } from "@/pages/componentes/features/Simulation/FormStep";
 
-export const simulationFormSteps: FormStepProps[] = [
+// [CORRIGIDO]: Removido o ": FormStepProps[]" estático para permitir que o "satisfies" preserve os IDs literais [1]
+export const simulationFormSteps = [
   // Passo 1: Renda Mensal Bruta
   {
     id: "income",
@@ -93,4 +94,10 @@ export const simulationFormSteps: FormStepProps[] = [
       emojiIcon: "✨",
     },
   },
-];
+] satisfies FormStepProps[]; // [CORRIGIDO]: Garante que o array segue o contrato, mas mantém a literalidade dos IDs intacta [1]
+
+// [NOVO]: Infere e exporta dinamicamente a tipagem de dados das respostas com base nos IDs reais! [1]
+export type SimulationFormData = Record<
+  (typeof simulationFormSteps)[number]["id"],
+  string
+>;

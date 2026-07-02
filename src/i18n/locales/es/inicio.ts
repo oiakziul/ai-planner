@@ -48,4 +48,6 @@ export const inicioES = () => ({
 
   goalDeadline_suffix_years: "años",
   goalDeadline_suffix_months: "meses",
+
+  campo_obrigatorio: "¡Este campo es obligatorio!",
 });

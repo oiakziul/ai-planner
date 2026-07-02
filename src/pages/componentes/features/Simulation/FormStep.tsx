@@ -15,8 +15,14 @@ export interface FormStepProps {
     label: string;
     emojiIcon?: string;
   };
-  onBack?: () => void;
-  onSubmit?: () => void;
+}
+
+interface ActionsButtonsProps {
+  onBack: () => void;
+  onNext: () => void;
+  hideBackButton?: boolean;
+  hasError?: boolean; 
+  shake?: boolean; 
 }
 
 export function FormStep({
@@ -25,17 +31,14 @@ export function FormStep({
   question,
   inputProps,
   submitButtonProps,
+  hideBackButton,
   onBack,
-  onSubmit
-}: FormStepProps) {
+  onNext,
+  hasError, // [NOVO] [1]
+  shake,     // [NOVO] [1]
+}: FormStepProps & ActionsButtonsProps) {
   const { t } = useTranslation("inicio");
 
-  // ==========================================
-  // CONFIGURAÇÃO DE CLASSES (DESIGN TOKENS)
-  // ==========================================
-
-  // [AJUSTADO]: Adicionamos largura máxima (max-w-lg), margem automática para centralizar (mx-auto),
-  // altura mínima estável (min-h-[380px] md:min-h-[400px]) e flex-col para estabilizar e alinhar o design!
   const formStepContainer = cn(
     "bg-card rounded-2xl p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] sm:p-8",
     "w-full max-w-lg mx-auto min-h-[380px] md:min-h-[400px] flex flex-col justify-between"
@@ -53,8 +56,10 @@ export function FormStep({
     "text-foreground mb-6 text-xl leading-snug font-semibold sm:text-2xl"
   );
 
+  // [CORRIGIDO]: Se a prop 'shake' for verdadeira, aplica a classe de tremor no formulário!
   const formStyle = cn(
-    "flex flex-col gap-4 mt-auto" // mt-auto garante que o formulário empurre as ações para o fundo
+    "flex flex-col gap-4 mt-auto",
+    shake && "animate-shake"
   );
 
   const buttonContainer = cn(
@@ -72,47 +77,54 @@ export function FormStep({
   return (
     <div className={formStepContainer}>
       
-      {/* Topo do Card (Ícone + Título + Pergunta) */}
+      {/* Topo do Card */}
       <div>
-        {/* Ícone */}
         <div className={iconContainer}>
           <Icon size={32} className="text-primary-foreground" />
         </div>
 
-        {/* Título */}
         <h2 className={titleStyle}>{t(title)}</h2>
 
-        {/* Pergunta */}
         <h3 className={questionStyle}>{t(question)}</h3>
       </div>
 
-      {/* Formulário (Sempre alinhado ao fundo do card estável) */}
+      {/* Formulário */}
       <form 
         className={formStyle} 
         onSubmit={(e) => {
           e.preventDefault();
-          onSubmit?.();
+          onNext(); 
         }}
       >
-   {/* [CORRIGIDO]: Verificação de tipo typeof garante que o tradutor t() seja chamado apenas se o valor for uma string! */}
-        <Input
-          {...inputProps}
-          placeholder={
-            typeof inputProps.placeholder === "string" 
-              ? t(inputProps.placeholder) 
-              : undefined
-          }
-          prefix={
-            typeof inputProps.prefix === "string" 
-              ? t(inputProps.prefix) 
-              : inputProps.prefix
-          }
-          suffix={
-            typeof inputProps.suffix === "string" 
-              ? t(inputProps.suffix) 
-              : inputProps.suffix // Se já for o elemento <select>, passa ele direto sem traduzir!
-          }
-        />
+        <div className="flex flex-col w-full relative">
+          {/* Repassamos a prop 'hasError' diretamente para o Input customizado */}
+          <Input
+            {...inputProps}
+            hasError={hasError}
+            placeholder={
+              typeof inputProps.placeholder === "string" 
+                ? t(inputProps.placeholder) 
+                : undefined
+            }
+            prefix={
+              typeof inputProps.prefix === "string" 
+                ? t(inputProps.prefix) 
+                : inputProps.prefix
+            }
+            suffix={
+              typeof inputProps.suffix === "string" 
+                ? t(inputProps.suffix) 
+                : inputProps.suffix 
+            }
+          />
+          
+          {/* [NOVO]: Legenda de aviso vermelha que surge suavemente abaixo do input se houver erro */}
+          {hasError && (
+            <span className="text-destructive text-xs font-semibold mt-1.5 ml-1 self-start animate-in fade-in slide-in-from-top-1 duration-300">
+              {t("campo_obrigatorio", "Este campo é obrigatório!")}
+            </span>
+          )}
+        </div>
 
         <div className={buttonContainer}>
 
@@ -137,8 +149,8 @@ export function FormStep({
             </span>
           </ButtonRipple>
 
-          {/* [CONDICIONAL]: Botão Voltar só renderiza se onBack for fornecido (Ocultado no Passo 0) */}
-          {onBack && (
+          {/* Botão de Voltar */}
+          {!hideBackButton && onBack && (
             <ButtonRipple
               type="button"
               variant="ghost"
