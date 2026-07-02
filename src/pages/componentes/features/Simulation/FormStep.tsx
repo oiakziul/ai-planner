@@ -34,8 +34,8 @@ export function FormStep({
   hideBackButton,
   onBack,
   onNext,
-  hasError, // [NOVO] [1]
-  shake,     // [NOVO] [1]
+  hasError, 
+  shake,     
 }: FormStepProps & ActionsButtonsProps) {
   const { t } = useTranslation("inicio");
 
@@ -56,7 +56,6 @@ export function FormStep({
     "text-foreground mb-6 text-xl leading-snug font-semibold sm:text-2xl"
   );
 
-  // [CORRIGIDO]: Se a prop 'shake' for verdadeira, aplica a classe de tremor no formulário!
   const formStyle = cn(
     "flex flex-col gap-4 mt-auto",
     shake && "animate-shake"
@@ -97,7 +96,7 @@ export function FormStep({
         }}
       >
         <div className="flex flex-col w-full relative">
-          {/* Repassamos a prop 'hasError' diretamente para o Input customizado */}
+   
           <Input
             {...inputProps}
             hasError={hasError}
@@ -118,7 +117,7 @@ export function FormStep({
             }
           />
           
-          {/* [NOVO]: Legenda de aviso vermelha que surge suavemente abaixo do input se houver erro */}
+
           {hasError && (
             <span className="text-destructive text-xs font-semibold mt-1.5 ml-1 self-start animate-in fade-in slide-in-from-top-1 duration-300">
               {t("campo_obrigatorio", "Este campo é obrigatório!")}
@@ -128,7 +127,7 @@ export function FormStep({
 
         <div className={buttonContainer}>
 
-          {/* Botão Avançar / Gerar Simulação */}
+   
           <ButtonRipple
             type="submit"
             variant="default"
@@ -136,20 +135,16 @@ export function FormStep({
             disabled={false}
             className={btnProximoStyle}
           >
-            <span className="inline-flex items-center justify-center gap-1.5 leading-none">
-              {submitButtonProps?.label ? t(submitButtonProps.label) : t("Próximo")}
+            {submitButtonProps?.label ? t(submitButtonProps.label) : t("Próximo")}
 
-              {submitButtonProps?.emojiIcon ? (
-                <span className="text-base leading-none">
-                  {submitButtonProps.emojiIcon}
-                </span>
-              ) : (
-                <ArrowRight className="h-4 w-4 shrink-0 translate-y-px transition-transform group-hover:translate-x-1" />
-              )}
-            </span>
+            {submitButtonProps?.emojiIcon ? (
+              <span className="text-base">{submitButtonProps.emojiIcon}</span>
+            ) : (
+              <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
+            )}
           </ButtonRipple>
 
-          {/* Botão de Voltar */}
+  
           {!hideBackButton && onBack && (
             <ButtonRipple
               type="button"
@@ -159,10 +154,8 @@ export function FormStep({
               onClick={onBack}
               className={btnVoltarStyle}
             >
-              <span className="inline-flex items-center justify-center gap-1.5 leading-none">
-                <ArrowLeft className="h-4 w-4 shrink-0 translate-y-px transition-transform group-hover:-translate-x-1" />
-                {t("Voltar")}
-              </span>
+              <ArrowLeft className="h-4 w-4 shrink-0 transition-transform group-hover:-translate-x-1" />
+              {t("Voltar")}
             </ButtonRipple>
           )}
 

@@ -9,6 +9,6 @@ export * from './Footer'
 //Paginas
 export * from './SimulationFormPage';
 
-export * from './Pagina1';
-export * from './Pagina2';
+export * from './SimulationHistoryPage';
+export * from './SimulationResultsPage';
 export * from './Pagina3';

@@ -1,3 +1,4 @@
+// src/pages/Header.tsx
 import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { US, BR, ES } from "country-flag-icons/react/3x2";
@@ -8,11 +9,11 @@ import { cn } from "@/lib/utils";
 import InteractiveHoverButton from "@/components/shadcn-space/button/button-19";
 import ButtonRipple from "@/components/shadcn-space/button/button-16";
 
+// [CORRIGIDO]: Mapeamento atualizado com os nomes reais e semânticos do AI Planner
 const navLinks = [
   { to: "/", label: "Início" },
-  { to: "/pagina1", label: "Pagina1" },
-  { to: "/pagina2", label: "Pagina2" },
-  { to: "/pagina3", label: "Pagina3" },
+  { to: "/resultado", label: "Resultado" },
+  { to: "/historico", label: "Histórico" },
 ];
 
 export const Header: React.FC = () => {
@@ -57,7 +58,7 @@ export const Header: React.FC = () => {
     supportedLanguages.find((l) => l.code === i18n.language.split("-")[0]) ||
     supportedLanguages[0];
 
-  // Dropdown base
+  // Dropdown que abre reto para baixo
   const dropdownBase = cn(
     "absolute top-[calc(100%+12px)] left-0 w-48 rounded-2xl border border-border/60",
     "bg-popover/98 backdrop-blur-xl shadow-2xl overflow-hidden",
@@ -66,15 +67,19 @@ export const Header: React.FC = () => {
 
   return (
     <>
+      {/* ══════════════════════════════════════
+          HEADER PRINCIPAL (UNIFICADO)
+      ══════════════════════════════════════ */}
       <header
         className={cn(
-          "mx-auto flex items-center justify-between w-[95%] max-w-7xl h-16 px-4 md:px-6",
+          "mx-auto flex items-center justify-between w-[95%] max-w-3xl h-16 px-4 md:px-6",
           "z-50 rounded-2xl sticky top-4 transition-all duration-300 ease-in-out font-sans select-none",
           isAtTop
             ? "opacity-100 translate-y-0 shadow-lg bg-background/85 backdrop-blur-md border border-border"
             : "opacity-0 -translate-y-10 pointer-events-none"
         )}
       >
+        {/* LOGO */}
         <Link
           to="/"
           className="flex items-center gap-2.5 font-bold text-lg text-foreground tracking-tight shrink-0"
@@ -83,41 +88,27 @@ export const Header: React.FC = () => {
           <span className="hidden sm:inline-block">AI Planner</span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-1 bg-accent/20 border border-border/40 px-1.5 py-1 rounded-full">
-          {navLinks.map((link) => {
-            const active = location.pathname === link.to;
-            return (
-              <Link
-                key={link.to}
-                to={link.to}
-                className={cn(
-                  "px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200",
-                  active
-                    ? "bg-background text-foreground shadow-sm"
-                    : "text-muted-foreground hover:text-foreground hover:bg-background/60"
-                )}
-              >
-                {t(link.label, link.label)}
-              </Link>
-            );
-          })}
-        </nav>
+        {/* [CORRIGIDO]: Cápsula central removida para deixar o meio limpo e evitar duplicações de botões! */}
 
+        {/* DIREITA */}
         <div className="flex items-center gap-2 md:gap-3">
 
-          <div className="relative lg:hidden" ref={menuRef}>
+          {/* MENU — [CORRIGIDO]: Removido 'lg:hidden' para que o botão fique visível em todas as telas (PC e Celular) */}
+          <div className="relative" ref={menuRef}>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className={cn(
-                "flex h-10 items-center gap-2 px-3 rounded-xl border border-border/50 font-medium text-sm",
+                "flex h-10 items-center gap-2 px-3 rounded-xl border border-border/50 font-medium text-sm cursor-pointer",
                 "bg-accent/15 hover:bg-accent hover:text-accent-foreground transition-all duration-200",
                 isMenuOpen && "bg-accent"
               )}
             >
               <Menu className="h-4 w-4 shrink-0" />
-              <span className="hidden lg:inline text-xs">{t("Páginas")}</span>
+              {/* 'hidden sm:inline' esconde o texto 'Páginas' apenas em celulares muito pequenos */}
+              <span className="hidden sm:inline text-xs">{t("Páginas")}</span>
             </button>
 
+            {/* DROPDOWN — Mapeando as novas rotas semânticas da simulação */}
             {isMenuOpen && (
               <div className={dropdownBase}>
                 <div className="px-4 py-2.5 border-b border-border/40">
@@ -156,7 +147,8 @@ export const Header: React.FC = () => {
             )}
           </div>
 
-          <div className="h-5 w-px bg-border/50 lg:hidden" />
+          {/* DIVISOR — [CORRIGIDO]: Removido 'lg:hidden' para sempre separar o menu das ferramentas */}
+          <div className="h-5 w-px bg-border/50" />
 
           {/* IDIOMA */}
           <div className="relative" ref={langRef}>
@@ -200,9 +192,10 @@ export const Header: React.FC = () => {
             )}
           </div>
 
-   
+          {/* TEMA */}
           <AnimatedThemeToggler variant="circle" duration={500} fromCenter />
 
+          {/* BOTÕES DE PC — visíveis apenas em computadores (lg+) */}
           <div className="hidden lg:flex items-center gap-2">
             <div className="h-5 w-px bg-border/50" />
             <InteractiveHoverButton
@@ -223,6 +216,9 @@ export const Header: React.FC = () => {
         </div>
       </header>
 
+      {/* ══════════════════════════════════════
+          BOTTOM BAR — só visível no celular (< lg)
+      ══════════════════════════════════════ */}
       <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
         <div className="mx-3 mb-3 flex items-center gap-2 px-3 py-2.5 rounded-2xl border border-border/60 bg-background/95 backdrop-blur-xl shadow-2xl">
           <div className="flex-1">

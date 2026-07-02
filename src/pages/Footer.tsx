@@ -38,9 +38,9 @@ export const Footer = () => {
   const botaoSeta = cn(
     "group flex justify-center items-center rounded-full text-xl cursor-pointer",
     "h-12 w-12 bg-accent/20 border border-border transition-all duration-500 ease-out",
-    "text-foreground", 
-    "hover:text-accent hover:border-accent hover:bg-accent/10 hover:-translate-y-2",
-    "hover:shadow-[0_0_20px_rgba(var(--color-primary),0.3)]", 
+    "text-foreground",
+    "hover:text-primary-foreground hover:border-primary hover:bg-primary hover:-translate-y-2",
+    "hover:shadow-lg hover:shadow-primary/30",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
   );
 
@@ -56,24 +56,8 @@ export const Footer = () => {
 
   const eMailLink = cn(
     "group relative overflow-hidden flex items-center justify-center mx-auto gap-2 text-lg font-medium py-3 mt-3 w-48 h-12",
-    "rounded-xl border border-border bg-background transition-all duration-300",
-    "text-foreground hover:border-primary/50 hover:shadow-[0_0_15px_rgba(var(--color-primary),0.15)] hover:-translate-y-1",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
   );
 
-  const shineEffect = cn(
-    "absolute inset-0 -translate-x-full group-hover:translate-x-full",
-    "bg-gradient-to-r from-transparent via-foreground/10 to-transparent",
-    "transition-transform duration-700 ease-in-out"
-  );
-
-  // const iconeMailAnimado = cn(
-  //   "h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors"
-  // );
-
-  // ==========================================
-  // ESTRUTURA VISUAL (JSX)
-  // ==========================================
 
   return (
     <footer className={footerBase}>
@@ -101,7 +85,7 @@ export const Footer = () => {
 
           <section className={emailSection}>
             <a className={eMailLink} href="mailto:kaioaac3@gmail.com">
-              <div className={shineEffect} />
+              
               
             </a>
           </section>

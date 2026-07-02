@@ -94,9 +94,8 @@ export const simulationFormSteps = [
       emojiIcon: "✨",
     },
   },
-] satisfies FormStepProps[]; // [CORRIGIDO]: Garante que o array segue o contrato, mas mantém a literalidade dos IDs intacta [1]
+] satisfies FormStepProps[]; 
 
-// [NOVO]: Infere e exporta dinamicamente a tipagem de dados das respostas com base nos IDs reais! [1]
 export type SimulationFormData = Record<
   (typeof simulationFormSteps)[number]["id"],
   string

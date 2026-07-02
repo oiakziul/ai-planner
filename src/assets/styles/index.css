@@ -17,7 +17,7 @@
 
   /* --- CORES CUSTOMIZADAS (preservadas) --- */
   --color-cor1: var(--color-rose-600);
-  --color-cor2: var(--color-teal-600);
+  --color-cor2: var(--color-rose-600);
   --color-cor3: var(--color-pink-600);
   --color-cor4: var(--color-red-600);
   --color-cor5: var(--color-fuchsia-600);
@@ -102,7 +102,7 @@
 :root {
   /* Hovers Header */
   --hoverHeader: var(--color-white);
-  --textHoverHeader: var(--color-teal-600);
+  --textHoverHeader: var(--color-rose-700);
 
   /* Fundo: cinza frio — card branco flutua sobre ele */
   --background: var(--color-slate-100);
@@ -121,8 +121,8 @@
   --popover: var(--color-white);
   --popover-foreground: var(--color-slate-900);
 
-  /* Primary teal */
-  --primary: var(--color-teal-600);
+  /* Primary vinho / rosa escuro */
+  --primary: var(--color-rose-700);
   --primary-foreground: var(--color-white);
 
   --secondary: var(--color-slate-200);
@@ -131,8 +131,8 @@
   --muted: var(--color-slate-200);
   --muted-foreground: var(--color-slate-500);
 
-  --accent: var(--color-teal-50);
-  --accent-foreground: var(--color-teal-700);
+  --accent: var(--color-rose-50);
+  --accent-foreground: var(--color-rose-800);
 
   --destructive: var(--color-red-600);
   --destructive-foreground: var(--color-white);
@@ -141,20 +141,20 @@
   --border: var(--color-slate-300);
   --input: var(--color-slate-300);
 
-  /* Ring teal — visível no focus */
-  --ring: var(--color-teal-500);
+  /* Ring vinho — visível no focus */
+  --ring: var(--color-rose-600);
 
   --radius: 0.375rem;
 
   /* Sidebar clara */
   --sidebar: var(--color-white);
   --sidebar-foreground: var(--color-slate-700);
-  --sidebar-primary: var(--color-teal-600);
+  --sidebar-primary: var(--color-rose-700);
   --sidebar-primary-foreground: var(--color-white);
   --sidebar-accent: var(--color-slate-100);
   --sidebar-accent-foreground: var(--color-slate-900);
   --sidebar-border: var(--color-slate-300);
-  --sidebar-ring: var(--color-teal-500);
+  --sidebar-ring: var(--color-rose-600);
 
   /* Sombras reais com opacidade */
   --shadow-2xs: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
@@ -178,7 +178,7 @@
 :root.dark {
   /* Hovers Header */
   --hoverHeader: var(--color-slate-800);
-  --textHoverHeader: var(--color-teal-300);
+  --textHoverHeader: var(--color-rose-300);
 
   /* Fundo bem escuro — card sobe um nível */
   --background: var(--color-slate-950);
@@ -197,7 +197,7 @@
   --popover: var(--color-slate-900);
   --popover-foreground: var(--color-slate-50);
 
-  --primary: var(--color-teal-400);
+  --primary: var(--color-rose-400);
   --primary-foreground: var(--color-slate-950);
 
   --secondary: var(--color-slate-800);
@@ -206,8 +206,8 @@
   --muted: var(--color-slate-800);
   --muted-foreground: var(--color-slate-400);
 
-  --accent: var(--color-teal-900);
-  --accent-foreground: var(--color-teal-100);
+  --accent: var(--color-rose-900);
+  --accent-foreground: var(--color-rose-100);
 
   --destructive: var(--color-red-500);
   --destructive-foreground: var(--color-white);
@@ -216,18 +216,18 @@
   --border: rgb(255 255 255 / 0.12);
   --input: rgb(255 255 255 / 0.15);
 
-  /* Ring teal visível no escuro */
-  --ring: var(--color-teal-400);
+  /* Ring vinho visível no escuro */
+  --ring: var(--color-rose-400);
 
   /* Sidebar escura — um toque mais clara que o background */
   --sidebar: var(--color-slate-900);
   --sidebar-foreground: var(--color-slate-300);
-  --sidebar-primary: var(--color-teal-400);
+  --sidebar-primary: var(--color-rose-400);
   --sidebar-primary-foreground: var(--color-slate-950);
   --sidebar-accent: var(--color-slate-800);
   --sidebar-accent-foreground: var(--color-slate-100);
   --sidebar-border: rgb(255 255 255 / 0.08);
-  --sidebar-ring: var(--color-teal-400);
+  --sidebar-ring: var(--color-rose-400);
 
   /* Sombras escuras — mais opacas para aparecer no fundo dark */
   --shadow-2xs: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
