@@ -1,12 +1,13 @@
 // src/components/features/Simulation/Form.tsx
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom"; // [NOVO]: Importado para redirecionar de página [1]
 import { simulationFormSteps } from "@/data/simulation";
 import { FormStep } from "./FormStep";
 import { StepProgress } from "./Progress";
 import { formatCurrencyMask, type Currency } from "@/utils/currency";
-// Importamos o tipo correto para evitar o erro de inferência estrita de caminhos do TypeScript [1]
 import { type InputProps } from "@/pages/componentes/shared/Input";
+import { useSimulationStorage } from "@/hooks/useSimulationStorage"; // [NOVO]: Importado seu hook de persistência [1]
 
 const getCurrencyByLanguage = (langCode: string): Currency => {
   const lang = langCode.split("-")[0].toLowerCase();
@@ -17,25 +18,25 @@ const getCurrencyByLanguage = (langCode: string): Currency => {
 
 export const SimulationForm = () => {
   const { t, i18n } = useTranslation("inicio"); 
+  const navigate = useNavigate(); // [NOVO]: Instanciamos o navegador do React Router [1]
+  const { saveFormData } = useSimulationStorage(); // [NOVO]: Puxamos a sua função de salvar do seu hook [1]
+
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const totalSteps = simulationFormSteps.length;
   const currentStep = simulationFormSteps[currentStepIndex];
 
   const [timeUnit, setTimeUnit] = useState<"years" | "months">("years");
 
-  // Estados para controlar o alerta de erro e o tremor físico do input
+  // Alerta de erro e tremor
   const [showError, setShowError] = useState(false);
   const [shake, setShake] = useState(false);
 
-  const [formData, setFormData] = useState<Record<string, string>>(() => {
-    if (typeof window === "undefined") return { income: "", expenses: "", debts: "", goalName: "", goalAmount: "", goalDeadline: "" };
-    const savedData = localStorage.getItem("ai_planner_simulation_data");
-    return savedData ? JSON.parse(savedData) : {
-      income: "", expenses: "", debts: "", goalName: "", goalAmount: "", goalDeadline: "",
-    };
+  // Estado centralizado das respostas
+  const [formData, setFormData] = useState<Record<string, string>>({
+    income: "", expenses: "", debts: "", goalName: "", goalAmount: "", goalDeadline: "",
   });
 
-  // Gravação automática das respostas
+  // Gravação automática temporária das respostas parciais
   useEffect(() => {
     localStorage.setItem("ai_planner_simulation_data", JSON.stringify(formData));
   }, [formData]);
@@ -63,7 +64,6 @@ export const SimulationForm = () => {
   const handleInputChange = (value: string) => {
     let finalValue = value;
 
-    // Se o usuário começar a digitar, removemos os avisos de erro e tremor imediatamente!
     setShowError(false);
     setShake(false);
 
@@ -88,27 +88,30 @@ export const SimulationForm = () => {
   const handleNextStep = () => {
     const valorEtapaAtual = formData[currentStep.id];
 
-    // [VALIDAÇÃO]: Se estiver vazio, ativa a borda vermelha e faz o input tremer!
     if (!valorEtapaAtual || valorEtapaAtual.trim() === "") {
       setShowError(true);
       setShake(true);
-      
-      // Reseta o estado do tremor após 500ms para permitir que trema novamente no próximo clique vazio
       setTimeout(() => setShake(false), 500); 
       return;
     }
 
-    setShowError(false); // Reseta o erro para o próximo passo
+    setShowError(false);
 
     if (currentStepIndex + 1 > totalSteps - 1) {
-      console.log("Formulário concluído! Dados para a IA:", { ...formData, timeUnit });
+      // [CORRIGIDO]: Salva as respostas finais usando o seu hook e pega o ID único gerado! [1]
+      const newSimulationId = saveFormData(formData);
+      
+      // Limpa os dados temporários do rascunho de preenchimento
+      localStorage.removeItem("ai_planner_simulation_data");
+
+      // Redireciona o usuário para a página de resultados com o ID na URL! [1]
+      navigate(`/resultado/${newSimulationId}`);
       return;
     }
     setCurrentStepIndex((prev) => prev + 1);
   };
 
   const handlePreviousStep = () => {
-    // Se o usuário clicar em voltar, removemos os avisos de erro da tela anterior
     setShowError(false);
     setShake(false);
 
@@ -118,7 +121,6 @@ export const SimulationForm = () => {
     setCurrentStepIndex((prev) => prev - 1);
   };
 
-  // [CORRIGIDO]: Tipagem explícita de `: InputProps` garante compatibilidade total com o select dinâmico [1, 3]
   const inputPropsDynamic: InputProps = {
     ...currentStep.inputProps,
     value: formData[currentStep.id] || "",

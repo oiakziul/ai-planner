@@ -1,12 +1,17 @@
 // src/pages/SimulationResultsPage.tsx
 import { useTranslation } from "react-i18next";
-
+import { useParams } from "react-router-dom"; 
 import { Goal, CalendarClock, PiggyBank, Wallet, CreditCard, Landmark } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { type SimulationFormData } from "@/data/simulation";
 import { calcMonthlySavings } from "@/utils/simulation";
+import { useSimulationStorage } from "@/hooks/useSimulationStorage"; 
 import { Card } from "./componentes/features/simulationResults/Card";
 import { PageHero } from "./componentes/shared/PageHero";
+import { AIInsightsCard } from "./componentes/features/simulationResults/AIInsightCardProps";
+
+// [NOVO]: Importamos o componente oficial da Inteligência Artificial
+
 
 const mockSimulation: SimulationFormData = {
   id: "simulation_test",
@@ -29,8 +34,10 @@ const getCurrencyByLanguage = (langCode: string): Currency => {
 
 export const SimulationResultsPage = () => {
   const { t, i18n } = useTranslation("pagina2");
+  const { id } = useParams<{ id: string }>(); 
+  const { getFormData } = useSimulationStorage(); 
 
-  const data: SimulationFormData = mockSimulation;
+  const data = (id ? getFormData(id) : null) || mockSimulation;
 
   const monthlySavings = calcMonthlySavings(data);
 
@@ -43,39 +50,48 @@ export const SimulationResultsPage = () => {
     }
   );
 
+  // ==========================================
+  // CONFIGURAÇÃO DE CLASSES (DESIGN TOKENS OKLCH)
+  // ==========================================
 
   const mainLayout = cn(
-    "mx-auto max-w-7xl px-4 py-10 sm:py-14 font-sans select-none"
+    "mx-auto max-w-[89rem] h-auto px-4 py-10 sm:py-14 font-sans select-none"
   );
 
   const pageGridLayout = cn(
     "grid grid-cols-1 lg:grid-cols-3 gap-6"
   );
 
-  const aiAdvisorCardStyle = cn(
-    "relative w-full h-full min-h-[460px] overflow-hidden transition-all duration-300",
-    "flex flex-col items-center justify-center rounded-3xl p-8 border border-border bg-card/30 backdrop-blur-md shadow-2xl text-card-foreground text-center"
+  const card1Wrapper = cn("lg:col-start-1 lg:row-start-1");
+  const card2Wrapper = cn("lg:col-start-2 lg:row-start-1");
+  const card3Wrapper = cn("lg:col-start-3 lg:row-start-1");
+
+  const card4Wrapper = cn("lg:col-start-3 lg:row-start-2");
+  const card5Wrapper = cn("lg:col-start-3 lg:row-start-3");
+  const card6Wrapper = cn("lg:col-start-3 lg:row-start-4");
+
+  // O Wrapper da IA: Mantém o card do Gemini ocupando as colunas 1 e 2 no PC!
+  const aiCardWrapper = cn(
+    "lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:row-span-3 h-full"
   );
 
-  const aiTitleStyle = cn(
-    "drop-shadow-sm px-4 font-sans font-bold text-xl md:text-2xl text-foreground mb-2"
-  );
-
-  const aiSubtitleStyle = cn(
-    "text-sm text-muted-foreground max-w-md font-medium"
-  );
+  // ==========================================
+  // ESTRUTURA VISUAL (JSX)
+  // ==========================================
 
   return (
     <main className={mainLayout}>
       
+      {/* Cabeçalho de alta fidelidade */}
       <PageHero
         title={t("resultado_title", "Resultado da sua simulação")}
         subtitle={t("resultado_subtitle", "Com base no seu perfil financeiro e objetivos.")}
       />
 
       <div className={pageGridLayout}>
-
-        <div className="lg:col-start-1 lg:row-start-1">
+        
+        {/* [Item 1]: Custo da Meta */}
+        <div className={card1Wrapper}>
           <Card
             icon={Goal}
             label="Custo da Meta"
@@ -84,7 +100,8 @@ export const SimulationResultsPage = () => {
           />
         </div>
 
-        <div className="lg:col-start-2 lg:row-start-1">
+        {/* [Item 2]: Prazo */}
+        <div className={card2Wrapper}>
           <Card
             icon={CalendarClock}
             label="Prazo"
@@ -93,7 +110,8 @@ export const SimulationResultsPage = () => {
           />
         </div>
 
-        <div className="lg:col-start-3 lg:row-start-1">
+        {/* [Item 3]: Economia mensal */}
+        <div className={card3Wrapper}>
           <Card
             icon={PiggyBank}
             variant="primary"
@@ -103,7 +121,8 @@ export const SimulationResultsPage = () => {
           />
         </div>
 
-        <div className="lg:col-start-3 lg:row-start-2">
+        {/* [Item 4]: Renda Mensal */}
+        <div className={card4Wrapper}>
           <Card
             icon={Wallet}
             label="Renda Mensal"
@@ -112,7 +131,8 @@ export const SimulationResultsPage = () => {
           />
         </div>
 
-        <div className="lg:col-start-3 lg:row-start-3">
+        {/* [Item 5]: Custos Fixos */}
+        <div className={card5Wrapper}>
           <Card
             icon={CreditCard}
             label="Custos fixos de vida"
@@ -121,7 +141,8 @@ export const SimulationResultsPage = () => {
           />
         </div>
 
-        <div className="lg:col-start-3 lg:row-start-4">
+        {/* [Item 6]: Dívidas/Parcelas */}
+        <div className={card6Wrapper}>
           <Card
             icon={Landmark}
             label="Dívidas / parcelas"
@@ -130,15 +151,10 @@ export const SimulationResultsPage = () => {
           />
         </div>
 
-        <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:row-span-3 h-auto">
-          <div className={aiAdvisorCardStyle}>
-            <h2 className={aiTitleStyle}>
-              {t('msg', 'Sua análise inteligente está sendo gerada...')}
-            </h2>
-            <p className={aiSubtitleStyle}>
-              Nossos consultores de Inteligência Artificial estão calculando os juros compostos necessários para atingir o seu objetivo. Em breve as tabelas aparecerão aqui!
-            </p>
-          </div>
+        {/* [Item 7]: Painel de Insights do Gemini (Ocupa as colunas 1 e 2) */}
+        <div className={aiCardWrapper}>
+          {/* [NOVO]: O componente oficial do Gemini injetado exatamente no seu Wrapper! */}
+          <AIInsightsCard simulationId={data.id} />
         </div>
 
       </div>

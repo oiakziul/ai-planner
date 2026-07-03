@@ -101,4 +101,7 @@ export type SimulationFormData = Record<
 >;
 
 // [NOVO]: Tipagem para os registros salvos no histórico (Dados do formulário + ID único) [1]
-export type SimulationRecord = SimulationFormData & { id: string };
+export type SimulationRecord = SimulationFormData & { 
+  id: string; 
+  timeUnit?: "years" | "months" 
+};
