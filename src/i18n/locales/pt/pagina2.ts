@@ -1,3 +1,3 @@
 export const pagina2PT = () => ({
-    msg: "PT2",
+    msg: "Carregando resultados da simulação...",
 });

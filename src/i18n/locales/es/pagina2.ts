@@ -1,4 +1,3 @@
 export const pagina2ES = () => ({
-  msg: "ES2",
-  
+  msg: "Cargando resultados de la simulación...",
 });

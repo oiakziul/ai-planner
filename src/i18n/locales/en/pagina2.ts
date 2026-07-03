@@ -1,5 +1,5 @@
 export const pagina2EN = () => ({
 
-    msg: "EN2",
-  
+    msg: "Loading simulation results...",
+
 });
