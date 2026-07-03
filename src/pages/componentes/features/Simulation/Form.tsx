@@ -17,7 +17,7 @@ const getCurrencyByLanguage = (langCode: string): Currency => {
 };
 
 export const SimulationForm = () => {
-  const { t, i18n } = useTranslation("inicio"); 
+  const { t, i18n } = useTranslation("inicio");
   const navigate = useNavigate(); // [NOVO]: Instanciamos o navegador do React Router [1]
   const { saveFormData } = useSimulationStorage(); // [NOVO]: Puxamos a sua função de salvar do seu hook [1]
 
@@ -91,7 +91,7 @@ export const SimulationForm = () => {
     if (!valorEtapaAtual || valorEtapaAtual.trim() === "") {
       setShowError(true);
       setShake(true);
-      setTimeout(() => setShake(false), 500); 
+      setTimeout(() => setShake(false), 500);
       return;
     }
 
@@ -100,7 +100,7 @@ export const SimulationForm = () => {
     if (currentStepIndex + 1 > totalSteps - 1) {
       // [CORRIGIDO]: Salva as respostas finais usando o seu hook e pega o ID único gerado! [1]
       const newSimulationId = saveFormData(formData);
-      
+
       // Limpa os dados temporários do rascunho de preenchimento
       localStorage.removeItem("ai_planner_simulation_data");
 
@@ -151,8 +151,8 @@ export const SimulationForm = () => {
         onBack={handlePreviousStep}
         onNext={handleNextStep}
         hideBackButton={currentStepIndex === 0}
-        hasError={showError} 
-        shake={shake} 
+        hasError={showError}
+        shake={shake}
       />
     </>
   );

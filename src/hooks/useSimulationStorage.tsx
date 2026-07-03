@@ -1,39 +1,52 @@
 // src/hooks/useSimulationStorage.tsx
-import { type SimulationFormData } from "../data/simulation";
+import { type SimulationFormData, type SimulationRecord } from "../data/simulation";
+import { type InsightData } from "@/services/aiService"; // Importamos o tipo do laudo
 
 const LOCAL_STORAGE_KEY = "ai_planner_simulation_history";
 
-export type SimulationRecord = SimulationFormData & { id: string };
-
 export const useSimulationStorage = () => {
+  
   const saveFormData = (formData: SimulationFormData): string => {
     const storage = localStorage.getItem(LOCAL_STORAGE_KEY);
-
-    const savedData = storage
-      ? JSON.parse(storage)
-      : [];
-
+    const savedData = storage ? JSON.parse(storage) : [];
     const id = crypto.randomUUID();
     const record: SimulationRecord = { ...formData, id };
 
-    localStorage.setItem(
-      LOCAL_STORAGE_KEY,
-      JSON.stringify([...savedData, record])
-    );
-
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([...savedData, record]));
     return id;
   };
 
   const getFormData = (id: string) => {
     const storage = localStorage.getItem(LOCAL_STORAGE_KEY);
-
-    if (!storage) {
-      return null;
-    }
+    if (!storage) return null;
 
     const savedData = JSON.parse(storage) as SimulationRecord[];
     return savedData.find((record) => record.id === id) || null;
   };
 
-  return { saveFormData, getFormData };
+  const getLatestFormData = (): SimulationRecord | null => {
+    const storage = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (!storage) return null;
+
+    const savedData = JSON.parse(storage) as SimulationRecord[];
+    if (savedData.length === 0) return null;
+    return savedData[savedData.length - 1];
+  };
+
+  // [NOVO]: Função que atualiza uma simulação específica injetando o laudo da IA!
+  const saveInsightData = (id: string, insight: InsightData) => {
+    const storage = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (!storage) return;
+
+    const savedData = JSON.parse(storage) as SimulationRecord[];
+    
+    // Varre o banco, acha a simulação correta e adiciona o 'insightData' nela
+    const updatedData = savedData.map(record => 
+      record.id === id ? { ...record, insightData: insight } : record
+    );
+
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedData));
+  };
+
+  return { saveFormData, getFormData, getLatestFormData, saveInsightData };
 };

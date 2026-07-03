@@ -152,9 +152,11 @@ export function FormStep({
               size="default"
               disabled={false}
               onClick={onBack}
-              className={btnVoltarStyle}
+              // [CORREÇÃO SÊNIOR]: Além do React não renderizar, o Tailwind garante que ele fique 'hidden' se hideBackButton for true!
+              className={cn(btnVoltarStyle, hideBackButton ? "hidden" : "flex")}
+              icon={ArrowLeft}
+              iconPlacement="left"
             >
-              <ArrowLeft className="h-4 w-4 shrink-0 transition-transform group-hover:-translate-x-1" />
               {t("Voltar")}
             </ButtonRipple>
           )}
