@@ -20,7 +20,7 @@ export const ScrollProgress = ({ containerRef, activeColor }: ScrollProgressProp
     });
 
     return (
-        <div className="fixed top-0 left-0 right-0 h-1.5 z-200 rounded-full overflow-hidden">
+        <div className="fixed top-0 left-0 right-0 h-1.5 z-99999 rounded-full overflow-hidden">
             <motion.div
                 className={`h-full origin-left ${activeColor}`}
                 style={{ scaleX }}

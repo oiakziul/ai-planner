@@ -72,7 +72,7 @@ export const SimulationResultsPage = () => {
 
   // O Wrapper da IA: Mantém o card do Gemini ocupando as colunas 1 e 2 no PC!
   const aiCardWrapper = cn(
-    "lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:row-span-3 h-full"
+       "lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:row-span-3 h-full"
   );
 
   // ==========================================
