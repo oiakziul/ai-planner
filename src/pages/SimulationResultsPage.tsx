@@ -1,11 +1,11 @@
 // src/pages/SimulationResultsPage.tsx
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom"; 
+import { useParams } from "react-router-dom";
 import { Goal, CalendarClock, PiggyBank, Wallet, CreditCard, Landmark } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { type SimulationFormData } from "@/data/simulation";
 import { calcMonthlySavings } from "@/utils/simulation";
-import { useSimulationStorage } from "@/hooks/useSimulationStorage"; 
+import { useSimulationStorage } from "@/hooks/useSimulationStorage";
 import { Card } from "./componentes/features/simulationResults/Card";
 import { PageHero } from "./componentes/shared/PageHero";
 import { AIInsightsCard } from "./componentes/features/simulationResults/AIInsightCardProps";
@@ -34,8 +34,8 @@ const getCurrencyByLanguage = (langCode: string): Currency => {
 
 export const SimulationResultsPage = () => {
   const { t, i18n } = useTranslation("pagina2");
-  const { id } = useParams<{ id: string }>(); 
-  const { getFormData } = useSimulationStorage(); 
+  const { id } = useParams<{ id: string }>();
+  const { getFormData } = useSimulationStorage();
 
   const data = (id ? getFormData(id) : null) || mockSimulation;
 
@@ -72,7 +72,7 @@ export const SimulationResultsPage = () => {
 
   // O Wrapper da IA: Mantém o card do Gemini ocupando as colunas 1 e 2 no PC!
   const aiCardWrapper = cn(
-       "lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:row-span-3 h-full"
+    "lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:row-span-3 h-full"
   );
 
   // ==========================================
@@ -81,7 +81,7 @@ export const SimulationResultsPage = () => {
 
   return (
     <main className={mainLayout}>
-      
+
       {/* Cabeçalho de alta fidelidade */}
       <PageHero
         title={t("resultado_title", "Resultado da sua simulação")}
@@ -89,7 +89,7 @@ export const SimulationResultsPage = () => {
       />
 
       <div className={pageGridLayout}>
-        
+
         {/* [Item 1]: Custo da Meta */}
         <div className={card1Wrapper}>
           <Card
@@ -110,14 +110,14 @@ export const SimulationResultsPage = () => {
           />
         </div>
 
-        {/* [Item 3]: Economia mensal */}
+        {/* [Item 3]: Capacidade de poupança mensal */}
         <div className={card3Wrapper}>
           <Card
             icon={PiggyBank}
             variant="primary"
-            label="Economia mensal"
+            label="Capacidade de poupança"
             value={formattedSavings}
-            subtitle="Economia mensal necessária"
+            subtitle="Quanto sobra livre por mês"
           />
         </div>
 
