@@ -2,14 +2,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { US, BR, ES } from "country-flag-icons/react/3x2";
-import { Link, useLocation } from "react-router-dom";
+// [CORRIGIDO]: Adicionado 'useNavigate' para controlar cliques e redirecionamentos no roteador
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { Menu, ChartNoAxesCombined, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import InteractiveHoverButton from "@/components/shadcn-space/button/button-19";
 import ButtonRipple from "@/components/shadcn-space/button/button-16";
 
-// [CORRIGIDO]: Mapeamento atualizado com os nomes reais e semânticos do AI Planner
+// Mapeamento atualizado com os nomes reais e semânticos do AI Planner
 const navLinks = [
   { to: "/", label: "Início" },
   { to: "/resultado", label: "Resultado" },
@@ -19,6 +20,7 @@ const navLinks = [
 export const Header: React.FC = () => {
   const { t, i18n } = useTranslation("header");
   const location = useLocation();
+  const navigate = useNavigate(); // [NOVO]: Instanciamos a função de navegação por cliques [1]
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
@@ -88,12 +90,10 @@ export const Header: React.FC = () => {
           <span className="hidden sm:inline-block">AI Planner</span>
         </Link>
 
-        {/* [CORRIGIDO]: Cápsula central removida para deixar o meio limpo e evitar duplicações de botões! */}
-
         {/* DIREITA */}
         <div className="flex items-center gap-2 md:gap-3">
 
-          {/* MENU — [CORRIGIDO]: Removido 'lg:hidden' para que o botão fique visível em todas as telas (PC e Celular) */}
+          {/* MENU */}
           <div className="relative" ref={menuRef}>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -104,11 +104,10 @@ export const Header: React.FC = () => {
               )}
             >
               <Menu className="h-4 w-4 shrink-0" />
-              {/* 'hidden sm:inline' esconde o texto 'Páginas' apenas em celulares muito pequenos */}
               <span className="hidden sm:inline text-xs">{t("Páginas")}</span>
             </button>
 
-            {/* DROPDOWN — Mapeando as novas rotas semânticas da simulação */}
+            {/* DROPDOWN */}
             {isMenuOpen && (
               <div className={dropdownBase}>
                 <div className="px-4 py-2.5 border-b border-border/40">
@@ -147,7 +146,6 @@ export const Header: React.FC = () => {
             )}
           </div>
 
-          {/* DIVISOR — [CORRIGIDO]: Removido 'lg:hidden' para sempre separar o menu das ferramentas */}
           <div className="h-5 w-px bg-border/50" />
 
           {/* IDIOMA */}
@@ -192,15 +190,15 @@ export const Header: React.FC = () => {
             )}
           </div>
 
-          {/* TEMA */}
           <AnimatedThemeToggler variant="circle" duration={500} fromCenter />
 
-          {/* BOTÕES DE PC — visíveis apenas em computadores (lg+) */}
+          {/* BOTÕES DE PC — [CORRIGIDO]: Vinculados ao clique e navegação síncrona! */}
           <div className="hidden lg:flex items-center gap-2">
             <div className="h-5 w-px bg-border/50" />
             <InteractiveHoverButton
               icon={ChartNoAxesCombined}
               nome="Planejar"
+              onClick={() => navigate("/")} // Redireciona para o início (formulário) [1]
               className="shadow-md hover:bg-primary/15 active:scale-95 ring ring-ring/50 h-10 py-0"
             />
             <ButtonRipple
@@ -209,6 +207,7 @@ export const Header: React.FC = () => {
               variant="ghost"
               size="default"
               disabled={false}
+              onClick={() => navigate("/historico")} // Redireciona para a página de histórico [1]
               className="ring ring-primary/20 shadow-lg h-10 py-0"
             />
           </div>
@@ -217,7 +216,7 @@ export const Header: React.FC = () => {
       </header>
 
       {/* ══════════════════════════════════════
-          BOTTOM BAR — só visível no celular (< lg)
+          BOTTOM BAR — [CORRIGIDO]: Vinculados ao clique no mobile também!
       ══════════════════════════════════════ */}
       <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
         <div className="mx-3 mb-3 flex items-center gap-2 px-3 py-2.5 rounded-2xl border border-border/60 bg-background/95 backdrop-blur-xl shadow-2xl">
@@ -225,6 +224,7 @@ export const Header: React.FC = () => {
             <InteractiveHoverButton
               icon={ChartNoAxesCombined}
               nome="Planejar"
+              onClick={() => navigate("/")} // Redireciona no mobile [1]
               className="w-full shadow-md hover:bg-primary/15 active:scale-95 ring ring-ring/50 h-11 py-0"
             />
           </div>
@@ -236,6 +236,7 @@ export const Header: React.FC = () => {
               variant="ghost"
               size="default"
               disabled={false}
+              onClick={() => navigate("/historico")} // Redireciona no mobile [1]
               className="w-full ring ring-primary/20 shadow-lg h-11 py-0"
             />
           </div>
