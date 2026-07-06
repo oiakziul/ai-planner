@@ -158,7 +158,7 @@ export const Header: React.FC = () => {
 
       <header
         className={cn(
-          "header-intro mx-auto flex items-center justify-between w-[95%] max-w-4xl px-2 sm:px-4 md:px-6",
+          "header-intro mx-auto flex items-center justify-between w-[95%] max-w-4xl py-8 px-2 sm:px-4 md:px-6",
           "z-50 rounded-[1.75rem] sticky top-4 transition-all duration-300 ease-in-out font-sans select-none",
           "ring-1 ring-black/5 border",
           isScrolled
@@ -169,7 +169,7 @@ export const Header: React.FC = () => {
         {/* LOGO */}
         <Link
           to="/"
-          className="group flex items-center gap-2 font-bold text-foreground tracking-tight shrink-0"
+          className="group flex items-center gap-3 font-bold text-foreground tracking-tight shrink-0"
         >
           <img
             src="/logo192.png"
@@ -190,14 +190,14 @@ export const Header: React.FC = () => {
               aria-expanded={isMenuOpen}
               aria-haspopup="menu"
               className={cn(
-                "flex h-8.5 sm:h-10 items-center gap-1.5 px-1.5 sm:px-3 rounded-xl border border-border/50 font-medium text-sm cursor-pointer",
+                "flex h-8.5 sm:h-10 items-center gap-1.5 px-2 sm:px-3 rounded-xl border border-border/50 font-medium text-sm cursor-pointer",
                 "bg-accent/15 hover:bg-accent hover:text-accent-foreground transition-all duration-200",
                 "outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                 isMenuOpen && "bg-accent"
               )}
             >
               <Menu className="h-4 w-4 shrink-0" />
-              <span className="hidden sm:inline text-xs">{t("Páginas")}</span>
+              <span className="hidden sm:inline text-xs md:text-[16px]">{t("Páginas")}</span>
               <ChevronDown
                 className={cn(
                   "h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform duration-200",
@@ -378,12 +378,12 @@ export const Header: React.FC = () => {
                 className={cn(
                   "shadow-sm active:scale-95 ring transition-all h-10 py-0 text-sm [&_svg]:h-6 [&_svg]:w-6",
                   isPlanejarActive
-                    ? "ring-primary/30 bg-primary/[0.07] text-primary font-semibold shadow-[0_0_16px_-4px_var(--primary)]"
-                    : "ring-ring/50 text-foreground"
+                    ? "ring-primary/30 bg-primary/5 text-primary font-semibold shadow-xs"
+                    : "ring-ring/50 text-foreground "
                 )}
               />
               {isPlanejarActive && (
-                <span className="absolute rounded-full bg-primary " />
+                <span className="absolute" />
               )}
             </div>
             <div className="relative">
@@ -395,14 +395,14 @@ export const Header: React.FC = () => {
                 disabled={false}
                 onClick={() => navigate("/historico")}
                 className={cn(
-                  "shadow-lg h-10 py-0 text-sm ring transition-all [&_svg]:h-4 [&_svg]:w-4",
+                  "h-10 py-0 text-sm ring transition-all [&_svg]:h-4 [&_svg]:w-4",
                   isHistoricoActive
-                    ? "ring-primary/35 bg-primary/[0.07] text-primary font-semibold shadow-[0_0_16px_-4px_var(--primary)]"
+                    ? "ring-primary/35  text-primary font-semibold "
                     : "ring-primary/20 text-foreground"
                 )}
               />
               {isHistoricoActive && (
-                <span className="absolute -top-1 left-1/2 -translate-x-1/2 h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_2px_var(--primary)]" />
+                <span className="absolute " />
               )}
             </div>
           </div>
@@ -422,32 +422,29 @@ export const Header: React.FC = () => {
               nome="Planejar"
               onClick={() => navigate("/")}
               className={cn(
-                "w-full shadow-md active:scale-95 ring transition-all h-10 py-0 text-sm [&_svg]:h-3.5 [&_svg]:w-3.5",
+                "w-full  active:scale-95 ring transition-all h-10 py-0 text-sm [&_svg]:h-6 [&_svg]:w-6 ",
                 isPlanejarActive
-                  ? "ring-primary/40 bg-primary/8 text-primary font-bold shadow-[0_0_16px_-4px_var(--primary)]"
-                  : "ring-ring/50 text-foreground"
+                  ? "ring-primary/40 bg-primary/8 text-primary font-bold "
+                  : "ring-ring/50 text-primary"
               )}
             />
             {isPlanejarActive && (
-              <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_2px_var(--primary)]" />
+              <span className="absolute" />
             )}
           </div>
-          <div className="h-8 w-px bg-linear-to-b from-transparent via-border to-transparent shrink-0" />
+          <div className="h-8 w-px bg-linear-to-b from-transparent via-border to-transparent shrink-0 " />
           <div className="relative flex-1">
             <ButtonRipple
               icon={Clock}
               nome="Histórico"
               onClick={() => navigate("/historico")}
               className={cn(
-                "w-full shadow-lg h-10 py-0 text-sm ring transition-all [&_svg]:h-3.5 [&_svg]:w-3.5",
+                "w-full  h-10 py-0 text-sm ring transition-all [&_svg]:h-3.5 [&_svg]:w-3.5",
                 isHistoricoActive
-                  ? "ring-primary/40 bg-primary/8 text-primary font-bold shadow-[0_0_16px_-4px_var(--primary)]"
-                  : "ring-primary/20 text-foreground"
+                  ? "ring-primary/40  text-primary font-bold bg-primary/10 "
+                  : "ring-primary/20 text-primary"
               )}
             />
-            {isHistoricoActive && (
-              <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_2px_var(--primary)]" />
-            )}
           </div>
         </div>
       </div>

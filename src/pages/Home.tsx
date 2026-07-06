@@ -7,7 +7,6 @@ import { Footer } from "./Footer";
 import { ScrollProgress } from "../assets/styles/componentes/ScrollProgress";
 import { useTheme } from "@/context/ThemeContext";
 
-// Estados de navegação da aplicação (usados para dar identidade visual a cada etapa)
 type PageState = "criacao" | "resultado" | "historico";
 
 const getPageState = (pathname: string): PageState => {
@@ -17,16 +16,12 @@ const getPageState = (pathname: string): PageState => {
   return "criacao";
 };
 
-// Configuração visual de cada estado:
-// - criacao   -> Ouro vibrante   (início / preenchimento do formulário)
-// - resultado -> Platina/Prata forte, é o "grande reveal", por isso é o mais intenso
-// - historico -> Prata apagada, deliberadamente discreta (é só consulta/arquivo)
 const STATE_CONFIG: Record<
   PageState,
   { scrollGradient: string; ambientGlow: string; pulseGlow: string }
 > = {
   criacao: {
-    // Ouro — sólido do início ao fim, sem clarear pra tom pálido/quase-branco
+
     scrollGradient:
       "bg-[radial-gradient(circle_at_right,var(--primary)_15%,#f59e0b_50%,#b45309_100%)]",
     ambientGlow:
@@ -35,7 +30,7 @@ const STATE_CONFIG: Record<
       "bg-[radial-gradient(circle_at_top,rgba(251,191,36,0.8),rgba(245,158,11,0.4)_50%,transparent_75%)]",
   },
   resultado: {
-    // Prata — vai do slate claro ao slate escuro, nunca chega no branco
+
     scrollGradient:
       "bg-[radial-gradient(circle_at_right,var(--primary)_10%,#94a3b8_45%,#475569_100%)]",
     ambientGlow:
@@ -44,7 +39,7 @@ const STATE_CONFIG: Record<
       "bg-[radial-gradient(circle_at_top,rgba(226,232,240,0.85),rgba(100,116,139,0.45)_50%,transparent_75%)]",
   },
   historico: {
-    // Bronze/cobre — identidade própria pro histórico, sólida (nada de cinza apagado ou branco)
+
     scrollGradient:
       "bg-[radial-gradient(circle_at_right,var(--primary)_10%,#c2703c_45%,#7c3f23_100%)]",
     ambientGlow:
@@ -81,7 +76,6 @@ export const Home = () => {
     <div className="w-full h-dvh overflow-hidden bg-background relative">
       <ScrollToTop />
 
-      {/* Keyframe do flash de transição de página */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -97,7 +91,6 @@ export const Home = () => {
         }}
       />
 
-      {/* Aura radial PERSISTENTE (identidade contínua do estado atual) */}
       <div
         className={clsx(
           "absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-70 pointer-events-none blur-[45px] transition-all duration-700 ease-in-out z-0",
@@ -105,7 +98,6 @@ export const Home = () => {
         )}
       />
 
-      {/* Flash de transição: remonta a cada troca de rota via key, dando o "aviso" de mudança de página */}
       <div
         key={pageState}
         className={clsx(
