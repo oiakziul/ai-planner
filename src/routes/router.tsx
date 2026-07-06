@@ -1,5 +1,5 @@
 // src/routes/AppRoutes.tsx (ou onde estiver)
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, type ComponentType } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Home } from '@/pages/Home';
 
@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 
 const SimulationFormPage = lazy(() => import('@/pages/SimulationFormPage').then(m => ({ default: m.SimulationFormPage })));
 const SimulationResultsPage = lazy(() => import('@/pages/SimulationResultsPage').then(m => ({ default: m.SimulationResultsPage })));
-const SimulationHistoryPage = lazy(() => import('@/pages/SimulationHistoryPage').then(m => ({ default: m.SimulationHistoryPage })));
+const SimulationHistoryPage = lazy(() => import('@/pages/SimulationHistoryPage').then(m => ({ default: m.SimulationHistoryPage as ComponentType<any> })));
 
 const classeLoad = cn(
   'relative bg-background h-screen w-full z-[9999]',
