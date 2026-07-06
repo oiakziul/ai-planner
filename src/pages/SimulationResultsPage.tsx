@@ -1,4 +1,4 @@
-// src/pages/SimulationResultsPage.tsx
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { Goal, CalendarClock, PiggyBank, Wallet, CreditCard, Landmark } from 'lucide-react';
@@ -9,8 +9,6 @@ import { useSimulationStorage } from "@/hooks/useSimulationStorage";
 import { Card } from "./componentes/features/simulationResults/Card";
 import { PageHero } from "./componentes/shared/PageHero";
 import { AIInsightsCard } from "./componentes/features/simulationResults/AIInsightCardProps";
-
-// [NOVO]: Importamos o componente oficial da Inteligência Artificial
 
 
 const mockSimulation: SimulationFormData = {
@@ -36,6 +34,8 @@ export const SimulationResultsPage = () => {
   const { t, i18n } = useTranslation("pagina2");
   const { id } = useParams<{ id: string }>();
   const { getFormData } = useSimulationStorage();
+
+  const [isAIPanelExpanded, setIsAIPanelExpanded] = useState(false);
 
   const data = (id ? getFormData(id) : null) || mockSimulation;
 
@@ -70,9 +70,11 @@ export const SimulationResultsPage = () => {
   const card5Wrapper = cn("lg:col-start-3 lg:row-start-3");
   const card6Wrapper = cn("lg:col-start-3 lg:row-start-4");
 
-  // O Wrapper da IA: Mantém o card do Gemini ocupando as colunas 1 e 2 no PC!
+  // Posicionamento ajustado: Recua 24 (96px) do topo para não cobrir o Header superior
   const aiCardWrapper = cn(
-    "lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:row-span-3 h-full"
+    isAIPanelExpanded
+      ? "fixed top-20 sm:top-24 bottom-6 left-4 right-4 md:left-10 md:right-10 lg:left-16 lg:right-16 z-50 transition-all duration-300 ease-in-out"
+      : "lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:row-span-3 h-full transition-all duration-200"
   );
 
   // ==========================================
@@ -80,85 +82,98 @@ export const SimulationResultsPage = () => {
   // ==========================================
 
   return (
-    <main className={mainLayout}>
+    <>
+      {/* Camada de fundo escurecida (Backdrop) */}
+      {isAIPanelExpanded && (
+        <div 
+          className="fixed inset-0 bg-black/75 backdrop-blur-md z-40 transition-opacity duration-300"
+          onClick={() => setIsAIPanelExpanded(false)}
+        />
+      )}
 
-      {/* Cabeçalho de alta fidelidade */}
-      <PageHero
-        title={t("resultado_title", "Resultado da sua simulação")}
-        subtitle={t("resultado_subtitle", "Com base no seu perfil financeiro e objetivos.")}
-      />
+      <main className={mainLayout}>
 
-      <div className={pageGridLayout}>
+        {/* Cabeçalho de alta fidelidade */}
+        <PageHero
+          title={t("resultado_title", "Resultado da sua simulação")}
+          subtitle={t("resultado_subtitle", "Com base no seu perfil financeiro e objetivos.")}
+        />
 
-        {/* [Item 1]: Custo da Meta */}
-        <div className={card1Wrapper}>
-          <Card
-            icon={Goal}
-            label="Custo da Meta"
-            value={data.goalAmount}
-            subtitle={data.goalName}
-          />
+        <div className={pageGridLayout}>
+
+          {/* [Item 1]: Custo da Meta */}
+          <div className={card1Wrapper}>
+            <Card
+              icon={Goal}
+              label="Custo da Meta"
+              value={data.goalAmount}
+              subtitle={data.goalName}
+            />
+          </div>
+
+          {/* [Item 2]: Prazo */}
+          <div className={card2Wrapper}>
+            <Card
+              icon={CalendarClock}
+              label="Prazo"
+              value={`${data.goalDeadline} ${data.goalDeadline === "1" ? "ano" : "anos"}`}
+              subtitle="Tempo estimado para atingir o objetivo"
+            />
+          </div>
+
+          {/* [Item 3]: Capacidade de poupança mensal */}
+          <div className={card3Wrapper}>
+            <Card
+              icon={PiggyBank}
+              variant="primary"
+              label="Capacidade de poupança"
+              value={formattedSavings}
+              subtitle="Quanto sobra livre por mês"
+            />
+          </div>
+
+          {/* [Item 4]: Renda Mensal */}
+          <div className={card4Wrapper}>
+            <Card
+              icon={Wallet}
+              label="Renda Mensal"
+              value={data.income}
+              subtitle="Renda total bruta por mês"
+            />
+          </div>
+
+          {/* [Item 5]: Custos Fixos */}
+          <div className={card5Wrapper}>
+            <Card
+              icon={CreditCard}
+              label="Custos fixos de vida"
+              value={data.expenses}
+              subtitle="Gastos essenciais por mês"
+            />
+          </div>
+
+          {/* [Item 6]: Dívidas/Parcelas */}
+          <div className={card6Wrapper}>
+            <Card
+              icon={Landmark}
+              label="Dívidas / parcelas"
+              value={data.debts}
+              subtitle="Valor comprometido em parcelas/depósito"
+            />
+          </div>
+
+          {/* [Item 7]: Painel de Insights do Gemini */}
+          <div className={aiCardWrapper}>
+            <AIInsightsCard 
+              simulationId={data.id} 
+              isExpanded={isAIPanelExpanded}
+              onToggleExpand={() => setIsAIPanelExpanded(!isAIPanelExpanded)}
+            />
+          </div>
+
         </div>
-
-        {/* [Item 2]: Prazo */}
-        <div className={card2Wrapper}>
-          <Card
-            icon={CalendarClock}
-            label="Prazo"
-            value={`${data.goalDeadline} ${data.goalDeadline === "1" ? "ano" : "anos"}`}
-            subtitle="Tempo estimado para atingir o objetivo"
-          />
-        </div>
-
-        {/* [Item 3]: Capacidade de poupança mensal */}
-        <div className={card3Wrapper}>
-          <Card
-            icon={PiggyBank}
-            variant="primary"
-            label="Capacidade de poupança"
-            value={formattedSavings}
-            subtitle="Quanto sobra livre por mês"
-          />
-        </div>
-
-        {/* [Item 4]: Renda Mensal */}
-        <div className={card4Wrapper}>
-          <Card
-            icon={Wallet}
-            label="Renda Mensal"
-            value={data.income}
-            subtitle="Renda total bruta por mês"
-          />
-        </div>
-
-        {/* [Item 5]: Custos Fixos */}
-        <div className={card5Wrapper}>
-          <Card
-            icon={CreditCard}
-            label="Custos fixos de vida"
-            value={data.expenses}
-            subtitle="Gastos essenciais por mês"
-          />
-        </div>
-
-        {/* [Item 6]: Dívidas/Parcelas */}
-        <div className={card6Wrapper}>
-          <Card
-            icon={Landmark}
-            label="Dívidas / parcelas"
-            value={data.debts}
-            subtitle="Valor comprometido em parcelas/depósito"
-          />
-        </div>
-
-        {/* [Item 7]: Painel de Insights do Gemini (Ocupa as colunas 1 e 2) */}
-        <div className={aiCardWrapper}>
-          {/* [NOVO]: O componente oficial do Gemini injetado exatamente no seu Wrapper! */}
-          <AIInsightsCard simulationId={data.id} />
-        </div>
-
-      </div>
-    </main>
+      </main>
+    </>
   );
 };
 

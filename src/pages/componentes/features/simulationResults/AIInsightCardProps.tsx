@@ -1,4 +1,3 @@
-// src/pages/componentes/features/simulationResults/AIInsightsCard.tsx
 import { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useInsight } from "@/hooks/useInsight";
@@ -12,17 +11,22 @@ import {
   Quote,
   Send,
   Sparkles,
-  CircleUser
+  CircleUser,
+  Maximize2,
+  Minimize2
 } from "lucide-react";
 import { ScrollProgress } from "@/assets/styles/componentes/ScrollProgress";
 import { Input } from "@/pages/componentes/shared/Input";
 import { Button } from "@/components/ui/button"; 
 import { callGeminiChatAPI, type ChatMessage } from "@/services/aiService"; 
+
 interface AIInsightCardProps {
   simulationId: string;
+  isExpanded?: boolean;
+  onToggleExpand?: () => void;
 }
 
-export function AIInsightsCard({ simulationId }: AIInsightCardProps) {
+export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpand }: AIInsightCardProps) {
   const { t } = useTranslation("pagina2");
   const { insight, isLoading, error } = useInsight(simulationId);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -60,7 +64,6 @@ export function AIInsightsCard({ simulationId }: AIInsightCardProps) {
     setIsChatLoading(true);
 
     try {
-
       const systemContextPrompt = `Você é o educador financeiro pessoal do app AI Planner. Responda a dúvidas sobre o laudo de simulação que você gerou. 
       Laudo de simulação ativo: ${JSON.stringify(insight)}.
       Mantenha as respostas curtas (máximo 3 parágrafos), didáticas, profissionais e encorajadoras. Responda sempre no mesmo idioma da pergunta do usuário.`;
@@ -83,10 +86,12 @@ export function AIInsightsCard({ simulationId }: AIInsightCardProps) {
     }
   };
 
+  // Cores adaptativas dinâmicas que seguem o tema ativo (Light/Dark) para evitar falta de contraste
   const cardOuterStyle = cn(
-    "relative w-full h-full min-h-[400px] max-h-[459.5px] transition-all duration-300",
-    "flex flex-col rounded-3xl border border-border bg-card/30 backdrop-blur-md shadow-2xl text-card-foreground",
-    "overflow-hidden"
+    "relative w-full transition-all duration-300 flex flex-col rounded-3xl border border-border text-card-foreground overflow-hidden shadow-2xl",
+    isExpanded 
+      ? "h-full max-h-full bg-background" 
+      : "h-full min-h-[400px] max-h-[459.5px] bg-card/30 backdrop-blur-md"
   );
 
   const cardInnerScrollStyle = cn(
@@ -119,10 +124,27 @@ export function AIInsightsCard({ simulationId }: AIInsightCardProps) {
   return (
     <div className={cardOuterStyle}>
 
+      {/* Barra de progresso de scroll superior */}
       {insight && !isLoading && (
         <div className="absolute top-0 left-0 w-full z-50">
           <ScrollProgress containerRef={scrollContainerRef} activeColor={scrollActiveColor} />
         </div>
+      )}
+
+      {/* Botão de fechar/minimizar adaptativo ao tema */}
+      {onToggleExpand && (
+        <button
+          type="button"
+          onClick={onToggleExpand}
+          className="absolute top-4 right-4 z-50 p-2 rounded-xl bg-secondary/80 hover:bg-secondary border border-border text-muted-foreground hover:text-foreground transition-all shadow-md cursor-pointer flex items-center justify-center"
+          title={isExpanded ? "Recolher painel" : "Expandir leitura"}
+        >
+          {isExpanded ? (
+            <Minimize2 className="h-4.5 w-4.5" />
+          ) : (
+            <Maximize2 className="h-4.5 w-4.5" />
+          )}
+        </button>
       )}
 
       <div ref={scrollContainerRef} className={cardInnerScrollStyle}>
@@ -146,7 +168,7 @@ export function AIInsightsCard({ simulationId }: AIInsightCardProps) {
         )}
 
         {insight && !isLoading && (
-          <div className="w-full flex flex-col items-start text-left animate-in fade-in slide-in-from-bottom-4 duration-700 gap-8">
+          <div className="w-full flex flex-col items-start text-left animate-in fade-in slide-in-from-bottom-4 duration-700 gap-8 pr-8">
 
             <h2 className="font-bold text-2xl md:text-3xl text-primary flex items-center gap-2">
               ✨ Plano de Ação Inteligente
@@ -229,7 +251,7 @@ export function AIInsightsCard({ simulationId }: AIInsightCardProps) {
                 <Sparkles className="h-5 w-5" /> Converse com seu Educador
               </h3>
 
-                <div className="space-y-3 w-full">
+              <div className="space-y-3 w-full">
                 {chatHistory.map((msg, i) => {
                   const isUser = msg.role === "user";
                   return (
@@ -269,10 +291,14 @@ export function AIInsightsCard({ simulationId }: AIInsightCardProps) {
 
       </div>
 
+      {/* Formulário de chat: Fundo sólido do tema ativo no modo expandido */}
       {insight && !isLoading && (
         <form
           onSubmit={handleSendChat}
-          className="border-t border-border/40 p-4 bg-card/60 backdrop-blur-md flex items-center gap-2 relative z-30"
+          className={cn(
+            "border-t border-border/40 p-4 flex items-center gap-2 relative z-30",
+            isExpanded ? "bg-background" : "bg-card/60 backdrop-blur-md"
+          )}
         >
           <div className="flex-1 relative">
             <Input
