@@ -5,34 +5,63 @@ import { ScrollToTop } from "./componentes/ScrollToTop";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { ScrollProgress } from "../assets/styles/componentes/ScrollProgress";
-import { useTheme } from "@/context/ThemeContext"; // Importado para escutar as mudanças de cor em tempo real
+import { useTheme } from "@/context/ThemeContext";
 
-const getScrollGradient = (pathname: string): string => {
+// Estados de navegação da aplicação (usados para dar identidade visual a cada etapa)
+type PageState = "criacao" | "resultado" | "historico";
+
+const getPageState = (pathname: string): PageState => {
   const path = pathname.toLowerCase();
+  if (path.startsWith("/resultado")) return "resultado";
+  if (path.startsWith("/historico")) return "historico";
+  return "criacao";
+};
 
-  // [PÁGINA 2]: Resultado da Simulação (Cobre "/resultado" e "/resultado/:id") -> Prata Sutil
-  if (path.startsWith("/resultado")) {
-    return "bg-gradient-to-r from-primary via-primary/95 to-slate-200/60";
-  }
-
-  // [PÁGINA 3]: Histórico de Simulações (Cobre "/historico") -> Bronze Sutil
-  if (path.startsWith("/historico")) {
-    return "bg-gradient-to-r from-primary via-primary/90 to-orange-700/80";
-  }
-
-  // [PÁGINA 1]: Inserção de Dados (Cobre o início "/" e qualquer rota de fallback "*") -> Ouro Solar
-  return "bg-gradient-to-r from-primary via-primary/90 to-yellow-300/80";
+// Configuração visual de cada estado:
+// - criacao   -> Ouro vibrante   (início / preenchimento do formulário)
+// - resultado -> Platina/Prata forte, é o "grande reveal", por isso é o mais intenso
+// - historico -> Prata apagada, deliberadamente discreta (é só consulta/arquivo)
+const STATE_CONFIG: Record<
+  PageState,
+  { scrollGradient: string; ambientGlow: string; pulseGlow: string }
+> = {
+  criacao: {
+    // Ouro — sólido do início ao fim, sem clarear pra tom pálido/quase-branco
+    scrollGradient:
+      "bg-[radial-gradient(circle_at_right,var(--primary)_15%,#f59e0b_50%,#b45309_100%)]",
+    ambientGlow:
+      "bg-[radial-gradient(circle_at_top,rgba(245,158,11,0.45),rgba(180,83,9,0.25)_50%,transparent_75%)]",
+    pulseGlow:
+      "bg-[radial-gradient(circle_at_top,rgba(251,191,36,0.8),rgba(245,158,11,0.4)_50%,transparent_75%)]",
+  },
+  resultado: {
+    // Prata — vai do slate claro ao slate escuro, nunca chega no branco
+    scrollGradient:
+      "bg-[radial-gradient(circle_at_right,var(--primary)_10%,#94a3b8_45%,#475569_100%)]",
+    ambientGlow:
+      "bg-[radial-gradient(circle_at_top,rgba(148,163,184,0.55),rgba(71,85,105,0.3)_50%,transparent_75%)]",
+    pulseGlow:
+      "bg-[radial-gradient(circle_at_top,rgba(226,232,240,0.85),rgba(100,116,139,0.45)_50%,transparent_75%)]",
+  },
+  historico: {
+    // Bronze/cobre — identidade própria pro histórico, sólida (nada de cinza apagado ou branco)
+    scrollGradient:
+      "bg-[radial-gradient(circle_at_right,var(--primary)_10%,#c2703c_45%,#7c3f23_100%)]",
+    ambientGlow:
+      "bg-[radial-gradient(circle_at_top,rgba(194,112,60,0.4),rgba(124,63,35,0.22)_50%,transparent_75%)]",
+    pulseGlow:
+      "bg-[radial-gradient(circle_at_top,rgba(224,137,79,0.75),rgba(124,63,35,0.35)_50%,transparent_75%)]",
+  },
 };
 
 export const Home = () => {
   const location = useLocation();
   const mainRef = useRef<HTMLElement>(null);
-  
-  // 1. Escuta o contexto de temas. Isso garante que o componente Home reaja e mude de cor instantaneamente
+
   const { colorTheme, theme } = useTheme();
 
-  // 2. Calcula o gradiente reativo com base no caminho da rota ativa
-  const dynamicGradient = getScrollGradient(location.pathname);
+  const pageState = getPageState(location.pathname);
+  const { scrollGradient, ambientGlow, pulseGlow } = STATE_CONFIG[pageState];
 
   const pageWrapper = clsx(
     "w-full h-full scroll-auto duration-100",
@@ -43,34 +72,62 @@ export const Home = () => {
   );
 
   const layoutMain = clsx(
-    "h-full w-full",
+    "h-full w-full relative z-10",
     "bg-cover bg-center bg-no-repeat bg-fixed",
     "bg-background"
   );
 
   return (
-    <div className="w-full h-dvh overflow-hidden bg-background">
+    <div className="w-full h-dvh overflow-hidden bg-background relative">
       <ScrollToTop />
 
-      {/* Forçamos a remontagem/re-renderização correta injetando uma key baseada no tema de cor ativo */}
-      <ScrollProgress 
-        key={`${colorTheme}-${theme}-${location.pathname}`} 
-        containerRef={mainRef} 
-        activeColor={dynamicGradient} 
+      {/* Keyframe do flash de transição de página */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            @keyframes pageStatePulse {
+              0% { opacity: 0; transform: scale(0.82); }
+              35% { opacity: 1; transform: scale(1.08); }
+              100% { opacity: 0; transform: scale(1.35); }
+            }
+            .page-state-pulse {
+              animation: pageStatePulse 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            }
+          `,
+        }}
+      />
+
+      {/* Aura radial PERSISTENTE (identidade contínua do estado atual) */}
+      <div
+        className={clsx(
+          "absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-70 pointer-events-none blur-[45px] transition-all duration-700 ease-in-out z-0",
+          ambientGlow
+        )}
+      />
+
+      {/* Flash de transição: remonta a cada troca de rota via key, dando o "aviso" de mudança de página */}
+      <div
+        key={pageState}
+        className={clsx(
+          "page-state-pulse absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-96 pointer-events-none blur-[55px] z-0",
+          pulseGlow
+        )}
+      />
+
+      <ScrollProgress
+        key={`${colorTheme}-${theme}-${location.pathname}`}
+        containerRef={mainRef}
+        activeColor={scrollGradient}
       />
 
       <main
         ref={mainRef}
         id="inicio"
-        className={clsx(
-          layoutMain,
-          pageWrapper,
-          "border-border"
-        )}
+        className={clsx(layoutMain, pageWrapper, "border-border")}
       >
-        <Header /> 
+        <Header />
 
-        <div className="min-h-screen w-full pt-6 px-2">
+        <div className="min-h-screen w-full pt-6 px-2 relative z-10">
           <Outlet />
         </div>
 
