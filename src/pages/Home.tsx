@@ -5,32 +5,43 @@ import { ScrollToTop } from "./componentes/ScrollToTop";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { ScrollProgress } from "../assets/styles/componentes/ScrollProgress";
+import { useTheme } from "@/context/ThemeContext"; // Importado para escutar as mudanças de cor em tempo real
 
-const getScrollColor = (pathname: string) => {
+const getScrollGradient = (pathname: string): string => {
   const path = pathname.toLowerCase();
 
-  if (path === "/") return "bg-cor2"; 
-  if (path.startsWith("/pagina1")) return "bg-cor4"; 
-  if (path.startsWith("/pagina2")) return "bg-cor5"; 
-  if (path.startsWith("/pagina3")) return "bg-cor1"; 
+  // [PÁGINA 2]: Resultado da Simulação (Cobre "/resultado" e "/resultado/:id") -> Prata Sutil
+  if (path.startsWith("/resultado")) {
+    return "bg-gradient-to-r from-primary via-primary/95 to-slate-200/60";
+  }
 
-  return "bg-cor3"; 
+  // [PÁGINA 3]: Histórico de Simulações (Cobre "/historico") -> Bronze Sutil
+  if (path.startsWith("/historico")) {
+    return "bg-gradient-to-r from-primary via-primary/90 to-orange-700/80";
+  }
+
+  // [PÁGINA 1]: Inserção de Dados (Cobre o início "/" e qualquer rota de fallback "*") -> Ouro Solar
+  return "bg-gradient-to-r from-primary via-primary/90 to-yellow-300/80";
 };
 
 export const Home = () => {
   const location = useLocation();
-  const dynamicColor = getScrollColor(location.pathname);
   const mainRef = useRef<HTMLElement>(null);
+  
+  // 1. Escuta o contexto de temas. Isso garante que o componente Home reaja e mude de cor instantaneamente
+  const { colorTheme, theme } = useTheme();
+
+  // 2. Calcula o gradiente reativo com base no caminho da rota ativa
+  const dynamicGradient = getScrollGradient(location.pathname);
 
   const pageWrapper = clsx(
     "w-full h-full scroll-auto duration-100",
     "text-foreground",
     "overflow-y-auto",
     "snap-y-center snap-mandatory",
-    "scrollbar-hide bg-stripes-custom0 " 
+    "scrollbar-hide bg-stripes-custom0"
   );
 
-  // Estilos de fundo e estrutura do main
   const layoutMain = clsx(
     "h-full w-full",
     "bg-cover bg-center bg-no-repeat bg-fixed",
@@ -41,7 +52,12 @@ export const Home = () => {
     <div className="w-full h-dvh overflow-hidden bg-background">
       <ScrollToTop />
 
-      <ScrollProgress containerRef={mainRef} activeColor={dynamicColor} />
+      {/* Forçamos a remontagem/re-renderização correta injetando uma key baseada no tema de cor ativo */}
+      <ScrollProgress 
+        key={`${colorTheme}-${theme}-${location.pathname}`} 
+        containerRef={mainRef} 
+        activeColor={dynamicGradient} 
+      />
 
       <main
         ref={mainRef}
@@ -49,7 +65,7 @@ export const Home = () => {
         className={clsx(
           layoutMain,
           pageWrapper,
-          "border-border",
+          "border-border"
         )}
       >
         <Header /> 

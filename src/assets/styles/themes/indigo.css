@@ -1,0 +1,23 @@
+/* LIGHT MODE - INDIGO OVERRIDE */
+:root.theme-indigo {
+  --textHoverHeader: var(--color-indigo-600);
+  --cor2-dinamica: var(--color-indigo-600);
+  --primary: var(--color-indigo-600);
+  --accent: var(--color-indigo-50);
+  --accent-foreground: var(--color-indigo-800);
+  --ring: var(--color-indigo-500);
+  --sidebar-primary: var(--color-indigo-600);
+  --sidebar-ring: var(--color-indigo-500);
+}
+
+/* DARK MODE - INDIGO OVERRIDE */
+:root.dark.theme-indigo {
+  --textHoverHeader: var(--color-indigo-300);
+  --cor2-dinamica: var(--color-indigo-600);
+  --primary: var(--color-indigo-400);
+  --accent: var(--color-indigo-950);
+  --accent-foreground: var(--color-indigo-100);
+  --ring: var(--color-indigo-400);
+  --sidebar-primary: var(--color-indigo-400);
+  --sidebar-ring: var(--color-indigo-400);
+}

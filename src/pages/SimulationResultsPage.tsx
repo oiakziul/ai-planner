@@ -50,10 +50,6 @@ export const SimulationResultsPage = () => {
     }
   );
 
-  // ==========================================
-  // CONFIGURAÇÃO DE CLASSES (DESIGN TOKENS OKLCH)
-  // ==========================================
-
   const mainLayout = cn(
     "mx-auto max-w-[89rem] h-auto px-4 py-10 sm:py-14 font-sans select-none"
   );
@@ -70,30 +66,24 @@ export const SimulationResultsPage = () => {
   const card5Wrapper = cn("lg:col-start-3 lg:row-start-3");
   const card6Wrapper = cn("lg:col-start-3 lg:row-start-4");
 
-  // Posicionamento ajustado: Recua 24 (96px) do topo para não cobrir o Header superior
   const aiCardWrapper = cn(
     isAIPanelExpanded
-      ? "fixed top-20 sm:top-24 bottom-6 left-4 right-4 md:left-10 md:right-10 lg:left-16 lg:right-16 z-50 transition-all duration-300 ease-in-out"
+      ? "fixed top-20 sm:top-24 bottom-6 left-4 right-4 md:left-10 md:right-10 lg:left-16 lg:right-16 z-30 transition-all duration-300 ease-in-out"
       : "lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:row-span-3 h-full transition-all duration-200"
   );
 
-  // ==========================================
-  // ESTRUTURA VISUAL (JSX)
-  // ==========================================
 
   return (
     <>
-      {/* Camada de fundo escurecida (Backdrop) */}
       {isAIPanelExpanded && (
         <div 
-          className="fixed inset-0 bg-black/75 backdrop-blur-md z-40 transition-opacity duration-300"
+          className="fixed inset-0 bg-black/75 backdrop-blur-md z-30 transition-opacity duration-300 "
           onClick={() => setIsAIPanelExpanded(false)}
         />
       )}
 
       <main className={mainLayout}>
 
-        {/* Cabeçalho de alta fidelidade */}
         <PageHero
           title={t("resultado_title", "Resultado da sua simulação")}
           subtitle={t("resultado_subtitle", "Com base no seu perfil financeiro e objetivos.")}
@@ -101,7 +91,6 @@ export const SimulationResultsPage = () => {
 
         <div className={pageGridLayout}>
 
-          {/* [Item 1]: Custo da Meta */}
           <div className={card1Wrapper}>
             <Card
               icon={Goal}
@@ -111,7 +100,6 @@ export const SimulationResultsPage = () => {
             />
           </div>
 
-          {/* [Item 2]: Prazo */}
           <div className={card2Wrapper}>
             <Card
               icon={CalendarClock}
@@ -121,7 +109,6 @@ export const SimulationResultsPage = () => {
             />
           </div>
 
-          {/* [Item 3]: Capacidade de poupança mensal */}
           <div className={card3Wrapper}>
             <Card
               icon={PiggyBank}
@@ -132,7 +119,6 @@ export const SimulationResultsPage = () => {
             />
           </div>
 
-          {/* [Item 4]: Renda Mensal */}
           <div className={card4Wrapper}>
             <Card
               icon={Wallet}
@@ -142,7 +128,6 @@ export const SimulationResultsPage = () => {
             />
           </div>
 
-          {/* [Item 5]: Custos Fixos */}
           <div className={card5Wrapper}>
             <Card
               icon={CreditCard}
@@ -152,7 +137,6 @@ export const SimulationResultsPage = () => {
             />
           </div>
 
-          {/* [Item 6]: Dívidas/Parcelas */}
           <div className={card6Wrapper}>
             <Card
               icon={Landmark}
@@ -162,7 +146,6 @@ export const SimulationResultsPage = () => {
             />
           </div>
 
-          {/* [Item 7]: Painel de Insights do Gemini */}
           <div className={aiCardWrapper}>
             <AIInsightsCard 
               simulationId={data.id} 

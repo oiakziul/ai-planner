@@ -1,0 +1,23 @@
+/* LIGHT MODE - SKY OVERRIDE */
+:root.theme-sky {
+  --textHoverHeader: var(--color-sky-600);
+  --cor2-dinamica: var(--color-sky-600);
+  --primary: var(--color-sky-600);
+  --accent: var(--color-sky-50);
+  --accent-foreground: var(--color-sky-800);
+  --ring: var(--color-sky-500);
+  --sidebar-primary: var(--color-sky-600);
+  --sidebar-ring: var(--color-sky-500);
+}
+
+/* DARK MODE - SKY OVERRIDE */
+:root.dark.theme-sky {
+  --textHoverHeader: var(--color-sky-300);
+  --cor2-dinamica: var(--color-sky-600);
+  --primary: var(--color-sky-400);
+  --accent: var(--color-sky-950);
+  --accent-foreground: var(--color-sky-100);
+  --ring: var(--color-sky-400);
+  --sidebar-primary: var(--color-sky-400);
+  --sidebar-ring: var(--color-sky-400);
+}

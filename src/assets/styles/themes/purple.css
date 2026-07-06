@@ -1,0 +1,23 @@
+/* LIGHT MODE - PURPLE OVERRIDE */
+:root.theme-purple {
+  --textHoverHeader: var(--color-purple-600);
+  --cor2-dinamica: var(--color-purple-600);
+  --primary: var(--color-purple-600);
+  --accent: var(--color-purple-50);
+  --accent-foreground: var(--color-purple-800);
+  --ring: var(--color-purple-500);
+  --sidebar-primary: var(--color-purple-600);
+  --sidebar-ring: var(--color-purple-500);
+}
+
+/* DARK MODE - PURPLE OVERRIDE */
+:root.dark.theme-purple {
+  --textHoverHeader: var(--color-purple-300);
+  --cor2-dinamica: var(--color-purple-600);
+  --primary: var(--color-purple-400);
+  --accent: var(--color-purple-950);
+  --accent-foreground: var(--color-purple-100);
+  --ring: var(--color-purple-400);
+  --sidebar-primary: var(--color-purple-400);
+  --sidebar-ring: var(--color-purple-400);
+}

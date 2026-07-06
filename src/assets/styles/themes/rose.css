@@ -1,0 +1,23 @@
+/* LIGHT MODE - ROSE OVERRIDE */
+:root.theme-rose {
+  --textHoverHeader: var(--color-rose-700);
+  --cor2-dinamica: var(--color-rose-600);
+  --primary: var(--color-rose-700);
+  --accent: var(--color-rose-50);
+  --accent-foreground: var(--color-rose-800);
+  --ring: var(--color-rose-600);
+  --sidebar-primary: var(--color-rose-700);
+  --sidebar-ring: var(--color-rose-600);
+}
+
+/* DARK MODE - ROSE OVERRIDE */
+:root.dark.theme-rose {
+  --textHoverHeader: var(--color-rose-300);
+  --cor2-dinamica: var(--color-rose-600);
+  --primary: var(--color-rose-400);
+  --accent: var(--color-rose-900);
+  --accent-foreground: var(--color-rose-100);
+  --ring: var(--color-rose-400);
+  --sidebar-primary: var(--color-rose-400);
+  --sidebar-ring: var(--color-rose-400);
+}

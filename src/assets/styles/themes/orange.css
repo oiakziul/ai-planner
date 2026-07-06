@@ -1,0 +1,23 @@
+/* LIGHT MODE - ORANGE OVERRIDE */
+:root.theme-orange {
+  --textHoverHeader: var(--color-orange-600);
+  --cor2-dinamica: var(--color-orange-600);
+  --primary: var(--color-orange-600);
+  --accent: var(--color-orange-50);
+  --accent-foreground: var(--color-orange-800);
+  --ring: var(--color-orange-500);
+  --sidebar-primary: var(--color-orange-600);
+  --sidebar-ring: var(--color-orange-500);
+}
+
+/* DARK MODE - ORANGE OVERRIDE */
+:root.dark.theme-orange {
+  --textHoverHeader: var(--color-orange-300);
+  --cor2-dinamica: var(--color-orange-600);
+  --primary: var(--color-orange-400);
+  --accent: var(--color-orange-950);
+  --accent-foreground: var(--color-orange-100);
+  --ring: var(--color-orange-400);
+  --sidebar-primary: var(--color-orange-400);
+  --sidebar-ring: var(--color-orange-400);
+}

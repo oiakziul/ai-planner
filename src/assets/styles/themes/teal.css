@@ -1,0 +1,23 @@
+/* LIGHT MODE - TEAL OVERRIDE */
+:root.theme-teal {
+  --textHoverHeader: var(--color-teal-600);
+  --cor2-dinamica: var(--color-teal-600);
+  --primary: var(--color-teal-600);
+  --accent: var(--color-teal-50);
+  --accent-foreground: var(--color-teal-800);
+  --ring: var(--color-teal-500);
+  --sidebar-primary: var(--color-teal-600);
+  --sidebar-ring: var(--color-teal-500);
+}
+
+/* DARK MODE - TEAL OVERRIDE */
+:root.dark.theme-teal {
+  --textHoverHeader: var(--color-teal-300);
+  --cor2-dinamica: var(--color-teal-600);
+  --primary: var(--color-teal-400);
+  --accent: var(--color-teal-950);
+  --accent-foreground: var(--color-teal-100);
+  --ring: var(--color-teal-400);
+  --sidebar-primary: var(--color-teal-400);
+  --sidebar-ring: var(--color-teal-400);
+}

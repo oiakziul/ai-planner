@@ -1,0 +1,23 @@
+/* LIGHT MODE - EMERALD OVERRIDE */
+:root.theme-emerald {
+  --textHoverHeader: var(--color-emerald-600);
+  --cor2-dinamica: var(--color-emerald-600);
+  --primary: var(--color-emerald-600);
+  --accent: var(--color-emerald-50);
+  --accent-foreground: var(--color-emerald-800);
+  --ring: var(--color-emerald-500);
+  --sidebar-primary: var(--color-emerald-600);
+  --sidebar-ring: var(--color-emerald-500);
+}
+
+/* DARK MODE - EMERALD OVERRIDE */
+:root.dark.theme-emerald {
+  --textHoverHeader: var(--color-emerald-300);
+  --cor2-dinamica: var(--color-emerald-600);
+  --primary: var(--color-emerald-400);
+  --accent: var(--color-emerald-950);
+  --accent-foreground: var(--color-emerald-100);
+  --ring: var(--color-emerald-400);
+  --sidebar-primary: var(--color-emerald-400);
+  --sidebar-ring: var(--color-emerald-400);
+}

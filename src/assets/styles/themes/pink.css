@@ -1,0 +1,23 @@
+/* LIGHT MODE - PINK OVERRIDE */
+:root.theme-pink {
+  --textHoverHeader: var(--color-pink-600);
+  --cor2-dinamica: var(--color-pink-600);
+  --primary: var(--color-pink-600);
+  --accent: var(--color-pink-50);
+  --accent-foreground: var(--color-pink-800);
+  --ring: var(--color-pink-500);
+  --sidebar-primary: var(--color-pink-600);
+  --sidebar-ring: var(--color-pink-500);
+}
+
+/* DARK MODE - PINK OVERRIDE */
+:root.dark.theme-pink {
+  --textHoverHeader: var(--color-pink-300);
+  --cor2-dinamica: var(--color-pink-600);
+  --primary: var(--color-pink-400);
+  --accent: var(--color-pink-950);
+  --accent-foreground: var(--color-pink-100);
+  --ring: var(--color-pink-400);
+  --sidebar-primary: var(--color-pink-400);
+  --sidebar-ring: var(--color-pink-400);
+}

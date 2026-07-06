@@ -1,0 +1,23 @@
+/* LIGHT MODE - LIME OVERRIDE */
+:root.theme-lime {
+  --textHoverHeader: var(--color-lime-600);
+  --cor2-dinamica: var(--color-lime-600);
+  --primary: var(--color-lime-600);
+  --accent: var(--color-lime-50);
+  --accent-foreground: var(--color-lime-800);
+  --ring: var(--color-lime-500);
+  --sidebar-primary: var(--color-lime-600);
+  --sidebar-ring: var(--color-lime-500);
+}
+
+/* DARK MODE - LIME OVERRIDE */
+:root.dark.theme-lime {
+  --textHoverHeader: var(--color-lime-300);
+  --cor2-dinamica: var(--color-lime-600);
+  --primary: var(--color-lime-400);
+  --accent: var(--color-lime-950);
+  --accent-foreground: var(--color-lime-100);
+  --ring: var(--color-lime-400);
+  --sidebar-primary: var(--color-lime-400);
+  --sidebar-ring: var(--color-lime-400);
+}

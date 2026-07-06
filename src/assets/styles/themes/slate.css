@@ -1,0 +1,23 @@
+/* LIGHT MODE - SLATE OVERRIDE */
+:root.theme-slate {
+  --textHoverHeader: var(--color-slate-600);
+  --cor2-dinamica: var(--color-slate-600);
+  --primary: var(--color-slate-600);
+  --accent: var(--color-slate-50);
+  --accent-foreground: var(--color-slate-800);
+  --ring: var(--color-slate-500);
+  --sidebar-primary: var(--color-slate-600);
+  --sidebar-ring: var(--color-slate-500);
+}
+
+/* DARK MODE - SLATE OVERRIDE */
+:root.dark.theme-slate {
+  --textHoverHeader: var(--color-slate-300);
+  --cor2-dinamica: var(--color-slate-600);
+  --primary: var(--color-slate-400);
+  --accent: var(--color-slate-950);
+  --accent-foreground: var(--color-slate-100);
+  --ring: var(--color-slate-400);
+  --sidebar-primary: var(--color-slate-400);
+  --sidebar-ring: var(--color-slate-400);
+}

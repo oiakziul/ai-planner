@@ -1,0 +1,23 @@
+/* LIGHT MODE - YELLOW OVERRIDE */
+:root.theme-yellow {
+  --textHoverHeader: var(--color-yellow-600);
+  --cor2-dinamica: var(--color-yellow-600);
+  --primary: var(--color-yellow-600);
+  --accent: var(--color-yellow-50);
+  --accent-foreground: var(--color-yellow-800);
+  --ring: var(--color-yellow-500);
+  --sidebar-primary: var(--color-yellow-600);
+  --sidebar-ring: var(--color-yellow-500);
+}
+
+/* DARK MODE - YELLOW OVERRIDE */
+:root.dark.theme-yellow {
+  --textHoverHeader: var(--color-yellow-300);
+  --cor2-dinamica: var(--color-yellow-600);
+  --primary: var(--color-yellow-400);
+  --accent: var(--color-yellow-950);
+  --accent-foreground: var(--color-yellow-100);
+  --ring: var(--color-yellow-400);
+  --sidebar-primary: var(--color-yellow-400);
+  --sidebar-ring: var(--color-yellow-400);
+}

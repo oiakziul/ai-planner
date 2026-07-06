@@ -1,0 +1,23 @@
+/* LIGHT MODE - GREEN OVERRIDE */
+:root.theme-green {
+  --textHoverHeader: var(--color-green-600);
+  --cor2-dinamica: var(--color-green-600);
+  --primary: var(--color-green-600);
+  --accent: var(--color-green-50);
+  --accent-foreground: var(--color-green-800);
+  --ring: var(--color-green-500);
+  --sidebar-primary: var(--color-green-600);
+  --sidebar-ring: var(--color-green-500);
+}
+
+/* DARK MODE - GREEN OVERRIDE */
+:root.dark.theme-green {
+  --textHoverHeader: var(--color-green-300);
+  --cor2-dinamica: var(--color-green-600);
+  --primary: var(--color-green-400);
+  --accent: var(--color-green-950);
+  --accent-foreground: var(--color-green-100);
+  --ring: var(--color-green-400);
+  --sidebar-primary: var(--color-green-400);
+  --sidebar-ring: var(--color-green-400);
+}

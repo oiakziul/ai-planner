@@ -1,0 +1,23 @@
+/* LIGHT MODE - BLUE OVERRIDE */
+:root.theme-blue {
+  --textHoverHeader: var(--color-blue-600);
+  --cor2-dinamica: var(--color-blue-600);
+  --primary: var(--color-blue-600);
+  --accent: var(--color-blue-50);
+  --accent-foreground: var(--color-blue-800);
+  --ring: var(--color-blue-500);
+  --sidebar-primary: var(--color-blue-600);
+  --sidebar-ring: var(--color-blue-500);
+}
+
+/* DARK MODE - BLUE OVERRIDE */
+:root.dark.theme-blue {
+  --textHoverHeader: var(--color-blue-300);
+  --cor2-dinamica: var(--color-blue-600);
+  --primary: var(--color-blue-400);
+  --accent: var(--color-blue-950);
+  --accent-foreground: var(--color-blue-100);
+  --ring: var(--color-blue-400);
+  --sidebar-primary: var(--color-blue-400);
+  --sidebar-ring: var(--color-blue-400);
+}

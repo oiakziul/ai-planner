@@ -2,6 +2,40 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
+
+@import "tailwindcss";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+/* Tema Padrão / Vinho */
+@import "./themes/rose.css";
+
+/* Família dos Azuis */
+@import "./themes/sky.css";
+@import "./themes/cyan.css";
+@import "./themes/blue.css";
+@import "./themes/indigo.css";
+
+/* Família dos Verdes */
+@import "./themes/teal.css";
+@import "./themes/emerald.css";
+@import "./themes/green.css";
+@import "./themes/lime.css";
+
+/* Família dos Amarelos / Laranjas / Vermelhos */
+@import "./themes/yellow.css";
+@import "./themes/amber.css";
+@import "./themes/orange.css";
+@import "./themes/red.css";
+
+/* Família dos Roxos / Rosas */
+@import "./themes/violet.css";
+@import "./themes/purple.css";
+@import "./themes/fuchsia.css";
+@import "./themes/pink.css";
+@import "./themes/slate.css";
+
+
 @custom-variant dark (&:is(.dark *));
 
 * {

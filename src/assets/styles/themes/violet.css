@@ -1,0 +1,23 @@
+/* LIGHT MODE - VIOLET OVERRIDE */
+:root.theme-violet {
+  --textHoverHeader: var(--color-violet-600);
+  --cor2-dinamica: var(--color-violet-600);
+  --primary: var(--color-violet-600);
+  --accent: var(--color-violet-50);
+  --accent-foreground: var(--color-violet-800);
+  --ring: var(--color-violet-500);
+  --sidebar-primary: var(--color-violet-600);
+  --sidebar-ring: var(--color-violet-500);
+}
+
+/* DARK MODE - VIOLET OVERRIDE */
+:root.dark.theme-violet {
+  --textHoverHeader: var(--color-violet-300);
+  --cor2-dinamica: var(--color-violet-600);
+  --primary: var(--color-violet-400);
+  --accent: var(--color-violet-950);
+  --accent-foreground: var(--color-violet-100);
+  --ring: var(--color-violet-400);
+  --sidebar-primary: var(--color-violet-400);
+  --sidebar-ring: var(--color-violet-400);
+}

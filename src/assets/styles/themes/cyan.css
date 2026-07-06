@@ -1,0 +1,23 @@
+/* LIGHT MODE - CYAN OVERRIDE */
+:root.theme-cyan {
+  --textHoverHeader: var(--color-cyan-600);
+  --cor2-dinamica: var(--color-cyan-600);
+  --primary: var(--color-cyan-600);
+  --accent: var(--color-cyan-50);
+  --accent-foreground: var(--color-cyan-800);
+  --ring: var(--color-cyan-500);
+  --sidebar-primary: var(--color-cyan-600);
+  --sidebar-ring: var(--color-cyan-500);
+}
+
+/* DARK MODE - CYAN OVERRIDE */
+:root.dark.theme-cyan {
+  --textHoverHeader: var(--color-cyan-300);
+  --cor2-dinamica: var(--color-cyan-600);
+  --primary: var(--color-cyan-400);
+  --accent: var(--color-cyan-950);
+  --accent-foreground: var(--color-cyan-100);
+  --ring: var(--color-cyan-400);
+  --sidebar-primary: var(--color-cyan-400);
+  --sidebar-ring: var(--color-cyan-400);
+}

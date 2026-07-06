@@ -1,0 +1,23 @@
+/* LIGHT MODE - RED OVERRIDE */
+:root.theme-red {
+  --textHoverHeader: var(--color-red-600);
+  --cor2-dinamica: var(--color-red-600);
+  --primary: var(--color-red-600);
+  --accent: var(--color-red-50);
+  --accent-foreground: var(--color-red-800);
+  --ring: var(--color-red-500);
+  --sidebar-primary: var(--color-red-600);
+  --sidebar-ring: var(--color-red-500);
+}
+
+/* DARK MODE - RED OVERRIDE */
+:root.dark.theme-red {
+  --textHoverHeader: var(--color-red-300);
+  --cor2-dinamica: var(--color-red-600);
+  --primary: var(--color-red-400);
+  --accent: var(--color-red-950);
+  --accent-foreground: var(--color-red-100);
+  --ring: var(--color-red-400);
+  --sidebar-primary: var(--color-red-400);
+  --sidebar-ring: var(--color-red-400);
+}
