@@ -443,9 +443,7 @@ export const Header: React.FC = () => {
                   : "ring-ring/50 text-foreground"
               )}
             />
-            {isPlanejarActive && (
-              <span className="absolute" />
-            )}
+           
           </div>
           <div className="h-8 w-px bg-linear-to-b from-transparent via-border to-transparent shrink-0 " />
           <div className="relative flex-1 ">
@@ -454,10 +452,10 @@ export const Header: React.FC = () => {
               nome="Histórico"
               onClick={() => navigate("/historico")}
               className={cn(
-                "w-full  h-10 py-0 text-sm  transition-all [&_svg]:h-6 [&_svg]:w-6 ",
+                 "w-full  active:scale-95 ring transition-all h-10 py-0 text-sm [&_svg]:h-6 [&_svg]:w-6 ",
                 isHistoricoActive
-                  ? "ring-primary/40  text-foreground font-bold  "
-                  : "ring-primary/20 text-foreground"
+                 ? "ring-primary/40 bg-primary/8 text-foreground font-bold "
+                  : "ring-ring/50 text-foreground"
               )}
             />
           </div>
