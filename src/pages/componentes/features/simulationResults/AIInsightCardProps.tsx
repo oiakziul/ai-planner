@@ -18,12 +18,21 @@ import {
 import { ScrollProgress } from "@/assets/styles/componentes/ScrollProgress";
 import { Input } from "@/pages/componentes/shared/Input";
 import { Button } from "@/components/ui/button";
-import { callGeminiChatAPI, type ChatMessage } from "@/services/aiService";
+import { callGeminiChatAPI, type ChatMessage, QuotaExceededError } from "@/services/aiService";
 
 interface AIInsightCardProps {
   simulationId: string;
   isExpanded?: boolean;
   onToggleExpand?: () => void;
+}
+
+function loadChatHistory(simulationId: string): ChatMessage[] {
+  try {
+    const saved = localStorage.getItem(`chat_history_${simulationId}`);
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
 }
 
 export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpand }: AIInsightCardProps) {
@@ -35,12 +44,25 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
   const scrollActiveColor = "bg-primary";
 
   const [chatInput, setChatInput] = useState("");
-  const [chatHistory, setChatHistory] = useState<ChatMessage[]>(() => {
-    const saved = localStorage.getItem(`chat_history_${simulationId}`);
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>(() => loadChatHistory(simulationId));
   const [isChatLoading, setIsChatLoading] = useState(false);
   const [chatError, setChatError] = useState<string | null>(null);
+
+  // Rastreia qual simulationId a request em voo pertence, para ignorar
+  // respostas atrasadas caso o usuário troque de simulação ou dispare outra pergunta.
+  const activeSimIdRef = useRef(simulationId);
+  const abortControllerRef = useRef<AbortController | null>(null);
+
+  // Se a simulação mudar, recarrega o histórico correto do localStorage
+  // e cancela qualquer request pendente da simulação anterior.
+  useEffect(() => {
+    activeSimIdRef.current = simulationId;
+    abortControllerRef.current?.abort();
+    setChatHistory(loadChatHistory(simulationId));
+    setChatInput("");
+    setChatError(null);
+    setIsChatLoading(false);
+  }, [simulationId]);
 
   useEffect(() => {
     localStorage.setItem(`chat_history_${simulationId}`, JSON.stringify(chatHistory));
@@ -55,20 +77,26 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
     if (!chatInput.trim() || isChatLoading || !insight) return;
 
     const userText = chatInput.trim();
+    const requestSimId = simulationId;
     setChatInput("");
     setChatError(null);
 
     const userMsg: ChatMessage = { role: "user", parts: [{ text: userText }] };
 
-    // 1. Guardamos um backup do histórico atual ANTES de adicionar a nova mensagem
-    const previousHistory = [...chatHistory];
-
-    // 2. Atualizamos a tela imediatamente (Atualização Otimista)
+    // Snapshot local do histórico ATUALIZADO (com a nova mensagem do usuário).
+    // Seguro usar direto: o botão fica disabled durante isChatLoading, então
+    // não há risco de dois envios concorrentes lendo esse valor.
     const updatedHistory = [...chatHistory, userMsg];
-    setChatHistory(updatedHistory);
+
+    setChatHistory(prev => [...prev, userMsg]);
     setIsChatLoading(true);
 
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     try {
+      // systemContextPrompt usa o `insight` atual; como já checamos !insight acima,
+      // ele está garantido não-nulo neste ponto.
       const systemContextPrompt = `Você é o educador financeiro pessoal do app AI Planner. Responda a dúvidas sobre o laudo de simulação que você gerou. 
       Laudo de simulação ativo: ${JSON.stringify(insight)}.
       Mantenha as respostas curtas (máximo 3 parágrafos), didáticas, profissionais e encorajadoras. Responda sempre no mesmo idioma da pergunta do usuário.`;
@@ -79,22 +107,47 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
         ...updatedHistory
       ];
 
-      const aiResponseText = await callGeminiChatAPI(fullPayload);
+      const aiResponseText = await callGeminiChatAPI(fullPayload, controller.signal);
+
+      // Se, enquanto a API respondia, o usuário trocou de simulação, descarta a resposta:
+      // ela não pertence mais à conversa ativa.
+      if (activeSimIdRef.current !== requestSimId) {
+        return;
+      }
+
       const modelMsg: ChatMessage = { role: "model", parts: [{ text: aiResponseText }] };
-
-      // 3. Deu tudo certo! Adicionamos a resposta da IA na tela
-      setChatHistory([...updatedHistory, modelMsg]);
+      setChatHistory(prev => [...prev, modelMsg]);
     } catch (err) {
+      // Requisição cancelada de propósito (ex: troca de simulação) — não trata como erro.
+      if (controller.signal.aborted) {
+        return;
+      }
+
       console.error(err);
-      setChatError("Erro na conexão. Tente enviar novamente.");
 
-      // 4. ROLLBACK (Deu erro): Removemos a mensagem que falhou da tela
-      setChatHistory(previousHistory);
+      if (activeSimIdRef.current !== requestSimId) {
+        return;
+      }
 
-      // 5. UX Bônus: Devolvemos o texto para o input para o usuário não ter que digitar tudo de novo
+      if (err instanceof QuotaExceededError) {
+        setChatError(
+          err.retryAfterSeconds
+            ? `Limite de uso gratuito da IA atingido. Tente novamente em ${err.retryAfterSeconds}s ou mais tarde.`
+            : 'Limite de uso gratuito da IA atingido por hoje. Tente novamente mais tarde.'
+        );
+      } else {
+        setChatError("Erro na conexão. Tente enviar novamente.");
+      }
+
+      // Rollback: remove a mensagem do usuário que falhou (a última do histórico).
+      setChatHistory(prev => prev.slice(0, -1));
+
+      // UX: devolve o texto para o input para o usuário não precisar redigitar.
       setChatInput(userText);
     } finally {
-      setIsChatLoading(false);
+      if (activeSimIdRef.current === requestSimId) {
+        setIsChatLoading(false);
+      }
     }
   };
 
