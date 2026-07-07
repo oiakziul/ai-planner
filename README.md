@@ -14,7 +14,7 @@ Este projeto foi desenhado sob premissas reais de educação financeira digital 
 - **Aconselhamento e Ajustes por IA:** Avalia o orçamento do usuário e propõe caminhos de adequação (corte de custos supérfluos, geração de renda extra e veículos de investimento).
 - **Comunicação Interativa:** Painel de insights extenso com suporte a leitura em tela cheia (*Immersive Read Mode*).
 
-👉 Para ler as diretrizes de prompt e as premissas de cálculo enviadas para a IA, acesse o documento de [Escopo do Projeto](escopo-do-projeto.md).
+👉 Para ler as diretrizes de prompt e as premissas de cálculo enviadas para a IA, acesse o documento de [Escopo do Projeto](docs/escopo-do-projeto.md).
 
 ---
 
