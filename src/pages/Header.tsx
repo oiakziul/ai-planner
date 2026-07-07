@@ -178,20 +178,20 @@ export const Header: React.FC = () => {
         {/* LOGO */}
         <Link
           to="/"
-          className="group flex items-center gap-3 font-bold text-foreground tracking-tight shrink-0"
+          className="´group flex items-center gap-3 font-bold text-foreground tracking-tight shrink-0"
         >
           <img
             src="/logo192.png"
             alt="Logo"
             className="h-7 w-7 sm:h-9 sm:w-9 object-contain rounded-lg transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105"
           />
-          <span className="text-base sm:text-lg bg-linear-to-r from-foreground via-foreground to-primary bg-size-[200%_100%] bg-clip-text text-transparent transition-[background-position] duration-500 group-hover:bg-position-[100%_0]">
+          <span className=" text-base sm:text-lg bg-linear-to-r from-foreground via-foreground to-primary bg-size-[200%_100%] bg-clip-text text-transparent transition-[background-position] duration-500 group-hover:bg-position-[100%_0]">
             AI Planner
           </span>
         </Link>
 
         {/* DIREITA */}
-        <div className="flex items-center gap-3.5 sm:gap-4 md:gap-5">
+        <div className="flex items-center gap-3.5 sm:gap-4 ">
           {/* MENU DE NAVEGAÇÃO */}
           <div className="relative" ref={menuRef}>
             <button
