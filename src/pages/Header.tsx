@@ -172,8 +172,8 @@ export const Header: React.FC = () => {
             ? "opacity-100 translate-y-0 "
             : "opacity-0 translate-y-[-150%] pointer-events-none",
           isScrolled
-            ? "h-14 shadow-[0_14px_45px_-10px_rgba(0,0,0,0.35)] bg-background/90 backdrop-blur-2xl border-border"
-            : "h-16 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.25)] bg-background/80 backdrop-blur-xl border-border/70"
+            ? "h-14 shadow-[0_14px_45px_-10px_rgba(0,0,0,0.35)] bg-background/10 backdrop-blur-xl border-border" //bg90
+            : "h-16 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.25)] bg-background/40 backdrop-blur-xl border-border/70" // bg80
         )}
       >
         {/* LOGO */}
@@ -365,7 +365,7 @@ export const Header: React.FC = () => {
                     >
                       {lang.flag}
                       <span className="font-medium">{lang.name}</span>
-                     {active && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_6px_1px_var(--primary)] animate-pulse" />}
+                      {active && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_6px_1px_var(--primary)] animate-pulse" />}
                     </li>
                   );
                 })}
@@ -373,12 +373,12 @@ export const Header: React.FC = () => {
             )}
           </div>
 
-{/* BOTÃO DE TEMA ESCURO E ATUALIZAR */}
+          {/* BOTÃO DE TEMA ESCURO E ATUALIZAR */}
           <div className="flex items-center justify-center h-9 shrink-0">
-            <AnimatedThemeToggler 
-              variant="circle" 
-              duration={500} 
-              fromCenter 
+            <AnimatedThemeToggler
+              variant="circle"
+              duration={500}
+              fromCenter
             />
           </div>
 
@@ -394,7 +394,7 @@ export const Header: React.FC = () => {
                   "shadow-sm active:scale-95 ring transition-all h-10 py-0 text-sm [&_svg]:h-6 [&_svg]:w-6",
                   isPlanejarActive
                     ? "ring-primary/30 bg-primary/5 text-foreground font-semibold shadow-xs"
-                    : "ring-ring/50 text-foreground" 
+                    : "ring-ring/50 text-foreground"
                 )}
               />
               {isPlanejarActive && (
