@@ -119,7 +119,7 @@ export const Home = () => {
       >
         <Header />
 
-        <div className="min-h-screen w-full pt-6 px-2 relative z-10 mt-13 md:mt-26">
+        <div className="min-h-screen w-full pt-6 px-2 relative z-10 mt-16 md:mt-26">
           <Outlet />
         </div>
 
