@@ -95,7 +95,10 @@ export const useInsight = (id: string) => {
       setInsight(null);
       setError(null);
       setIsLoading(false);
-      return; // deixa o próximo ciclo do efeito (após o re-render) cuidar do fetch
+      // IMPORTANTE: não retornamos aqui. Se os estados já estavam em seus
+      // valores padrão (ex: primeiro carregamento de uma simulação), o
+      // setState acima é um no-op e o React NÃO agenda um novo render —
+      // então o guard abaixo, nesta mesma execução, precisa decidir se busca.
     }
 
     if (didFetch.current || insight || isLoading || error) {
