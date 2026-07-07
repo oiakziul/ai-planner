@@ -393,7 +393,7 @@ export const Header: React.FC = () => {
                 className={cn(
                   "shadow-sm active:scale-95 ring transition-all h-10 py-0 text-sm [&_svg]:h-6 [&_svg]:w-6",
                   isPlanejarActive
-                    ? "ring-primary/30 bg-primary/5 text-primary font-semibold shadow-xs"
+                    ? "ring-primary/30 bg-primary/5 text-foreground font-semibold shadow-xs"
                     : "ring-ring/50 text-foreground" 
                 )}
               />
@@ -413,7 +413,7 @@ export const Header: React.FC = () => {
                   "h-10 py-0 text-sm ring transition-all [&_svg]:h-4 [&_svg]:w-4",
                   isHistoricoActive
                     ? "ring-primary/35  text-foreground font-semibold "
-                    : "ring-primary/20 text-primary"
+                    : "ring-primary/20 text-foreground"
                 )}
               />
               {isHistoricoActive && (
