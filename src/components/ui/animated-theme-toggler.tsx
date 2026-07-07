@@ -56,13 +56,13 @@ function getThemeTransitionClipPaths(
         const verts: string[] = []
         for (let i = 0; i < 5; i++) {
           const outerA = -Math.PI / 2 + (i * 2 * Math.PI) / 5
-          verts.push(`${cx + radius * Math.cos(outerA)}px ${cy + radius * Math.sin(outerA)}px`)
+          verts.push(`${Math.round(cx + radius * Math.cos(outerA))}px ${Math.round(cy + radius * Math.sin(outerA))}px`)
           const innerA = outerA + Math.PI / 5
-          verts.push(`${cx + radius * innerRatio * Math.cos(innerA)}px ${cy + radius * innerRatio * Math.sin(innerA)}px`)
+          verts.push(`${Math.round(cx + radius * innerRatio * Math.cos(innerA))}px ${Math.round(cy + radius * innerRatio * Math.sin(innerA))}px`)
         }
         return `polygon(${verts.join(", ")})`
       }
-      return [starPolygon(Math.max(2, R * 0.025)), starPolygon(R)]
+      return [starPolygon(Math.max(2, Math.round(R * 0.025))), starPolygon(Math.round(R))]
     }
     default:
       return [`circle(0px at ${cx}px ${cy}px)`, `circle(${maxRadius}px at ${cx}px ${cy}px)`]
@@ -73,7 +73,7 @@ export const AnimatedThemeToggler = ({
   className,
   duration = 500,
   variant = "circle",
-  fromCenter = false,
+  fromCenter = true, // Forçado para sempre tentar originar a transição de um ponto seguro
   ...props
 }: AnimatedThemeTogglerProps) => {
   const shape = variant
@@ -85,32 +85,46 @@ export const AnimatedThemeToggler = ({
     const button = buttonRef.current
     if (!button) return
 
-    const viewportWidth = window.visualViewport?.width ?? window.innerWidth
-    const viewportHeight = window.visualViewport?.height ?? window.innerHeight
+    // Fallback absoluto contra o bug do Chrome Mobile (visualViewport retornando vazio)
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
 
-    let x: number, y: number
+    let x: number, y: number;
+
     if (fromCenter) {
-      x = viewportWidth / 2; y = viewportHeight / 2
+      // Arredondamento rígido forçando o eixo central. Chrome Mobile odeia floats no clip-path de ViewTransitions.
+      x = Math.round(viewportWidth / 2);
+      y = Math.round(viewportHeight / 2);
     } else {
-      const { top, left, width, height } = button.getBoundingClientRect()
-      x = left + width / 2; y = top + height / 2
+      const { top, left, width, height } = button.getBoundingClientRect();
+      x = Math.round(left + width / 2);
+      y = Math.round(top + height / 2);
     }
 
-    const maxRadius = Math.hypot(Math.max(x, viewportWidth - x), Math.max(y, viewportHeight - y))
+    const maxRadius = Math.round(
+      Math.hypot(Math.max(x, viewportWidth - x), Math.max(y, viewportHeight - y))
+    );
 
     if (typeof document.startViewTransition !== "function") {
-      toggleTheme()
-      return
+      toggleTheme();
+      return;
     }
 
     const transition = document.startViewTransition(() => {
       flushSync(() => {
-        toggleTheme()
-      })
-    })
+        toggleTheme();
+      });
+    });
 
     transition.ready.then(() => {
-      const clipPath = getThemeTransitionClipPaths(shape, x, y, maxRadius, viewportWidth, viewportHeight)
+      const clipPath = getThemeTransitionClipPaths(
+        shape,
+        x,
+        y,
+        maxRadius,
+        viewportWidth,
+        viewportHeight
+      );
       document.documentElement.animate(
         { clipPath },
         {
@@ -119,8 +133,8 @@ export const AnimatedThemeToggler = ({
           fill: "forwards",
           pseudoElement: "::view-transition-new(root)",
         }
-      )
-    })
+      );
+    });
   }, [shape, fromCenter, duration, toggleTheme])
 
   return (
