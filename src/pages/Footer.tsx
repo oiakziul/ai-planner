@@ -21,7 +21,7 @@ export const Footer = () => {
   };
   
   const footerBase = cn(
-    "relative py-8 px-6 w-full min-h-60 transition-colors duration-300 select-none",
+    "relative py-8 px-6 w-full min-h-90 md:min-h-60 transition-colors duration-300 select-none",
     "bg-background/60 backdrop-blur-md border-t border-border mt-2 overflow-hidden"
   );
 
@@ -52,10 +52,13 @@ export const Footer = () => {
   
   const footerCopyright = cn("text-muted-foreground text-sm mb-4 font-medium");
   
-  const emailSection = cn("flex justify-center items-center");
+  const emailSection = cn("flex justify-center items-center ");
 
   const eMailLink = cn(
-    "group relative overflow-hidden flex items-center justify-center mx-auto gap-2 text-lg font-medium py-3 mt-3 w-48 h-12",
+    "rounded-full group relative overflow-hidden flex items-center justify-center mx-auto gap-2 text-lg font-medium py-3 mt-3 w-48 h-12",
+    "text-primary active:scale-95 transition-transform duration-300",
+    "ring hover:bg-primary/10",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring "
   );
 
 
@@ -81,12 +84,12 @@ export const Footer = () => {
         <div className={footerDivider}>
           <p className={footerCopyright}>
             © {new Date().getFullYear()} {t("copy_hight")}
+            
           </p>
 
           <section className={emailSection}>
             <a className={eMailLink} href="mailto:kaioaac3@gmail.com">
-              
-              
+              E-mail
             </a>
           </section>
         </div>
