@@ -428,7 +428,7 @@ export const Header: React.FC = () => {
 
       {/* DOCK MOBILE */}
       <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden pb-[env(safe-area-inset-bottom)]">
-        <div className="dock-intro relative mx-2 mb-2 flex items-center gap-1.5 px-2 py-2 rounded-2xl border border-border/60 bg-background/90 backdrop-blur-2xl shadow-[0_-8px_30px_-8px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
+        <div className="dock-intro relative mx-2 mb-2 flex items-center gap-1.5 px-2 py-2 rounded-full border border-border/60 bg-background/20 backdrop-blur-2xl shadow-[0_-8px_30px_-8px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
           <div className="absolute -top-px left-6 right-6 h-px bg-linear-to-r from-transparent via-primary/60 to-transparent" />
 
           <div className="relative flex-1">
@@ -448,13 +448,13 @@ export const Header: React.FC = () => {
             )}
           </div>
           <div className="h-8 w-px bg-linear-to-b from-transparent via-border to-transparent shrink-0 " />
-          <div className="relative flex-1">
-            <ButtonRipple
+          <div className="relative flex-1 ">
+            <InteractiveHoverButton
               icon={Clock}
               nome="Histórico"
               onClick={() => navigate("/historico")}
               className={cn(
-                "w-full  h-10 py-0 text-sm ring transition-all [&_svg]:h-3.5 [&_svg]:w-3.5",
+                "w-full  h-10 py-0 text-sm  transition-all [&_svg]:h-6 [&_svg]:w-6 ",
                 isHistoricoActive
                   ? "ring-primary/40  text-foreground font-bold  "
                   : "ring-primary/20 text-foreground"
