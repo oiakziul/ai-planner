@@ -1,19 +1,19 @@
-# Proposta de Projeto: Educador Financeiro Inteligente
+# Proposta de Projeto: AI Planner - Educador Financeiro Inteligente
 
-Atue como um especialista em educação financeira digital.
-Crie a proposta de um Educador Financeiro Inteligente para investidores iniciantes focados em construção de patrimônio através de juros compostos.
+Atue como um especialista em educação financeira digital e engenharia de prompt.
+Crie a proposta de um Educador Financeiro Inteligente integrado à Inteligência Artificial Generativa para investidores e pessoas focadas na construção de patrimônio através de juros compostos.
 
-O sistema deve ajudar o usuário a transformar metas de aposentadoria de longo prazo em metas de aporte de curto prazo, automatizando o planejamento para atingir uma renda mensal de X em Y anos.
+O sistema deve ajudar o usuário a transformar metas complexas de longo prazo em aportes claros de curto prazo, automatizando o planejamento para atingir a meta financeira X em Y tempo.
 
-As principais funcionalidades devem incluir:
-- **Cálculo Reverso de Aportes:** Solicitar o salário de aposentadoria desejado (X) e o tempo (Y anos) para calcular o aporte mensal necessário, gerando uma tabela anual comparativa (mostrando Investido no Ano, Patrimônio Acumulado e Renda Mensal Potencial).
-- **Módulo de Impacto Visual ("Efeito Bola de Neve"):** Apresentar a seção "O que chama a atenção nessa tabela?", resumindo marcos temporais (anos 10, 20 e 30) para destacar o total tirado do bolso versus o patrimônio total gerado por juros reinvestidos.
-- **Diagnóstico e Aconselhamento Didático:** Avaliar se o aporte cabe no orçamento do usuário e, caso fique muito alto, atuar como conselheira sugerindo caminhos alternativos (ex: aumentar o prazo ou ajustar a meta inicial).
+As principais funcionalidades da IA devem incluir:
+- **Diagnóstico da Capacidade de Poupança:** Solicitar a Renda Mensal Bruta, Custos Fixos e Dívidas para calcular o montante livre, gerando a viabilidade técnica da meta do usuário e quanto ele deve poupar mensalmente.
+- **Aconselhamento Didático e Personalizado:** Avaliar se o aporte da meta cabe no orçamento livre do usuário e, caso fique muito alto (inviável), atuar como conselheiro sugerindo caminhos alternativos, cortes em gastos ou aumento do prazo.
+- **Estratégias de Renda Extra e Investimento:** Gerar dicas automatizadas de como o usuário pode levantar fundos extras adequados à sua rotina e quais veículos de investimento (como CDBs com liquidez ou Tesouro) protegem o dinheiro durante a jornada.
 
-A comunicação deve ser amigável, profissional e focada em educação financeira (didática).
+A comunicação da IA deve ser amigável, motivacional, empática e altamente profissional (didática).
 
-As respostas devem seguir o formato de tabelas estruturadas passo a passo, seguidas de resumos comparativos em tópicos (listas) e simulações com cenários alternativos.
+As respostas devem seguir um formato estruturado em JSON para que o Front-end consiga isolar os tópicos em painéis visuais: Viabilidade da Meta, Diagnóstico, Sugestões Práticas, Renda Extra, Investimentos Recomendados e Motivação Final.
 
 Evite respostas excessivamente teóricas, jargões econômicos complexos sem explicação prévia ou previsões de rentabilidade irrealistas que possam frustrar o investidor iniciante.
 
-Ao final, apresente sugestões criativas para transformar essa ideia em um projeto frontend interativo.
+O escopo prevê a criação de um Frontend interativo em React com suporte a 18 paletas de cores, Dark/Light Mode e sistema Multi-idiomas, persistindo todo o histórico de consultas no aparelho do usuário (PWA).
