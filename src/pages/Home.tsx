@@ -6,6 +6,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { ScrollProgress } from "../assets/styles/componentes/ScrollProgress";
 import { useTheme } from "@/context/ThemeContext";
+import { Particles } from "@/components/ui/particles"
 
 type PageState = "criacao" | "resultado" | "historico";
 
@@ -74,6 +75,7 @@ export const Home = () => {
 
   return (
     <div className="w-full h-dvh overflow-hidden bg-background relative">
+
       <ScrollToTop />
 
       <style
@@ -90,6 +92,7 @@ export const Home = () => {
           `,
         }}
       />
+
 
       <div
         className={clsx(
@@ -112,18 +115,29 @@ export const Home = () => {
         activeColor={scrollGradient}
       />
 
+
       <main
         ref={mainRef}
         id="inicio"
         className={clsx(layoutMain, pageWrapper, "border-border")}
       >
+        <div className="h-screen absolute inset-0 overflow-hidden pointer-events-none">
+          <Particles
+            className="absolute inset-0"
+            color={theme === "light" ? "#000000" : "#ffffff"} // 
+            quantity={100}
+          />
+        </div>
         <Header />
 
         <div className="min-h-screen w-full pt-6 px-2 relative z-10 mt-16 md:mt-26">
+
           <Outlet />
         </div>
 
         <Footer />
+
+
       </main>
     </div>
   );
