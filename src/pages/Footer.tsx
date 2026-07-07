@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { ChevronsUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import ButtonDemo from "@/components/shadcn-space/button/button-18";
 
 export const Footer = () => {
   const { t } = useTranslation("footer");
@@ -21,7 +22,7 @@ export const Footer = () => {
   };
   
   const footerBase = cn(
-    "relative py-8 px-6 w-full min-h-90 md:min-h-60 transition-colors duration-300 select-none",
+    "relative py-8 px-6 w-full min-h-90 xl:min-h-80 transition-colors duration-300 select-none",
     "bg-background/60 backdrop-blur-md border-t border-border mt-2 overflow-hidden"
   );
 
@@ -52,15 +53,15 @@ export const Footer = () => {
   
   const footerCopyright = cn("text-muted-foreground text-sm mb-4 font-medium");
   
-  const emailSection = cn("flex justify-center items-center ");
+  const emailSection = cn("flex justify-center items-center w-full mt-4");
 
   const eMailLink = cn(
-    "rounded-full group relative overflow-hidden flex items-center justify-center mx-auto gap-2 text-lg font-medium py-3 mt-3 w-48 h-12",
+    // 👇 "md:hidden" garante que este botão apareça apenas em telas pequenas (mobile/android/ios)
+    "lg:hidden rounded-full group relative overflow-hidden flex items-center justify-center mx-auto gap-2 text-lg font-medium py-3 w-48 h-12",
     "text-primary active:scale-95 transition-transform duration-300",
     "ring hover:bg-primary/10",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring "
   );
-
 
   return (
     <footer className={footerBase}>
@@ -84,10 +85,13 @@ export const Footer = () => {
         <div className={footerDivider}>
           <p className={footerCopyright}>
             © {new Date().getFullYear()} {t("copy_hight")}
-            
           </p>
 
           <section className={emailSection}>
+            <div className="hidden lg:flex justify-center w-full mt-3">
+              <ButtonDemo />
+            </div>
+            
             <a className={eMailLink} href="mailto:kaioaac3@gmail.com">
               E-mail
             </a>
