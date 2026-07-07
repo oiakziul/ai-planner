@@ -17,7 +17,7 @@ export const SimulationFormPage = () => {
 
   return (
     <div id="inicio" className={base}>
-      <main className="drop-shadow-sm text-center px-0 font-sans">
+      <main className="text-center px-0 font-sans">
         {/*t('msg')*/} 
         <SimulationHero/>
         <SimulationForm/>

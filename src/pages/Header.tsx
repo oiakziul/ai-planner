@@ -54,7 +54,6 @@ export const Header: React.FC = () => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isColorOpen, setIsColorOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // [CORRIGIDO]: Os dois estados de scroll trabalham juntos agora
   const [isScrolled, setIsScrolled] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
 
@@ -67,7 +66,6 @@ export const Header: React.FC = () => {
     const handleScroll = () => {
       if (mainScroll) {
         const scrollTop = mainScroll.scrollTop;
-        // Restaura a função de sumir o header quando rola pra baixo
         setIsAtTop(scrollTop < 5);
         setIsScrolled(scrollTop > 8);
       }
@@ -101,7 +99,6 @@ export const Header: React.FC = () => {
     { code: "es", flag: <ES className={flagClass} />, name: t("spanish") },
   ];
 
-  // [CORRIGIDO]: Resgata o idioma imediatamente na montagem usando o resolvedLanguage como fallback
   const langCode = (i18n.resolvedLanguage || i18n.language || "pt").split("-")[0].toLowerCase();
   const currentLang =
     supportedLanguages.find((l) => l.code === langCode) ||
@@ -123,7 +120,6 @@ export const Header: React.FC = () => {
       active && "bg-accent text-primary ring-1 ring-primary/20"
     );
 
-  // [CORRIGIDO]: A verificação de página inicial e histórico agora abrange sub-rotas
   const path = location.pathname;
   const isPlanejarActive = path === "/" || path === "";
   const isHistoricoActive = path.startsWith("/historico");
@@ -170,10 +166,8 @@ export const Header: React.FC = () => {
       <header
         className={cn(
           " header-intro mx-auto flex items-center justify-between w-full max-w-4xl px-2 sm:px-4 md:px-6",
-          // [AQUI]: Trocado 'sticky' por 'fixed left-0 right-0' para flutuar de verdade
           "z-50 rounded-[1.75rem] fixed top-4 left-0 right-0 transition-all duration-500 ease-in-out font-sans select-none",
           "ring-1 ring-black/5 border",
-          // [AQUI]: -translate-y-[150%] joga o header inteiramente para fora do monitor, liberando a visão
           isAtTop
             ? "opacity-100 translate-y-0 "
             : "opacity-0 translate-y-[-150%] pointer-events-none",
@@ -231,7 +225,6 @@ export const Header: React.FC = () => {
                 </div>
                 <ul className="p-1.5 space-y-0.5">
                   {navLinks.map((link) => {
-                    // [CORRIGIDO]: Identificação inteligente de sub-páginas (como /resultado/id) no dropdown do menu
                     const isDropdownLinkActive = path === link.to || (link.to !== "/" && path.startsWith(link.to));
                     const Icon = link.icon;
                     return (

@@ -40,7 +40,7 @@ export function FormStep({
   const { t } = useTranslation("inicio");
 
   const formStepContainer = cn(
-    "bg-card rounded-2xl p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] sm:p-8",
+    "bg-card rounded-2xl p-4  ring ring-primary/20 md:shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] sm:p-8",
     "w-full max-w-lg mx-auto min-h-[380px] md:min-h-[400px] flex flex-col justify-between"
   );
 
