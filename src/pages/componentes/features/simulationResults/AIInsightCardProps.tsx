@@ -59,6 +59,11 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
     setChatError(null);
 
     const userMsg: ChatMessage = { role: "user", parts: [{ text: userText }] };
+
+    // 1. Guardamos um backup do histórico atual ANTES de adicionar a nova mensagem
+    const previousHistory = [...chatHistory];
+
+    // 2. Atualizamos a tela imediatamente (Atualização Otimista)
     const updatedHistory = [...chatHistory, userMsg];
     setChatHistory(updatedHistory);
     setIsChatLoading(true);
@@ -77,10 +82,17 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
       const aiResponseText = await callGeminiChatAPI(fullPayload);
       const modelMsg: ChatMessage = { role: "model", parts: [{ text: aiResponseText }] };
 
-      setChatHistory((prev) => [...prev, modelMsg]);
+      // 3. Deu tudo certo! Adicionamos a resposta da IA na tela
+      setChatHistory([...updatedHistory, modelMsg]);
     } catch (err) {
       console.error(err);
-      setChatError("Erro ao enviar mensagem. Tente novamente.");
+      setChatError("Erro na conexão. Tente enviar novamente.");
+
+      // 4. ROLLBACK (Deu erro): Removemos a mensagem que falhou da tela
+      setChatHistory(previousHistory);
+
+      // 5. UX Bônus: Devolvemos o texto para o input para o usuário não ter que digitar tudo de novo
+      setChatInput(userText);
     } finally {
       setIsChatLoading(false);
     }
@@ -296,7 +308,7 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
         <form
           onSubmit={handleSendChat}
           className={cn(
-            "border-t border-border/40 p-4 flex items-center gap-2 relative z-30 ",
+            "border-t border-border/40 px-4 pt-4 pb-28 md:pb-4 flex items-center gap-2 relative z-30",
             isExpanded ? "bg-background" : "bg-card/60 backdrop-blur-md"
           )}
         >
