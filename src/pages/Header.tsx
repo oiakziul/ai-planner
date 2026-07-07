@@ -413,7 +413,7 @@ export const Header: React.FC = () => {
                   "h-10 py-0 text-sm ring transition-all [&_svg]:h-4 [&_svg]:w-4",
                   isHistoricoActive
                     ? "ring-primary/35  text-primary font-semibold "
-                    : "ring-primary/20 text-foreground"
+                    : "ring-primary/20 text-primary"
                 )}
               />
               {isHistoricoActive && (
