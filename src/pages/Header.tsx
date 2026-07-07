@@ -169,13 +169,13 @@ export const Header: React.FC = () => {
 
       <header
         className={cn(
-          "header-intro mx-auto flex items-center justify-between w-[95%] max-w-4xl px-2 sm:px-4 md:px-6",
+          " header-intro mx-auto flex items-center justify-between w-[95%] max-w-4xl px-2 sm:px-4 md:px-6",
           // [AQUI]: Trocado 'sticky' por 'fixed left-0 right-0' para flutuar de verdade
           "z-50 rounded-[1.75rem] fixed top-4 left-0 right-0 transition-all duration-500 ease-in-out font-sans select-none",
           "ring-1 ring-black/5 border",
           // [AQUI]: -translate-y-[150%] joga o header inteiramente para fora do monitor, liberando a visão
           isAtTop
-            ? "opacity-100 translate-y-0"
+            ? "opacity-100 translate-y-0 "
             : "opacity-0 translate-y-[-150%] pointer-events-none",
           isScrolled
             ? "h-14 shadow-[0_14px_45px_-10px_rgba(0,0,0,0.35)] bg-background/90 backdrop-blur-2xl border-border"
@@ -242,21 +242,21 @@ export const Header: React.FC = () => {
                           role="menuitem"
                           className={cn(
                             "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150",
-                            "outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                            "outline-none focus-visible:ring-2 focus-visible:ring-primary/50 ",
                             isDropdownLinkActive
-                              ? "bg-primary/10 text-primary font-semibold"
-                              : "text-foreground/80 hover:bg-accent hover:text-accent-foreground"
+                              ? "bg-primary/10 text-primary font-semibold "
+                              : "text-foreground/80 hover:bg-accent hover:text-accent-foreground "
                           )}
                         >
                           <Icon
                             className={cn(
-                              "h-4 w-4 shrink-0 transition-colors",
-                              isDropdownLinkActive ? "text-primary" : "text-muted-foreground"
+                              "h-4 w-4 shrink-0 transition-colors ",
+                              isDropdownLinkActive ? "text-primary " : "text-muted-foreground "
                             )}
                           />
                           <span className="flex-1">{t(link.label, link.label)}</span>
                           {isDropdownLinkActive && (
-                            <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_6px_1px_var(--primary)]" />
+                            <span className="animate-pulse h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_6px_1px_var(--primary)]" />
                           )}
                         </Link>
                       </li>
@@ -372,7 +372,7 @@ export const Header: React.FC = () => {
                     >
                       {lang.flag}
                       <span className="font-medium">{lang.name}</span>
-                      {active && <Check className="ml-auto h-3.5 w-3.5 text-primary" />}
+                     {active && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_6px_1px_var(--primary)] animate-pulse" />}
                     </li>
                   );
                 })}
@@ -425,7 +425,7 @@ export const Header: React.FC = () => {
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-6 right-6 h-0.5 bg-linear-to-r from-transparent via-primary to-transparent opacity-80" />
+        <div className="absolute bottom-0 left-6 right-6 h-0.5 bg-linear-to-r from-transparent via-primary to-transparent opacity-80 animate-pulse duration-600" />
       </header>
 
       {/* DOCK MOBILE */}
