@@ -86,11 +86,10 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
     }
   };
 
-  // Cores adaptativas dinâmicas que seguem o tema ativo (Light/Dark) para evitar falta de contraste
-  const cardOuterStyle = cn(
+const cardOuterStyle = cn(
     "relative w-full transition-all duration-300 flex flex-col rounded-3xl border border-border text-card-foreground overflow-hidden shadow-2xl",
     isExpanded 
-      ? "h-full max-h-full bg-background" 
+      ? "h-[calc(100dvh-220px)] lg:h-full max-h-full bg-background" 
       : "h-full min-h-[400px] max-h-[459.5px] bg-card/30 backdrop-blur-md"
   );
 
@@ -296,7 +295,7 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
         <form
           onSubmit={handleSendChat}
           className={cn(
-            "border-t border-border/40 p-4 flex items-center gap-2 relative z-30",
+            "border-t border-border/40 p-4 flex items-center gap-2 relative z-30 ",
             isExpanded ? "bg-background" : "bg-card/60 backdrop-blur-md"
           )}
         >
