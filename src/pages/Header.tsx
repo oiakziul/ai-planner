@@ -439,8 +439,8 @@ export const Header: React.FC = () => {
               className={cn(
                 "w-full  active:scale-95 ring transition-all h-10 py-0 text-sm [&_svg]:h-6 [&_svg]:w-6 ",
                 isPlanejarActive
-                  ? "ring-primary/40 bg-primary/8 text-primary font-bold "
-                  : "ring-ring/50 text-primary"
+                  ? "ring-primary/40 bg-primary/8 text-foreground font-bold "
+                  : "ring-ring/50 text-foreground"
               )}
             />
             {isPlanejarActive && (
@@ -456,8 +456,8 @@ export const Header: React.FC = () => {
               className={cn(
                 "w-full  h-10 py-0 text-sm ring transition-all [&_svg]:h-3.5 [&_svg]:w-3.5",
                 isHistoricoActive
-                  ? "ring-primary/40  text-primary font-bold  "
-                  : "ring-primary/20 text-primary"
+                  ? "ring-primary/40  text-foreground font-bold  "
+                  : "ring-primary/20 text-foreground"
               )}
             />
           </div>
