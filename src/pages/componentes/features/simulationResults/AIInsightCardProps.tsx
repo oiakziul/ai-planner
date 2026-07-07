@@ -17,8 +17,8 @@ import {
 } from "lucide-react";
 import { ScrollProgress } from "@/assets/styles/componentes/ScrollProgress";
 import { Input } from "@/pages/componentes/shared/Input";
-import { Button } from "@/components/ui/button"; 
-import { callGeminiChatAPI, type ChatMessage } from "@/services/aiService"; 
+import { Button } from "@/components/ui/button";
+import { callGeminiChatAPI, type ChatMessage } from "@/services/aiService";
 
 interface AIInsightCardProps {
   simulationId: string;
@@ -86,10 +86,10 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
     }
   };
 
-const cardOuterStyle = cn(
+  const cardOuterStyle = cn(
     "relative w-full transition-all duration-300 flex flex-col rounded-3xl border border-border text-card-foreground overflow-hidden shadow-2xl",
-    isExpanded 
-      ? "h-[calc(100dvh-220px)] 2xl:h-full max-h-full bg-background" 
+    isExpanded
+      ? "h-[calc(100dvh-220px)] 2xl:h-full max-h-full bg-background"
       : "h-full min-h-[400px] max-h-[459.5px] bg-card/30 backdrop-blur-md"
   );
 
@@ -257,21 +257,22 @@ const cardOuterStyle = cn(
                     <div
                       key={i}
                       className={cn(
-                        "flex items-start gap-2 max-w-[85%] rounded-2xl p-3.5 text-sm leading-relaxed",
+                        "flex items-start gap-2 rounded-2xl p-3.5 text-sm leading-relaxed",
                         isUser
-                          ? "bg-primary text-primary-foreground ml-auto rounded-tr-sm"
-                          : "bg-accent/25 border border-border mr-auto rounded-tl-sm"
+                          ? "bg-primary text-primary-foreground ml-auto rounded-tr-sm max-w-[85%]"
+                          : "bg-accent/25 border border-border mr-auto rounded-tl-sm w-[96%] max-w-[96%] md:w-auto md:max-w-[85%]"
+                        // 👆 w-[96%] alarga no mobile. md: volta ao tamanho original no PC.
                       )}
                     >
                       {!isUser && <Sparkles className="h-4 w-4 text-primary mt-0.5 shrink-0" />}
                       {isUser && <CircleUser className="h-4 w-4 mt-0.5 shrink-0" />}
-                      <span className="whitespace-pre-wrap">{msg.parts[0].text}</span>
+                      <span className="flex-1 whitespace-pre-wrap wrap-break-word">{msg.parts[0].text}</span>
                     </div>
                   );
                 })}
 
                 {isChatLoading && (
-                  <div className="flex items-center gap-2 bg-accent/15 border border-border mr-auto max-w-[85%] rounded-2xl rounded-tl-sm p-3.5 text-sm">
+                  <div className="flex items-center gap-2 bg-accent/15 border border-border mr-auto w-[96%] max-w-[96%] md:w-auto md:max-w-[85%] rounded-2xl rounded-tl-sm p-3.5 text-sm">
                     <Sparkles className="h-4 w-4 text-primary animate-pulse shrink-0" />
                     <span className="text-muted-foreground animate-pulse">Educador está analisando...</span>
                   </div>
