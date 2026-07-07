@@ -169,7 +169,7 @@ export const Header: React.FC = () => {
 
       <header
         className={cn(
-          " header-intro mx-auto flex items-center justify-between w-[95%] max-w-4xl px-2 sm:px-4 md:px-6",
+          " header-intro mx-auto flex items-center justify-between w-full max-w-4xl px-2 sm:px-4 md:px-6",
           // [AQUI]: Trocado 'sticky' por 'fixed left-0 right-0' para flutuar de verdade
           "z-50 rounded-[1.75rem] fixed top-4 left-0 right-0 transition-all duration-500 ease-in-out font-sans select-none",
           "ring-1 ring-black/5 border",
