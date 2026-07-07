@@ -171,8 +171,8 @@ export const Header: React.FC = () => {
             ? "opacity-100 translate-y-0 "
             : "opacity-0 translate-y-[-150%] pointer-events-none",
           isScrolled
-            ? "h-14 shadow-[0_14px_45px_-10px_rgba(0,0,0,0.35)] bg-background/10 backdrop-blur-xl border-border" //bg90
-            : "h-16 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.25)] bg-background/40 backdrop-blur-xl border-border/70" // bg80
+            ? "h-14 shadow-[0_14px_45px_-10px_rgba(0,0,0,0.35)] bg-card/80 backdrop-blur-xl border-border" 
+            : "h-16 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.25)] bg-card/90 backdrop-blur-xl border-border/70" 
         )}
       >
         {/* LOGO */}
