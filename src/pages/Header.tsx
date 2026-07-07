@@ -373,8 +373,13 @@ export const Header: React.FC = () => {
             )}
           </div>
 
+{/* BOTÃO DE TEMA ESCURO E ATUALIZAR */}
           <div className="flex items-center justify-center h-9 shrink-0">
-            <AnimatedThemeToggler variant="circle" duration={500} fromCenter />
+            <AnimatedThemeToggler 
+              variant="circle" 
+              duration={500} 
+              fromCenter 
+            />
           </div>
 
           {/* BOTÕES DESKTOP */}
