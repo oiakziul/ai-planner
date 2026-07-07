@@ -89,7 +89,7 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
 const cardOuterStyle = cn(
     "relative w-full transition-all duration-300 flex flex-col rounded-3xl border border-border text-card-foreground overflow-hidden shadow-2xl",
     isExpanded 
-      ? "h-[calc(100dvh-220px)] lg:h-full max-h-full bg-background" 
+      ? "h-[calc(100dvh-220px)] 2xl:h-full max-h-full bg-background" 
       : "h-full min-h-[400px] max-h-[459.5px] bg-card/30 backdrop-blur-md"
   );
 
