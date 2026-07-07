@@ -54,7 +54,9 @@ export const Header: React.FC = () => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isColorOpen, setIsColorOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // [CORRIGIDO]: Os dois estados de scroll trabalham juntos agora
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isAtTop, setIsAtTop] = useState(true);
 
   const langRef = useRef<HTMLDivElement>(null);
   const colorRef = useRef<HTMLDivElement>(null);
@@ -63,7 +65,12 @@ export const Header: React.FC = () => {
   useEffect(() => {
     const mainScroll = document.querySelector("main");
     const handleScroll = () => {
-      if (mainScroll) setIsScrolled(mainScroll.scrollTop > 8);
+      if (mainScroll) {
+        const scrollTop = mainScroll.scrollTop;
+        // Restaura a função de sumir o header quando rola pra baixo
+        setIsAtTop(scrollTop < 5);
+        setIsScrolled(scrollTop > 8);
+      }
     };
     mainScroll?.addEventListener("scroll", handleScroll);
     return () => mainScroll?.removeEventListener("scroll", handleScroll);
@@ -94,8 +101,10 @@ export const Header: React.FC = () => {
     { code: "es", flag: <ES className={flagClass} />, name: t("spanish") },
   ];
 
+  // [CORRIGIDO]: Resgata o idioma imediatamente na montagem usando o resolvedLanguage como fallback
+  const langCode = (i18n.resolvedLanguage || i18n.language || "pt").split("-")[0].toLowerCase();
   const currentLang =
-    supportedLanguages.find((l) => l.code === i18n.language.split("-")[0]) ||
+    supportedLanguages.find((l) => l.code === langCode) ||
     supportedLanguages[0];
 
   const currentThemeMeta = THEME_OPTIONS.find((th) => th.id === colorTheme);
@@ -103,7 +112,7 @@ export const Header: React.FC = () => {
   const dropdownBase = cn(
     "absolute top-[calc(100%+12px)] left-0 w-52 rounded-2xl border border-border/60",
     "bg-popover/98 backdrop-blur-xl shadow-2xl overflow-hidden",
-    "transition-all duration-200 origin-top-left z-50"
+    "transition-all duration-200 origin-top-left z-50 "
   );
 
   const iconTriggerClass = (active: boolean) =>
@@ -114,8 +123,10 @@ export const Header: React.FC = () => {
       active && "bg-accent text-primary ring-1 ring-primary/20"
     );
 
-  const isPlanejarActive = location.pathname === "/";
-  const isHistoricoActive = location.pathname === "/historico";
+  // [CORRIGIDO]: A verificação de página inicial e histórico agora abrange sub-rotas
+  const path = location.pathname;
+  const isPlanejarActive = path === "/" || path === "";
+  const isHistoricoActive = path.startsWith("/historico");
 
   return (
     <>
@@ -158,9 +169,14 @@ export const Header: React.FC = () => {
 
       <header
         className={cn(
-          "header-intro mx-auto flex items-center justify-between w-[95%] max-w-4xl py-8 px-2 sm:px-4 md:px-6",
-          "z-50 rounded-[1.75rem] sticky top-4 transition-all duration-300 ease-in-out font-sans select-none",
+          "header-intro mx-auto flex items-center justify-between w-[95%] max-w-4xl px-2 sm:px-4 md:px-6",
+          // [AQUI]: Trocado 'sticky' por 'fixed left-0 right-0' para flutuar de verdade
+          "z-50 rounded-[1.75rem] fixed top-4 left-0 right-0 transition-all duration-500 ease-in-out font-sans select-none",
           "ring-1 ring-black/5 border",
+          // [AQUI]: -translate-y-[150%] joga o header inteiramente para fora do monitor, liberando a visão
+          isAtTop
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-[-150%] pointer-events-none",
           isScrolled
             ? "h-14 shadow-[0_14px_45px_-10px_rgba(0,0,0,0.35)] bg-background/90 backdrop-blur-2xl border-border"
             : "h-16 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.25)] bg-background/80 backdrop-blur-xl border-border/70"
@@ -174,7 +190,7 @@ export const Header: React.FC = () => {
           <img
             src="/logo192.png"
             alt="Logo"
-            className="h-7 w-7 sm:h-8 sm:w-8 object-contain rounded-lg transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105"
+            className="h-7 w-7 sm:h-9 sm:w-9 object-contain rounded-lg transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105"
           />
           <span className="text-base sm:text-lg bg-linear-to-r from-foreground via-foreground to-primary bg-size-[200%_100%] bg-clip-text text-transparent transition-[background-position] duration-500 group-hover:bg-position-[100%_0]">
             AI Planner
@@ -215,7 +231,8 @@ export const Header: React.FC = () => {
                 </div>
                 <ul className="p-1.5 space-y-0.5">
                   {navLinks.map((link) => {
-                    const active = location.pathname === link.to;
+                    // [CORRIGIDO]: Identificação inteligente de sub-páginas (como /resultado/id) no dropdown do menu
+                    const isDropdownLinkActive = path === link.to || (link.to !== "/" && path.startsWith(link.to));
                     const Icon = link.icon;
                     return (
                       <li key={link.to}>
@@ -226,7 +243,7 @@ export const Header: React.FC = () => {
                           className={cn(
                             "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150",
                             "outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
-                            active
+                            isDropdownLinkActive
                               ? "bg-primary/10 text-primary font-semibold"
                               : "text-foreground/80 hover:bg-accent hover:text-accent-foreground"
                           )}
@@ -234,11 +251,11 @@ export const Header: React.FC = () => {
                           <Icon
                             className={cn(
                               "h-4 w-4 shrink-0 transition-colors",
-                              active ? "text-primary" : "text-muted-foreground"
+                              isDropdownLinkActive ? "text-primary" : "text-muted-foreground"
                             )}
                           />
                           <span className="flex-1">{t(link.label, link.label)}</span>
-                          {active && (
+                          {isDropdownLinkActive && (
                             <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_6px_1px_var(--primary)]" />
                           )}
                         </Link>
@@ -314,7 +331,7 @@ export const Header: React.FC = () => {
               onClick={() => setIsLangOpen(!isLangOpen)}
               aria-expanded={isLangOpen}
               aria-haspopup="menu"
-              className={cn(iconTriggerClass(isLangOpen), "overflow-hidden")}
+              className="mr-1 flex items-center justify-center h-9 w-9 rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             >
               {currentLang.flag}
             </button>
