@@ -42,20 +42,9 @@
   user-select: none;
 }
 
-/* =========================================================================
-   🎨 NOVA THEME — Hierarquia visual clara, bordas visíveis, sombras reais
-   ========================================================================= */
 @theme {
   /* --- BREAKPOINTS --- */
   --breakpoint-xs: 900px;
-
-  /* --- CORES CUSTOMIZADAS (preservadas) --- */
-  --color-cor1: var(--color-rose-600);
-  --color-cor2: var(--color-rose-600);
-  --color-cor3: var(--color-pink-600);
-  --color-cor4: var(--color-red-600);
-  --color-cor5: var(--color-fuchsia-600);
-  --color-progress: var(--color-cor1);
 
   /* Hovers dinâmicos do Header */
   --color-hoverHeader: var(--hoverHeader);
