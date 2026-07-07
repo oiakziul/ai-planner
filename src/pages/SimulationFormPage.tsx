@@ -7,7 +7,7 @@ import { SimulationForm } from "./componentes/features/Simulation/Form";
 export const SimulationFormPage = () => {
   // const { t } = useTranslation("inicio");
   const base = clsx(
-    "mt-14 md:mt-20 relative min-h-145 md:min-h-165" ,
+    "relative min-h-145 md:min-h-165" ,
     "flex justify-center mx-auto rounded-2xl",
     "md:shadow-lg md:ring-1 ring-border/50 font-sans",
     "text-card-foreground font-bold py-4 px-2 pb-6 md:p-10",
