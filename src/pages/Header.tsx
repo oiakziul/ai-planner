@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import InteractiveHoverButton from "@/components/shadcn-space/button/button-19";
-import ButtonRipple from "@/components/shadcn-space/button/button-16";
 
 const navLinks: { to: string; label: string; icon: LucideIcon }[] = [
   { to: "/", label: "Início", icon: HomeIcon },
@@ -402,18 +401,16 @@ export const Header: React.FC = () => {
               )}
             </div>
             <div className="relative">
-              <ButtonRipple
+              <InteractiveHoverButton
                 icon={Clock}
                 nome="Histórico"
-                variant="ghost"
-                size="default"
                 disabled={false}
                 onClick={() => navigate("/historico")}
                 className={cn(
-                  "h-10 py-0 text-sm ring transition-all [&_svg]:h-4 [&_svg]:w-4",
+                  "shadow-sm active:scale-95 ring transition-all h-10 py-0 text-sm [&_svg]:h-6 [&_svg]:w-6",
                   isHistoricoActive
-                    ? "ring-primary/35  text-foreground font-semibold "
-                    : "ring-primary/20 text-foreground"
+                    ? "ring-primary/30 bg-primary/5 text-foreground font-semibold shadow-xs"
+                    : "ring-ring/50 text-foreground"
                 )}
               />
               {isHistoricoActive && (
@@ -443,7 +440,7 @@ export const Header: React.FC = () => {
                   : "ring-ring/50 text-foreground"
               )}
             />
-           
+
           </div>
           <div className="h-8 w-px bg-linear-to-b from-transparent via-border to-transparent shrink-0 " />
           <div className="relative flex-1 ">
@@ -452,9 +449,9 @@ export const Header: React.FC = () => {
               nome="Histórico"
               onClick={() => navigate("/historico")}
               className={cn(
-                 "w-full  active:scale-95 ring transition-all h-10 py-0 text-sm [&_svg]:h-6 [&_svg]:w-6 ",
+                "w-full  active:scale-95 ring transition-all h-10 py-0 text-sm [&_svg]:h-6 [&_svg]:w-6 ",
                 isHistoricoActive
-                 ? "ring-primary/40 bg-primary/8 text-foreground font-bold "
+                  ? "ring-primary/40 bg-primary/8 text-foreground font-bold "
                   : "ring-ring/50 text-foreground"
               )}
             />
