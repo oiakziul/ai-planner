@@ -21,8 +21,8 @@ interface ActionsButtonsProps {
   onBack: () => void;
   onNext: () => void;
   hideBackButton?: boolean;
-  hasError?: boolean; 
-  shake?: boolean; 
+  hasError?: boolean;
+  shake?: boolean;
 }
 
 export function FormStep({
@@ -34,10 +34,10 @@ export function FormStep({
   hideBackButton,
   onBack,
   onNext,
-  hasError, 
-  shake,     
+  hasError,
+  shake,
 }: FormStepProps & ActionsButtonsProps) {
-  const { t } = useTranslation("inicio");
+  const { t } = useTranslation("simulationFormSteps");
 
   const formStepContainer = cn(
     "bg-card rounded-2xl p-4  ring ring-primary/20 md:shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] sm:p-8",
@@ -75,7 +75,7 @@ export function FormStep({
 
   return (
     <div className={formStepContainer}>
-      
+
       {/* Topo do Card */}
       <div>
         <div className={iconContainer}>
@@ -88,35 +88,35 @@ export function FormStep({
       </div>
 
       {/* Formulário */}
-      <form 
-        className={formStyle} 
+      <form
+        className={formStyle}
         onSubmit={(e) => {
           e.preventDefault();
-          onNext(); 
+          onNext();
         }}
       >
         <div className="flex flex-col w-full relative">
-   
+
           <Input
             {...inputProps}
             hasError={hasError}
             placeholder={
-              typeof inputProps.placeholder === "string" 
-                ? t(inputProps.placeholder) 
+              typeof inputProps.placeholder === "string"
+                ? t(inputProps.placeholder)
                 : undefined
             }
             prefix={
-              typeof inputProps.prefix === "string" 
-                ? t(inputProps.prefix) 
+              typeof inputProps.prefix === "string"
+                ? t(inputProps.prefix)
                 : inputProps.prefix
             }
             suffix={
-              typeof inputProps.suffix === "string" 
-                ? t(inputProps.suffix) 
-                : inputProps.suffix 
+              typeof inputProps.suffix === "string"
+                ? t(inputProps.suffix)
+                : inputProps.suffix
             }
           />
-          
+
 
           {hasError && (
             <span className="text-destructive text-xs font-semibold mt-1.5 ml-1 self-start animate-in fade-in slide-in-from-top-1 duration-300">
@@ -127,7 +127,7 @@ export function FormStep({
 
         <div className={buttonContainer}>
 
-   
+
           <ButtonRipple
             type="submit"
             variant="default"
@@ -135,7 +135,7 @@ export function FormStep({
             disabled={false}
             className={btnProximoStyle}
           >
-            {submitButtonProps?.label ? t(submitButtonProps.label) : t("Próximo")}
+            {submitButtonProps?.label ? t(submitButtonProps.label) : t("btn_next")}
 
             {submitButtonProps?.emojiIcon ? (
               <span className="text-base">{submitButtonProps.emojiIcon}</span>
@@ -144,7 +144,7 @@ export function FormStep({
             )}
           </ButtonRipple>
 
-  
+
           {!hideBackButton && onBack && (
             <ButtonRipple
               type="button"
@@ -152,12 +152,11 @@ export function FormStep({
               size="default"
               disabled={false}
               onClick={onBack}
-              // [CORREÇÃO SÊNIOR]: Além do React não renderizar, o Tailwind garante que ele fique 'hidden' se hideBackButton for true!
               className={cn(btnVoltarStyle, hideBackButton ? "hidden" : "flex")}
               icon={ArrowLeft}
               iconPlacement="left"
             >
-              {t("Voltar")}
+              {t("btn_back")}
             </ButtonRipple>
           )}
 

@@ -2,8 +2,12 @@ import { useState, useEffect } from "react";
 import { Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next"; // Hook de tradução
 
 const ButtonDemo = () => {
+  // Ajuste "footer" para o namespace real onde você guardar as chaves deste botão
+  const { t } = useTranslation("footer"); 
+  
   const [copied, setCopied] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -81,7 +85,8 @@ const ButtonDemo = () => {
           className="gap-1.5 rounded-full! cursor-pointer select-none hover:bg-primary/80 px-4"
         >
           <Copy className="w-3.5 h-3.5" />
-          Copiar
+          {/* 👇 Tradução aplicada ao botão Copiar */}
+          {t("btn_copy", "Copiar")}
         </Button>
       </div>
 
@@ -105,7 +110,8 @@ const ButtonDemo = () => {
           />
         </div>
         <span className="text-sm font-semibold text-foreground">
-          E-mail copiado!
+          {/* 👇 Tradução aplicada à mensagem de sucesso */}
+          {t("msg_copied", "E-mail copiado!")}
         </span>
       </div>
     </div>

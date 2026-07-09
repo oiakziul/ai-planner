@@ -48,5 +48,6 @@ export const simulationFormStepsPT = () => ({
   goalDeadline_placeholder: "ex: 12",
   goalDeadline_suffix_years: "anos",
   goalDeadline_suffix_months: "meses",
-  goalDeadline_submit_label: "Gerar Laudo Inteligente"
+  goalDeadline_submit_label: "Gerar Laudo Inteligente",
+
 });

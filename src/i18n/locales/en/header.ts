@@ -1,7 +1,31 @@
 export const headerEN = () => ({
-
   english: "English",
   portuguese: "Portuguese",
   spanish: "Spanish",
+  nav_pages: "Pages",
+  nav_plan: "Plan",
+  nav_history: "History",
 
+  label_navigation: "Navigation",
+  label_themes: "Color Themes",
+  label_language: "Language",
+
+  theme_rose: "Wine (Default)",
+  theme_red: "Red",
+  theme_orange: "Orange",
+  theme_amber: "Amber",
+  theme_yellow: "Yellow",
+  theme_lime: "Lime",
+  theme_green: "Green",
+  theme_emerald: "Emerald",
+  theme_teal: "Teal",
+  theme_cyan: "Cyan",
+  theme_sky: "Sky",
+  theme_blue: "Blue",
+  theme_indigo: "Indigo",
+  theme_violet: "Violet",
+  theme_purple: "Purple",
+  theme_fuchsia: "Fuchsia",
+  theme_pink: "Pink",
+  theme_slate: "Minimalist"
 });

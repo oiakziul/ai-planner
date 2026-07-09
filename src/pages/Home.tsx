@@ -61,8 +61,7 @@ export const Home = () => {
 
   const pageWrapper = clsx(
     "w-full h-full scroll-auto duration-100",
-    "text-foreground",
-    "overflow-y-auto",
+    "text-foreground overflow-y-auto",
     "snap-y-center snap-mandatory",
     "scrollbar-hide bg-stripes-custom0"
   );

@@ -2,5 +2,30 @@ export const headerES = () => ({
   english: "Inglés",
   portuguese: "Portugués",
   spanish: "Español",
- 
+  nav_pages: "Páginas",
+  nav_plan: "Planear",
+  nav_history: "Historial",
+
+  label_navigation: "Navegación",
+  label_themes: "Temas de Color",
+  label_language: "Idioma",
+
+  theme_rose: "Vino (Predeterminado)",
+  theme_red: "Rojo",
+  theme_orange: "Naranja",
+  theme_amber: "Ámbar",
+  theme_yellow: "Amarillo",
+  theme_lime: "Lima",
+  theme_green: "Verde",
+  theme_emerald: "Esmeralda",
+  theme_teal: "Teal",
+  theme_cyan: "Cian",
+  theme_sky: "Cielo",
+  theme_blue: "Azul",
+  theme_indigo: "Índigo",
+  theme_violet: "Violeta",
+  theme_purple: "Púrpura",
+  theme_fuchsia: "Fucsia",
+  theme_pink: "Rosa",
+  theme_slate: "Minimalista"
 });
