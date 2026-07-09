@@ -2,12 +2,6 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
-@import "tailwindcss";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
-
-/* Tema Padrão / Vinho */
-
 /* Família dos Azuis */
 @import "./themes/sky.css";
 @import "./themes/cyan.css";
@@ -116,40 +110,48 @@
   }
 }
 
-/* =========================================================================
-   ☀️ LIGHT MODE
-   ========================================================================= */
+/*  LIGHT MODE   */
 :root {
+  --theme-hue: 355;
+  --n-50: oklch(98.4% 0.004 var(--theme-hue));
+  --n-100: oklch(96.8% 0.006 var(--theme-hue));
+  --n-200: oklch(92.9% 0.010 var(--theme-hue));
+  --n-300: oklch(87.0% 0.016 var(--theme-hue));
+  --n-400: oklch(70.4% 0.024 var(--theme-hue));
+  --n-500: oklch(55.4% 0.026 var(--theme-hue));
+  --n-600: oklch(44.6% 0.024 var(--theme-hue));
+  --n-700: oklch(37.2% 0.022 var(--theme-hue));
+  --n-800: oklch(27.9% 0.020 var(--theme-hue));
+  --n-900: oklch(20.8% 0.018 var(--theme-hue));
+  --n-950: oklch(12.9% 0.014 var(--theme-hue));
+
   /* Hovers Header */
   --hoverHeader: var(--color-white);
   --textHoverHeader: var(--color-rose-700);
 
-  /* Fundo: cinza frio — card branco flutua sobre ele */
-  --background: var(--color-slate-100);
-  --bg-gradient: linear-gradient(
-    160deg,
-    var(--color-slate-100) 0%,
-    var(--color-slate-200) 100%
-  );
+  /* Fundo: neutro tingido pelo hue do tema — card branco flutua sobre ele */
+  --background: var(--n-100);
+  --bg-gradient: linear-gradient(160deg, var(--n-100) 0%, var(--n-200) 100%);
 
-  --foreground: var(--color-slate-900);
+  --foreground: var(--n-900);
 
-  /* Card branco com sombra = elemento elevado */
+  /* Card branco puro com sombra = elemento elevado, sempre destaca
+     independente do tema */
   --card: var(--color-white);
-  --card-foreground: var(--color-slate-900);
+  --card-foreground: var(--n-900);
 
   --popover: var(--color-white);
-  --popover-foreground: var(--color-slate-900);
+  --popover-foreground: var(--n-900);
 
-  /* Primary vinho / rosa escuro */
+  /* Primary vinho / rosa escuro (sobrescrito por .theme-*) */
   --primary: var(--color-rose-700);
   --primary-foreground: var(--color-white);
 
-  --secondary: var(--color-slate-200);
-  --secondary-foreground: var(--color-slate-800);
+  --secondary: var(--n-200);
+  --secondary-foreground: var(--n-800);
 
-  --muted: var(--color-slate-200);
-  --muted-foreground: var(--color-slate-500);
+  --muted: var(--n-200);
+  --muted-foreground: var(--n-500);
 
   --accent: var(--color-rose-50);
   --accent-foreground: var(--color-rose-800);
@@ -158,22 +160,22 @@
   --destructive-foreground: var(--color-white);
 
   /* Borda visível sobre fundo claro */
-  --border: var(--color-slate-300);
-  --input: var(--color-slate-300);
+  --border: var(--n-300);
+  --input: var(--n-300);
 
-  /* Ring vinho — visível no focus */
+  /* Ring vinho — visível no focus (sobrescrito por .theme-*) */
   --ring: var(--color-rose-600);
 
   --radius: 0.375rem;
 
   /* Sidebar clara */
   --sidebar: var(--color-white);
-  --sidebar-foreground: var(--color-slate-700);
+  --sidebar-foreground: var(--n-700);
   --sidebar-primary: var(--color-rose-700);
   --sidebar-primary-foreground: var(--color-white);
-  --sidebar-accent: var(--color-slate-100);
-  --sidebar-accent-foreground: var(--color-slate-900);
-  --sidebar-border: var(--color-slate-300);
+  --sidebar-accent: var(--n-100);
+  --sidebar-accent-foreground: var(--n-900);
+  --sidebar-border: var(--n-300);
   --sidebar-ring: var(--color-rose-600);
 
   /* Sombras reais com opacidade */
@@ -196,35 +198,34 @@
    🌙 DARK MODE
    ========================================================================= */
 :root.dark {
+  /* --theme-hue herda do :root (355 por padrão, ou o que o .theme-*
+     ativo tiver sobrescrito) — não precisa redeclarar aqui. */
+
   /* Hovers Header */
   --hoverHeader: var(--color-slate-800);
   --textHoverHeader: var(--color-rose-300);
 
   /* Fundo bem escuro — card sobe um nível */
-  --background: var(--color-slate-950);
-  --bg-gradient: linear-gradient(
-    160deg,
-    var(--color-slate-900) 0%,
-    var(--color-slate-950) 100%
-  );
+  --background: var(--n-950);
+  --bg-gradient: linear-gradient(160deg, var(--n-900) 0%, var(--n-950) 100%);
 
-  --foreground: var(--color-slate-50);
+  --foreground: var(--n-50);
 
-  /* Card um tom acima do fundo */
-  --card: var(--color-slate-900);
-  --card-foreground: var(--color-slate-50);
+  /* Card um tom acima do fundo, já tingido pelo hue do tema */
+  --card: var(--n-900);
+  --card-foreground: var(--n-50);
 
-  --popover: var(--color-slate-900);
-  --popover-foreground: var(--color-slate-50);
+  --popover: var(--n-900);
+  --popover-foreground: var(--n-50);
 
   --primary: var(--color-rose-400);
   --primary-foreground: var(--color-slate-950);
 
-  --secondary: var(--color-slate-800);
-  --secondary-foreground: var(--color-slate-100);
+  --secondary: var(--n-800);
+  --secondary-foreground: var(--n-100);
 
-  --muted: var(--color-slate-800);
-  --muted-foreground: var(--color-slate-400);
+  --muted: var(--n-800);
+  --muted-foreground: var(--n-400);
 
   --accent: var(--color-rose-900);
   --accent-foreground: var(--color-rose-100);
@@ -232,20 +233,21 @@
   --destructive: var(--color-red-500);
   --destructive-foreground: var(--color-white);
 
-  /* Borda sutil mas visível no escuro */
+  /* Borda sutil mas visível no escuro — alpha sobre o fundo tingido
+     já se adapta sozinha, sem precisar de hue própria */
   --border: rgb(255 255 255 / 0.12);
   --input: rgb(255 255 255 / 0.15);
 
-  /* Ring vinho visível no escuro */
+  /* Ring vinho visível no escuro (sobrescrito por .theme-*) */
   --ring: var(--color-rose-400);
 
   /* Sidebar escura — um toque mais clara que o background */
-  --sidebar: var(--color-slate-900);
-  --sidebar-foreground: var(--color-slate-300);
+  --sidebar: var(--n-900);
+  --sidebar-foreground: var(--n-300);
   --sidebar-primary: var(--color-rose-400);
   --sidebar-primary-foreground: var(--color-slate-950);
-  --sidebar-accent: var(--color-slate-800);
-  --sidebar-accent-foreground: var(--color-slate-100);
+  --sidebar-accent: var(--n-800);
+  --sidebar-accent-foreground: var(--n-100);
   --sidebar-border: rgb(255 255 255 / 0.08);
   --sidebar-ring: var(--color-rose-400);
 
@@ -302,25 +304,23 @@
     }
   }
 
-@layer utilities {
   .bg-stripes-custom0 {
     background: radial-gradient(
-      circle, 
-      oklch(99.15% var(--bg-stripes-light-chroma, 0.010) var(--theme-hue, 29.2)) 0%, 
-      oklch(98.764% var(--bg-stripes-light-chroma, 0.012) var(--theme-hue, 29.2)) 50%, 
-      oklch(98.687% var(--bg-stripes-light-chroma, 0.011) var(--theme-hue, 29.2)) 100%
+      circle,
+      oklch(99.15% var(--bg-stripes-light-chroma, 0.010) var(--theme-hue, 355)) 0%,
+      oklch(98.764% var(--bg-stripes-light-chroma, 0.012) var(--theme-hue, 355)) 50%,
+      oklch(98.687% var(--bg-stripes-light-chroma, 0.011) var(--theme-hue, 355)) 100%
     );
   }
 
   .dark .bg-stripes-custom0 {
     background: radial-gradient(
-      circle, 
-      oklch(24% var(--bg-stripes-dark-chroma, 0.05) var(--theme-hue, 29.2)) 0%, 
-      oklch(16% var(--bg-stripes-dark-chroma, 0.04) var(--theme-hue, 29.2)) 50%, 
-      oklch(10% var(--bg-stripes-dark-chroma, 0.03) var(--theme-hue, 29.2)) 100%
+      circle,
+      oklch(24% var(--bg-stripes-dark-chroma, 0.05) var(--theme-hue, 355)) 0%,
+      oklch(16% var(--bg-stripes-dark-chroma, 0.04) var(--theme-hue, 355)) 50%,
+      oklch(10% var(--bg-stripes-dark-chroma, 0.03) var(--theme-hue, 355)) 100%
     );
   }
-}
 }
 
 ::view-transition-old(root),

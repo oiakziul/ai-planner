@@ -176,8 +176,8 @@ export const Header: React.FC = () => {
             ? "opacity-100 translate-y-0 "
             : "opacity-0 translate-y-[-150%] pointer-events-none",
           isScrolled
-            ? "h-14 shadow-[0_14px_45px_-10px_rgba(0,0,0,0.35)] bg-card/80 backdrop-blur-xl border-border" 
-            : "h-16 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.25)] bg-card/90 backdrop-blur-xl border-border/70" 
+            ? "h-14 shadow-[0_14px_45px_-10px_rgba(0,0,0,0.35)] bg-card/80 backdrop-blur-xl border-border"
+            : "h-16 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.25)] bg-card/90 backdrop-blur-xl border-border/70"
         )}
       >
         {/* LOGO */}
@@ -278,22 +278,22 @@ export const Header: React.FC = () => {
               <ColorWheelIcon className="h-7.5 w-7.5 shrink-0 transition-transform duration-500 group-hover:rotate-45" />
             </button>
 
-{isColorOpen && (
+            {isColorOpen && (
               <div
                 role="menu"
-                // 👇 Reduzimos a largura para w-[230px] para ficar 100% seguro no Android
-                className="absolute top-[calc(100%+8px)] right-10px sm:right-0 w-57.5 z-50 rounded-2xl p-2 border border-border/60 shadow-2xl bg-popover/98 backdrop-blur-xl"
+                // 👇 Largura ajustada para w-[200px] e alinhamento corrigido (right-[-10px])
+                className="absolute top-[calc(100%+8px)] -right-2.5 sm:right-0 w-50 max-w-[90vw] z-50 rounded-2xl p-2 border border-border/60 shadow-2xl bg-popover/98 backdrop-blur-xl"
               >
                 <div className="px-2 py-1.5 border-b border-border/40 mb-2 flex items-center justify-between">
                   <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-                    Temas de Cor
+                    Temas
                   </p>
-                  <span className="text-[10px] font-medium text-primary">
+                  <span className="text-[10px] font-medium text-primary truncate pl-2 text-right">
                     {currentThemeMeta?.name}
                   </span>
                 </div>
-                
-                {/* 👇 Aqui está: 6 colunas para 18 itens = exatas 3 fileiras! */}
+
+                {/* 👇 Aqui está: 5 colunas para não estourar a tela no Android */}
                 <div className="grid grid-cols-6 gap-x-2 gap-y-3 p-1">
                   {THEME_OPTIONS.map((theme) => {
                     const active = colorTheme === theme.id;
