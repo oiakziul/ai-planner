@@ -6,11 +6,14 @@ import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { useTheme, type ColorTheme } from "@/context/ThemeContext";
 import { ColorWheelIcon } from "@/assets/styles/componentes/ColorWheelIcon";
 import {
-  Menu, ChartNoAxesCombined, Clock,
-  Home as HomeIcon, Check, ChevronDown,
+  Menu,
+  ChartNoAxesCombined,
+  Clock,
+  Home as HomeIcon,
+  Check,
+  ChevronDown,
   type LucideIcon,
 } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import InteractiveHoverButton from "@/components/shadcn-space/button/button-19";
 
@@ -41,7 +44,6 @@ const THEME_OPTIONS: { id: ColorTheme; nameKey: string; dotClass: string }[] = [
   { id: "slate", nameKey: "theme_slate", dotClass: "bg-slate-500" },
 ];
 
-/* Estilos globais */
 const globalStyles = `
   ::-webkit-scrollbar { width: 8px !important; height: 8px !important; }
   ::-webkit-scrollbar-thumb { 
@@ -129,14 +131,14 @@ export const Header: React.FC = () => {
     "z-50 rounded-[1.75rem] fixed top-4 left-0 right-0",
     "transition-all duration-500 ease-in-out font-sans select-none",
     "ring-1 ring-black/5 border",
-    isAtTop
-      ? "opacity-100 translate-y-0"
+    isAtTop 
+      ? "opacity-100 translate-y-0" 
       : "opacity-0 translate-y-[-150%] pointer-events-none",
     isScrolled
       ? "h-14 shadow-md bg-card/80 backdrop-blur-xl border-border"
       : "h-16 shadow-lg bg-card/90 backdrop-blur-xl border-border/70"
   );
-
+  
   const rightSectionClasses = cn("flex items-center gap-3.5 sm:gap-4 md:gap-5");
   const verticalDividerClass = cn(
     "h-5 w-px bg-linear-to-b from-transparent via-border to-transparent shrink-0"
@@ -156,6 +158,7 @@ export const Header: React.FC = () => {
     "duration-500 group-hover:bg-position-[100%_0]"
   );
 
+  // --- Botões de Ícones Genéricos ---
   const getIconTriggerClass = (active: boolean) => cn(
     "flex items-center justify-center h-9 w-9 rounded-full transition-all cursor-pointer",
     "hover:scale-105 active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
@@ -180,19 +183,26 @@ export const Header: React.FC = () => {
     "outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
     isMenuOpen && "bg-accent"
   );
-  const menuLabelTextClass = cn("hidden sm:block text-xs md:text-[16px] w-[64px] text-center");
-
+  const menuLabelTextClass = cn("hidden sm:block text-xs md:text-[16px] w-[64px] text-center"); 
+  
   const menuDropdownClasses = cn(dropdownBaseClasses, "left-0 right-auto w-52 p-0");
   const menuListClasses = cn("p-1.5 space-y-0.5");
   const getMenuItemClasses = (active: boolean) => cn(
     "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150",
     "outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
-    active
-      ? "bg-primary/10 text-primary font-semibold"
+    active 
+      ? "bg-primary/10 text-primary font-semibold" 
       : "text-foreground/80 hover:bg-accent hover:text-accent-foreground"
   );
 
   // --- Botão "Paleta de Cores" ---
+  const colorTriggerBtnClass = cn(
+    "group flex items-center justify-center h-9 w-9 rounded-full transition-all cursor-pointer",
+    "outline-none focus-visible:ring-2 focus-visible:ring-primary/50 text-muted-foreground hover:text-primary",
+    isColorOpen && "bg-accent text-primary ring-1 ring-primary/20"
+  );
+  const colorWheelIconClasses = "h-7.5 w-7.5 shrink-0 transition-transform duration-500 group-hover:rotate-45";
+
   const themeDropdownClasses = cn(dropdownBaseClasses, "-right-2.5 sm:right-0 w-56 p-2");
   const themeDropdownHeaderClass = cn(dropdownHeaderContainer, "flex items-center justify-between px-2 py-1.5 mb-2");
   const themeGridClasses = cn("grid grid-cols-6 gap-2 p-1");
@@ -210,15 +220,15 @@ export const Header: React.FC = () => {
     active ? "bg-primary/10 text-primary font-semibold" : "hover:bg-accent hover:text-accent-foreground"
   );
 
-  // --- Botões de Navegação Desktop  ---
+  // --- Botões de Navegação Desktop ---
   const desktopNavWrapper = cn("hidden lg:flex items-center gap-2");
   const getDesktopBtnClasses = (active: boolean) => cn(
     "shadow-sm active:scale-95 ring transition-all",
     "h-10 py-0 text-sm flex items-center justify-center",
-    "w-[140px]",
+    "w-[155px]", 
     "[&_svg]:h-5 [&_svg]:w-5",
-    active
-      ? "ring-primary/30 bg-primary/5 text-foreground font-semibold shadow-xs"
+    active 
+      ? "ring-primary/30 bg-primary/5 text-foreground font-semibold shadow-xs" 
       : "ring-ring/50 text-foreground"
   );
 
@@ -237,6 +247,7 @@ export const Header: React.FC = () => {
     active ? "ring-primary/40 bg-primary/8 text-foreground font-bold" : "ring-ring/50 text-primary"
   );
 
+  // --- Elementos Comuns ---
   const activeDotClass = cn(
     "absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-1.5 w-1.5",
     "rounded-full bg-primary shadow-[0_0_6px_1px_var(--primary)] animate-pulse"
@@ -246,42 +257,87 @@ export const Header: React.FC = () => {
     "bg-linear-to-r from-transparent via-primary to-transparent opacity-80 animate-pulse"
   );
 
+  // ==========================================
+  // RENDERIZAÇÃO
+  // ==========================================
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
 
       <header className={headerWrapperClasses}>
+        
+        {/* LOGO */}
         <Link to="/" className={logoLinkClasses}>
-          <img src="/logo192.png" alt="Logo" className={logoImgClasses} />
-          <span className={logoTextClasses}>AI Planner</span>
+          <img 
+            src="/logo192.png" 
+            alt="Logo" 
+            className={logoImgClasses} 
+          />
+          <span className={logoTextClasses}>
+            AI Planner
+          </span>
         </Link>
 
+        {/* LADO DIREITO (CONTROLES E NAVEGAÇÃO) */}
         <div className={rightSectionClasses}>
-
+          
+          {/* MENU PÁGINAS */}
           <div className="relative" ref={menuRef}>
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-expanded={isMenuOpen} className={menuTriggerBtn}>
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)} 
+              aria-expanded={isMenuOpen} 
+              className={menuTriggerBtn}
+            >
               <Menu className="h-4 w-4 shrink-0" />
               <span className={menuLabelTextClass}>
                 {t("nav_pages", "Páginas")}
               </span>
-              <ChevronDown className={cn("h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform", isMenuOpen && "rotate-180")} />
+              <ChevronDown 
+                className={cn(
+                  "h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform", 
+                  isMenuOpen && "rotate-180"
+                )} 
+              />
             </button>
 
             {isMenuOpen && (
               <div className={menuDropdownClasses}>
                 <div className={dropdownHeaderContainer}>
-                  <p className={dropdownHeaderText}>{t("label_navigation", "Navegação")}</p>
+                  <p className={dropdownHeaderText}>
+                    {t("label_navigation", "Navegação")}
+                  </p>
                 </div>
+                
                 <ul className={menuListClasses}>
                   {navLinks.map((link) => {
                     const isActive = path === link.to || (link.to !== "/" && path.startsWith(link.to));
                     const Icon = link.icon;
                     return (
                       <li key={link.to}>
-                        <Link to={link.to} onClick={() => setIsMenuOpen(false)} className={getMenuItemClasses(isActive)}>
-                          <Icon className={cn("h-4 w-4 shrink-0 transition-colors", isActive ? "text-primary" : "text-muted-foreground")} />
-                          <span className="flex-1 truncate">{t(link.labelKey, link.labelKey)}</span>
-                          {isActive && <span className={activeDotClass.replace('-bottom-1.5 left-1/2 -translate-x-1/2', 'relative left-0 bottom-0')} />}
+                        <Link 
+                          to={link.to} 
+                          onClick={() => setIsMenuOpen(false)} 
+                          className={getMenuItemClasses(isActive)}
+                        >
+                          <Icon 
+                            className={cn(
+                              "h-4 w-4 shrink-0 transition-colors", 
+                              isActive ? "text-primary" : "text-muted-foreground"
+                            )} 
+                          />
+                          <span className="flex-1 truncate">
+                            {t(link.labelKey, link.labelKey)}
+                          </span>
+                          
+                          {isActive && (
+                            <span 
+                              className={activeDotClass.replace(
+                                '-bottom-1.5 left-1/2 -translate-x-1/2', 
+                                'relative left-0 bottom-0'
+                              )} 
+                            />
+                          )}
                         </Link>
                       </li>
                     );
@@ -293,26 +349,45 @@ export const Header: React.FC = () => {
 
           <div className={verticalDividerClass} />
 
+          {/* PALETA DE CORES */}
           <div className="relative" ref={colorRef}>
-            <button onClick={() => setIsColorOpen(!isColorOpen)} aria-expanded={isColorOpen} className={getIconTriggerClass(isColorOpen)} title="Mudar cor do tema">
-              <ColorWheelIcon className="h-7.5 w-7.5 shrink-0 transition-transform duration-500 group-hover:rotate-45" />
+            <button 
+              onClick={() => setIsColorOpen(!isColorOpen)} 
+              aria-expanded={isColorOpen} 
+              className={colorTriggerBtnClass} 
+              title="Mudar cor do tema"
+            >
+              <ColorWheelIcon className={colorWheelIconClasses} />
             </button>
 
             {isColorOpen && (
               <div className={themeDropdownClasses}>
                 <div className={themeDropdownHeaderClass}>
-                  <p className={dropdownHeaderText}>{t("label_themes", "Temas")}</p>
+                  <p className={dropdownHeaderText}>
+                    {t("label_themes", "Temas")}
+                  </p>
                   <span className="text-[10px] font-medium text-primary truncate pl-2 text-right">
                     {currentThemeMeta ? t(currentThemeMeta.nameKey, currentThemeMeta.nameKey) : ""}
                   </span>
                 </div>
+                
                 <div className={themeGridClasses}>
                   {THEME_OPTIONS.map((theme) => {
                     const isActive = colorTheme === theme.id;
                     return (
-                      <button key={theme.id} onClick={() => { setColorTheme(theme.id); setIsColorOpen(false); }} className={getThemeBtnClasses(isActive)} title={t(theme.nameKey, theme.nameKey)}>
+                      <button 
+                        key={theme.id} 
+                        onClick={() => { 
+                          setColorTheme(theme.id); 
+                          setIsColorOpen(false); 
+                        }} 
+                        className={getThemeBtnClasses(isActive)} 
+                        title={t(theme.nameKey, theme.nameKey)}
+                      >
                         <span className={cn("h-4.5 w-4.5 rounded-full block", theme.dotClass)} />
-                        {isActive && <Check className="absolute h-3 w-3 text-white drop-shadow-[0_0_2px_rgba(0,0,0,0.6)]" />}
+                        {isActive && (
+                          <Check className="absolute h-3 w-3 text-white drop-shadow-[0_0_2px_rgba(0,0,0,0.6)]" />
+                        )}
                       </button>
                     );
                   })}
@@ -321,22 +396,55 @@ export const Header: React.FC = () => {
             )}
           </div>
 
+          {/* IDIOMA */}
           <div className="relative" ref={langRef}>
-            <button onClick={() => setIsLangOpen(!isLangOpen)} aria-expanded={isLangOpen} className={getIconTriggerClass(isLangOpen)}>
+            <button 
+              onClick={() => setIsLangOpen(!isLangOpen)} 
+              aria-expanded={isLangOpen} 
+              className={getIconTriggerClass(isLangOpen)}
+            >
               {currentLang.flag}
             </button>
+
             {isLangOpen && (
               <ul className={langDropdownClass}>
                 <div className={dropdownHeaderContainer}>
-                  <p className={dropdownHeaderText}>{t("label_language", "Idioma")}</p>
+                  <p className={dropdownHeaderText}>
+                    {t("label_language", "Idioma")}
+                  </p>
                 </div>
+                
                 {supportedLanguages.map((lang) => {
                   const isActive = i18n.language.split("-")[0] === lang.code;
                   return (
-                    <li key={lang.code} tabIndex={0} onClick={() => { i18n.changeLanguage(lang.code); setIsLangOpen(false); }} className={getLangItemClasses(isActive)}>
+                    <li 
+                      key={lang.code} 
+                      tabIndex={0} 
+                      onClick={() => { 
+                        i18n.changeLanguage(lang.code); 
+                        setIsLangOpen(false); 
+                      }} 
+                      onKeyDown={(e) => { 
+                        if (e.key === "Enter") { 
+                          i18n.changeLanguage(lang.code); 
+                          setIsLangOpen(false); 
+                        } 
+                      }} 
+                      className={getLangItemClasses(isActive)}
+                    >
                       {lang.flag}
-                      <span className="font-medium">{lang.name}</span>
-                      {isActive && <span className={activeDotClass.replace('-bottom-1.5 left-1/2 -translate-x-1/2', 'ml-auto relative left-0 bottom-0')} />}
+                      <span className="font-medium">
+                        {lang.name}
+                      </span>
+                      
+                      {isActive && (
+                        <span 
+                          className={activeDotClass.replace(
+                            '-bottom-1.5 left-1/2 -translate-x-1/2', 
+                            'ml-auto relative left-0 bottom-0'
+                          )} 
+                        />
+                      )}
                     </li>
                   );
                 })}
@@ -344,34 +452,73 @@ export const Header: React.FC = () => {
             )}
           </div>
 
+          {/* MODO ESCURO/CLARO */}
           <div className="flex items-center justify-center h-9 shrink-0">
-            <AnimatedThemeToggler variant="circle" duration={500} fromCenter />
+            <AnimatedThemeToggler 
+              variant="circle" 
+              duration={500} 
+            />
           </div>
 
+          {/* BOTÕES DESKTOP */}
           <div className={desktopNavWrapper}>
             <div className={verticalDividerClass} />
+            
             <div className="relative">
-              <InteractiveHoverButton icon={ChartNoAxesCombined} nome={t("nav_plan", "Planejar")} onClick={() => navigate("/")} className={getDesktopBtnClasses(isPlanejarActive)} />
+              <InteractiveHoverButton 
+                icon={ChartNoAxesCombined} 
+                nome={t("nav_plan", "Planejar")} 
+                onClick={() => navigate("/")} 
+                className={getDesktopBtnClasses(isPlanejarActive)} 
+              />
+              
             </div>
+            
             <div className="relative">
-              <InteractiveHoverButton icon={Clock} nome={t("nav_history", "Histórico")} onClick={() => navigate("/historico")} className={getDesktopBtnClasses(isHistoricoActive)} />
+              <InteractiveHoverButton 
+                icon={Clock} 
+                nome={t("nav_history", "Histórico")} 
+                onClick={() => navigate("/historico")} 
+                className={getDesktopBtnClasses(isHistoricoActive)} 
+              />
+         
             </div>
           </div>
         </div>
-
         <div className={headerBottomLine} />
       </header>
 
+      {/* DOCK MOBILE (BARRA INFERIOR DE NAVEGAÇÃO) */}
       <div className={mobileDockWrapper}>
         <div className={mobileDockContainer}>
-          <div className="absolute -top-px left-6 right-6 h-px bg-linear-to-r from-transparent via-primary/60 to-transparent" />
+          
+          <div 
+            className={cn(
+              "absolute -top-px left-6 right-6 h-px",
+              "bg-linear-to-r from-transparent via-primary/60 to-transparent"
+            )} 
+          />
+          
           <div className="relative flex-1">
-            <InteractiveHoverButton icon={ChartNoAxesCombined} nome={t("nav_plan", "Planejar")} onClick={() => navigate("/")} className={getMobileBtnClasses(isPlanejarActive)} />
+            <InteractiveHoverButton 
+              icon={ChartNoAxesCombined} 
+              nome={t("nav_plan", "Planejar")} 
+              onClick={() => navigate("/")} 
+              className={getMobileBtnClasses(isPlanejarActive)} 
+            />
           </div>
+          
           <div className={verticalDividerClass} />
+          
           <div className="relative flex-1">
-            <InteractiveHoverButton icon={Clock} nome={t("nav_history", "Histórico")} onClick={() => navigate("/historico")} className={getMobileBtnClasses(isHistoricoActive)} />
+            <InteractiveHoverButton
+              icon={Clock}
+              nome={t("nav_history", "Histórico")}
+              onClick={() => navigate("/historico")}
+              className={getMobileBtnClasses(isHistoricoActive)} 
+            />
           </div>
+
         </div>
       </div>
     </>
