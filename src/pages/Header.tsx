@@ -24,24 +24,29 @@ const navLinks: { to: string; label: string; icon: LucideIcon }[] = [
 ];
 
 const THEME_OPTIONS: { id: ColorTheme; name: string; dotClass: string }[] = [
-  { id: "rose", name: "Vinho (Padrão)", dotClass: "bg-rose-500" },
+  /* --- FILEIRA 1: Tons Quentes & Corporativos (6 itens) --- */
+  { id: "rose", name: "Vinho (Padrão)", dotClass: "bg-red-700 shadow-[inset_0_0_0_2px_rgba(0,0,0,0.1)]" },
   { id: "red", name: "Vermelho", dotClass: "bg-red-500" },
   { id: "orange", name: "Laranja", dotClass: "bg-orange-500" },
   { id: "amber", name: "Âmbar", dotClass: "bg-amber-500" },
   { id: "yellow", name: "Amarelo", dotClass: "bg-yellow-500" },
   { id: "lime", name: "Limão", dotClass: "bg-lime-500" },
+
+  /* --- FILEIRA 2: Família dos Verdes & Azuis (6 itens) --- */
   { id: "green", name: "Verde", dotClass: "bg-green-500" },
   { id: "emerald", name: "Esmeralda", dotClass: "bg-emerald-500" },
   { id: "teal", name: "Teal", dotClass: "bg-teal-500" },
   { id: "cyan", name: "Ciano", dotClass: "bg-cyan-500" },
   { id: "sky", name: "Céu", dotClass: "bg-sky-500" },
   { id: "blue", name: "Azul", dotClass: "bg-blue-500" },
+
+  /* --- FILEIRA 3: Roxos, Pink & Neutros Metálicos (6 itens) --- */
   { id: "indigo", name: "Índigo", dotClass: "bg-indigo-500" },
   { id: "violet", name: "Violeta", dotClass: "bg-violet-600" },
   { id: "purple", name: "Roxo", dotClass: "bg-purple-500" },
   { id: "fuchsia", name: "Fúcsia", dotClass: "bg-fuchsia-500" },
-  { id: "pink", name: "Rosa", dotClass: "bg-pink-500" },
-  { id: "slate", name: "Cinza Minimalista", dotClass: "bg-slate-500" },
+  { id: "pink", name: "Rosa (Pink)", dotClass: "bg-pink-500" },
+  { id: "slate" as ColorTheme, name: "Minimalista", dotClass: "bg-slate-500" },
 ];
 
 export const Header: React.FC = () => {
@@ -178,7 +183,7 @@ export const Header: React.FC = () => {
         {/* LOGO */}
         <Link
           to="/"
-          className="´group flex items-center gap-3 font-bold text-foreground tracking-tight shrink-0"
+          className="group flex items-center gap-3 font-bold text-foreground tracking-tight shrink-0"
         >
           <img
             src="/logo192.png"
@@ -273,10 +278,11 @@ export const Header: React.FC = () => {
               <ColorWheelIcon className="h-7.5 w-7.5 shrink-0 transition-transform duration-500 group-hover:rotate-45" />
             </button>
 
-            {isColorOpen && (
+{isColorOpen && (
               <div
                 role="menu"
-                className="absolute top-[calc(100%+8px)] right-0 w-56 z-50 rounded-2xl p-2 border border-border/60 shadow-2xl bg-popover/98 backdrop-blur-xl"
+                // 👇 Reduzimos a largura para w-[230px] para ficar 100% seguro no Android
+                className="absolute top-[calc(100%+8px)] right-10px sm:right-0 w-57.5 z-50 rounded-2xl p-2 border border-border/60 shadow-2xl bg-popover/98 backdrop-blur-xl"
               >
                 <div className="px-2 py-1.5 border-b border-border/40 mb-2 flex items-center justify-between">
                   <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -286,7 +292,9 @@ export const Header: React.FC = () => {
                     {currentThemeMeta?.name}
                   </span>
                 </div>
-                <div className="grid grid-cols-6 gap-2 p-1">
+                
+                {/* 👇 Aqui está: 6 colunas para 18 itens = exatas 3 fileiras! */}
+                <div className="grid grid-cols-6 gap-x-2 gap-y-3 p-1">
                   {THEME_OPTIONS.map((theme) => {
                     const active = colorTheme === theme.id;
                     return (
@@ -297,11 +305,11 @@ export const Header: React.FC = () => {
                           setIsColorOpen(false);
                         }}
                         className={cn(
-                          "relative h-6 w-6 rounded-full flex items-center justify-center border transition-all cursor-pointer",
+                          "relative h-6 w-6 mx-auto rounded-full flex items-center justify-center border transition-all cursor-pointer",
                           "outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                           active
-                            ? "border-primary scale-110 ring-2 ring-primary/25"
-                            : "border-transparent hover:scale-105"
+                            ? "border-primary scale-125 ring-2 ring-primary/25 z-10"
+                            : "border-transparent hover:scale-110"
                         )}
                         title={theme.name}
                       >
@@ -440,7 +448,6 @@ export const Header: React.FC = () => {
                   : "ring-ring/50 text-foreground"
               )}
             />
-
           </div>
           <div className="h-8 w-px bg-linear-to-b from-transparent via-border to-transparent shrink-0 " />
           <div className="relative flex-1 ">

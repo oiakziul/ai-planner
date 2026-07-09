@@ -1,5 +1,6 @@
 /* LIGHT MODE - EMERALD OVERRIDE */
 :root.theme-emerald {
+  --theme-hue: 159.2;
   --textHoverHeader: var(--color-emerald-600);
   --cor2-dinamica: var(--color-emerald-600);
   --primary: var(--color-emerald-600);
@@ -12,6 +13,7 @@
 
 /* DARK MODE - EMERALD OVERRIDE */
 :root.dark.theme-emerald {
+  --theme-hue: 159.2;
   --textHoverHeader: var(--color-emerald-300);
   --cor2-dinamica: var(--color-emerald-600);
   --primary: var(--color-emerald-400);

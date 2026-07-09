@@ -1,23 +1,29 @@
-/* LIGHT MODE - AMBER OVERRIDE */
+/* LIGHT MODE - AMBER-SALMON OVERRIDE  */
 :root.theme-amber {
-  --textHoverHeader: var(--color-amber-600);
-  --cor2-dinamica: var(--color-amber-600);
-  --primary: var(--color-amber-600);
-  --accent: var(--color-amber-50);
-  --accent-foreground: var(--color-amber-800);
-  --ring: var(--color-amber-500);
-  --sidebar-primary: var(--color-amber-600);
-  --sidebar-ring: var(--color-amber-500);
+  --theme-hue: 40.0; 
+
+  --bg-stripes-light-chroma: 0.025; 
+  --bg-stripes-dark-chroma: 0.06;   
+  --textHoverHeader: var(--color-orange-600);
+  --cor2-dinamica: var(--color-orange-500);
+  --primary: var(--color-orange-500);
+  --accent: var(--color-orange-50);
+  --accent-foreground: var(--color-orange-950);
+  --ring: var(--color-orange-400);
+  --sidebar-primary: var(--color-orange-500);
+  --sidebar-ring: var(--color-orange-400);
 }
 
-/* DARK MODE - AMBER OVERRIDE */
+/* DARK MODE - AMBER-SALMON OVERRIDE */
 :root.dark.theme-amber {
-  --textHoverHeader: var(--color-amber-300);
-  --cor2-dinamica: var(--color-amber-600);
-  --primary: var(--color-amber-400);
-  --accent: var(--color-amber-950);
-  --accent-foreground: var(--color-amber-100);
-  --ring: var(--color-amber-400);
-  --sidebar-primary: var(--color-amber-400);
-  --sidebar-ring: var(--color-amber-400);
+  --theme-hue: 40.0;
+  --bg-stripes-dark-chroma: 0.06; 
+  --textHoverHeader: var(--color-orange-300);
+  --cor2-dinamica: var(--color-orange-500);
+  --primary: var(--color-orange-400);
+  --accent: var(--color-orange-950);
+  --accent-foreground: var(--color-orange-100);
+  --ring: var(--color-orange-400);
+  --sidebar-primary: var(--color-orange-400);
+  --sidebar-ring: var(--color-orange-400);
 }

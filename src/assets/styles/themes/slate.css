@@ -1,5 +1,8 @@
 /* LIGHT MODE - SLATE OVERRIDE */
 :root.theme-slate {
+  --theme-hue: 0;
+  /* Sobrescrevendo o utilitário especificamente para o Slate ignorar cores */
+  --bg-stripes-light-chroma: 0;
   --textHoverHeader: var(--color-slate-600);
   --cor2-dinamica: var(--color-slate-600);
   --primary: var(--color-slate-600);
@@ -12,6 +15,8 @@
 
 /* DARK MODE - SLATE OVERRIDE */
 :root.dark.theme-slate {
+  --theme-hue: 0;
+  --bg-stripes-dark-chroma: 0;
   --textHoverHeader: var(--color-slate-300);
   --cor2-dinamica: var(--color-slate-600);
   --primary: var(--color-slate-400);

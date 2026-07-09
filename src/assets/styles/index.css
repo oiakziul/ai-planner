@@ -2,13 +2,11 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
-
 @import "tailwindcss";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
 /* Tema Padrão / Vinho */
-@import "./themes/rose.css";
 
 /* Família dos Azuis */
 @import "./themes/sky.css";
@@ -34,7 +32,6 @@
 @import "./themes/fuchsia.css";
 @import "./themes/pink.css";
 @import "./themes/slate.css";
-
 
 @custom-variant dark (&:is(.dark *));
 
@@ -296,9 +293,6 @@
   }
 }
 
-/* =========================================================================
-   🛠️ UTILITIES
-   ========================================================================= */
 @layer utilities {
   .scrollbar-hide {
     scrollbar-width: none;
@@ -308,32 +302,25 @@
     }
   }
 
+@layer utilities {
   .bg-stripes-custom0 {
-    background-image: linear-gradient(135deg, #ffffff 0%, #eff5ff 100%);
+    background: radial-gradient(
+      circle, 
+      oklch(99.15% var(--bg-stripes-light-chroma, 0.010) var(--theme-hue, 29.2)) 0%, 
+      oklch(98.764% var(--bg-stripes-light-chroma, 0.012) var(--theme-hue, 29.2)) 50%, 
+      oklch(98.687% var(--bg-stripes-light-chroma, 0.011) var(--theme-hue, 29.2)) 100%
+    );
   }
-  .dark .bg-stripes-custom0 {
-    background-image: linear-gradient(135deg, #334155, #1e293b);
-  }
-}
 
-.bg-stripes-custom {
-  background-color: var(--muted);
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 10px,
-    var(--color-slate-200) 10px,
-    var(--color-slate-200) 11.7px
-  );
+  .dark .bg-stripes-custom0 {
+    background: radial-gradient(
+      circle, 
+      oklch(24% var(--bg-stripes-dark-chroma, 0.05) var(--theme-hue, 29.2)) 0%, 
+      oklch(16% var(--bg-stripes-dark-chroma, 0.04) var(--theme-hue, 29.2)) 50%, 
+      oklch(10% var(--bg-stripes-dark-chroma, 0.03) var(--theme-hue, 29.2)) 100%
+    );
+  }
 }
-.dark .bg-stripes-custom {
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 10px,
-    var(--color-slate-800) 10px,
-    var(--color-slate-800) 11px
-  );
 }
 
 ::view-transition-old(root),

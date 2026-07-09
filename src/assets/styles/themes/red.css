@@ -1,5 +1,6 @@
 /* LIGHT MODE - RED OVERRIDE */
 :root.theme-red {
+  --theme-hue: 29.2;
   --textHoverHeader: var(--color-red-600);
   --cor2-dinamica: var(--color-red-600);
   --primary: var(--color-red-600);
@@ -12,6 +13,7 @@
 
 /* DARK MODE - RED OVERRIDE */
 :root.dark.theme-red {
+  --theme-hue: 29.2;
   --textHoverHeader: var(--color-red-300);
   --cor2-dinamica: var(--color-red-600);
   --primary: var(--color-red-400);

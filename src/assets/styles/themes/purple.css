@@ -1,5 +1,6 @@
 /* LIGHT MODE - PURPLE OVERRIDE */
 :root.theme-purple {
+  --theme-hue: 310.2;
   --textHoverHeader: var(--color-purple-600);
   --cor2-dinamica: var(--color-purple-600);
   --primary: var(--color-purple-600);
@@ -12,6 +13,7 @@
 
 /* DARK MODE - PURPLE OVERRIDE */
 :root.dark.theme-purple {
+  --theme-hue: 310.2;
   --textHoverHeader: var(--color-purple-300);
   --cor2-dinamica: var(--color-purple-600);
   --primary: var(--color-purple-400);

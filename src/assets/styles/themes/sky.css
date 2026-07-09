@@ -1,5 +1,6 @@
 /* LIGHT MODE - SKY OVERRIDE */
 :root.theme-sky {
+  --theme-hue: 228.4;
   --textHoverHeader: var(--color-sky-600);
   --cor2-dinamica: var(--color-sky-600);
   --primary: var(--color-sky-600);
@@ -12,6 +13,7 @@
 
 /* DARK MODE - SKY OVERRIDE */
 :root.dark.theme-sky {
+  --theme-hue: 228.4;
   --textHoverHeader: var(--color-sky-300);
   --cor2-dinamica: var(--color-sky-600);
   --primary: var(--color-sky-400);

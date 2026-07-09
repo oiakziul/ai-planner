@@ -1,5 +1,6 @@
 /* LIGHT MODE - GREEN OVERRIDE */
 :root.theme-green {
+  --theme-hue: 142.5;
   --textHoverHeader: var(--color-green-600);
   --cor2-dinamica: var(--color-green-600);
   --primary: var(--color-green-600);
@@ -12,6 +13,7 @@
 
 /* DARK MODE - GREEN OVERRIDE */
 :root.dark.theme-green {
+  --theme-hue: 142.5;
   --textHoverHeader: var(--color-green-300);
   --cor2-dinamica: var(--color-green-600);
   --primary: var(--color-green-400);

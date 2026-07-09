@@ -1,5 +1,6 @@
 /* LIGHT MODE - LIME OVERRIDE */
 :root.theme-lime {
+  --theme-hue: 126.9;
   --textHoverHeader: var(--color-lime-600);
   --cor2-dinamica: var(--color-lime-600);
   --primary: var(--color-lime-600);
@@ -12,6 +13,7 @@
 
 /* DARK MODE - LIME OVERRIDE */
 :root.dark.theme-lime {
+  --theme-hue: 126.9;
   --textHoverHeader: var(--color-lime-300);
   --cor2-dinamica: var(--color-lime-600);
   --primary: var(--color-lime-400);
