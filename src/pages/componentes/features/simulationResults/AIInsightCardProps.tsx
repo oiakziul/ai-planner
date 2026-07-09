@@ -361,7 +361,7 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
         <form
           onSubmit={handleSendChat}
           className={cn(
-            "border-t border-border/40 px-4 pt-4 pb-28 md:pb-4 flex items-center gap-2 relative z-30",
+            "border-t border-border/40 px-4 pt-4 pb-4 flex items-center gap-2 relative z-30",
             isExpanded ? "bg-background" : "bg-card/60 backdrop-blur-md"
           )}
         >
