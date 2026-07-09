@@ -1,13 +1,13 @@
-// src/components/features/Simulation/Form.tsx
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom"; // [NOVO]: Importado para redirecionar de página [1]
+import { useNavigate } from "react-router-dom";
+import clsx from "clsx";
 import { simulationFormSteps } from "@/data/simulation";
 import { FormStep } from "./FormStep";
 import { StepProgress } from "./Progress";
 import { formatCurrencyMask, type Currency } from "@/utils/currency";
 import { type InputProps } from "@/pages/componentes/shared/Input";
-import { useSimulationStorage } from "@/hooks/useSimulationStorage"; // [NOVO]: Importado seu hook de persistência [1]
+import { useSimulationStorage } from "@/hooks/useSimulationStorage";
 
 const getCurrencyByLanguage = (langCode: string): Currency => {
   const lang = langCode.split("-")[0].toLowerCase();
@@ -17,9 +17,9 @@ const getCurrencyByLanguage = (langCode: string): Currency => {
 };
 
 export const SimulationForm = () => {
-  const { t, i18n } = useTranslation("inicio");
-  const navigate = useNavigate(); // [NOVO]: Instanciamos o navegador do React Router [1]
-  const { saveFormData } = useSimulationStorage(); // [NOVO]: Puxamos a sua função de salvar do seu hook [1]
+  const { t, i18n } = useTranslation("simulationFormSteps");
+  const navigate = useNavigate();
+  const { saveFormData } = useSimulationStorage();
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const totalSteps = simulationFormSteps.length;
@@ -27,21 +27,22 @@ export const SimulationForm = () => {
 
   const [timeUnit, setTimeUnit] = useState<"years" | "months">("years");
 
-  // Alerta de erro e tremor
   const [showError, setShowError] = useState(false);
   const [shake, setShake] = useState(false);
 
-  // Estado centralizado das respostas
   const [formData, setFormData] = useState<Record<string, string>>({
-    income: "", expenses: "", debts: "", goalName: "", goalAmount: "", goalDeadline: "",
+    income: "",
+    expenses: "",
+    debts: "",
+    goalName: "",
+    goalAmount: "",
+    goalDeadline: "",
   });
 
-  // Gravação automática temporária das respostas parciais
   useEffect(() => {
     localStorage.setItem("ai_planner_simulation_data", JSON.stringify(formData));
   }, [formData]);
 
-  // Sincronização de idioma
   useEffect(() => {
     setFormData((prev) => {
       const updated = { ...prev };
@@ -60,7 +61,6 @@ export const SimulationForm = () => {
     });
   }, [i18n.language]);
 
-  // Handler para capturar a digitação
   const handleInputChange = (value: string) => {
     let finalValue = value;
 
@@ -84,7 +84,6 @@ export const SimulationForm = () => {
     }));
   };
 
-  // Handler para avançar de etapa
   const handleNextStep = () => {
     const valorEtapaAtual = formData[currentStep.id];
 
@@ -98,13 +97,8 @@ export const SimulationForm = () => {
     setShowError(false);
 
     if (currentStepIndex + 1 > totalSteps - 1) {
-      // [CORRIGIDO]: Salva as respostas finais usando o seu hook e pega o ID único gerado! [1]
       const newSimulationId = saveFormData(formData);
-
-      // Limpa os dados temporários do rascunho de preenchimento
       localStorage.removeItem("ai_planner_simulation_data");
-
-      // Redireciona o usuário para a página de resultados com o ID na URL! [1]
       navigate(`/resultado/${newSimulationId}`);
       return;
     }
@@ -124,18 +118,31 @@ export const SimulationForm = () => {
   const inputPropsDynamic: InputProps = {
     ...currentStep.inputProps,
     value: formData[currentStep.id] || "",
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e.target.value),
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+      handleInputChange(e.target.value),
   };
+
+  const selectClasses = clsx(
+    "bg-transparent text-muted-foreground text-sm font-medium outline-none cursor-pointer pr-1"
+  );
+  
+  const optionClasses = clsx(
+    "bg-popover text-foreground"
+  );
 
   if (currentStep.id === "goalDeadline") {
     inputPropsDynamic.suffix = (
       <select
         value={timeUnit}
         onChange={(e) => setTimeUnit(e.target.value as "years" | "months")}
-        className="bg-transparent text-muted-foreground text-sm font-medium outline-none cursor-pointer pr-1"
+        className={selectClasses}
       >
-        <option value="years" className="bg-popover text-foreground">{t("goalDeadline_suffix_years", "anos")}</option>
-        <option value="months" className="bg-popover text-foreground">{t("goalDeadline_suffix_months", "meses")}</option>
+        <option value="years" className={optionClasses}>
+          {t("goalDeadline_suffix_years", "anos")}
+        </option>
+        <option value="months" className={optionClasses}>
+          {t("goalDeadline_suffix_months", "meses")}
+        </option>
       </select>
     );
   }

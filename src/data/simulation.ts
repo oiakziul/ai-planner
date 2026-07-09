@@ -10,6 +10,7 @@ import {
 
 import type { FormStepProps } from "@/pages/componentes/features/Simulation/FormStep";
 import type { InsightData } from "@/services/aiService";
+
 export const simulationFormSteps = [
   // Passo 1: Renda Mensal Bruta
   {
@@ -100,10 +101,9 @@ export type SimulationFormData = Record<
   string
 >;
 
-// [NOVO]: Tipagem para os registros salvos no histórico (Dados do formulário + ID único) [1]
-// [CORRIGIDO]: Agora a gravação também aceita o laudo da IA para fazermos o Cache Local!
+// Tipagem para os registros salvos no histórico
 export type SimulationRecord = SimulationFormData & { 
   id: string; 
   timeUnit?: "years" | "months";
-  insightData?: InsightData; // [NOVO]: Campo opcional para salvar o laudo do Gemini!
+  insightData?: InsightData;
 };
