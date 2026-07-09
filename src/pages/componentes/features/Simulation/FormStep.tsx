@@ -120,7 +120,7 @@ export function FormStep({
 
           {hasError && (
             <span className="text-destructive text-xs font-semibold mt-1.5 ml-1 self-start animate-in fade-in slide-in-from-top-1 duration-300">
-              {t("campo_obrigatorio", "Este campo é obrigatório!")}
+              {t("validation_error", "Este campo é obrigatório!")}
             </span>
           )}
         </div>
