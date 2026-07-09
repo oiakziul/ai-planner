@@ -1,6 +1,7 @@
 /* LIGHT MODE - YELLOW OVERRIDE */
 :root.theme-yellow {
-  --theme-hue: 96.4;
+  --theme-hue: 95;
+  --bg-stripes-light-chroma: 0.035;
   --textHoverHeader: var(--color-yellow-600);
   --cor2-dinamica: var(--color-yellow-600);
   --primary: var(--color-yellow-600);
@@ -13,7 +14,8 @@
 
 /* DARK MODE - YELLOW OVERRIDE */
 :root.dark.theme-yellow {
-  --theme-hue: 96.4;
+  --theme-hue: 95;
+  --bg-stripes-dark-chroma: 0.065;
   --textHoverHeader: var(--color-yellow-300);
   --cor2-dinamica: var(--color-yellow-600);
   --primary: var(--color-yellow-400);

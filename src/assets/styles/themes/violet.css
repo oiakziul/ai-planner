@@ -1,6 +1,7 @@
 /* LIGHT MODE - VIOLET OVERRIDE */
 :root.theme-violet {
-  --theme-hue: 292.1;
+  --theme-hue: 295;
+  --bg-stripes-light-chroma: 0.025;
   --textHoverHeader: var(--color-violet-600);
   --cor2-dinamica: var(--color-violet-600);
   --primary: var(--color-violet-600);
@@ -13,7 +14,8 @@
 
 /* DARK MODE - VIOLET OVERRIDE */
 :root.dark.theme-violet {
-  --theme-hue: 292.1;
+  --theme-hue: 295;
+  --bg-stripes-dark-chroma: 0.055;
   --textHoverHeader: var(--color-violet-300);
   --cor2-dinamica: var(--color-violet-600);
   --primary: var(--color-violet-400);

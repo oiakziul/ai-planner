@@ -1,6 +1,7 @@
 /* LIGHT MODE - TEAL OVERRIDE */
 :root.theme-teal {
-  --theme-hue: 177.3;
+  --theme-hue: 185;
+  --bg-stripes-light-chroma: 0.02;
   --textHoverHeader: var(--color-teal-600);
   --cor2-dinamica: var(--color-teal-600);
   --primary: var(--color-teal-600);
@@ -13,7 +14,8 @@
 
 /* DARK MODE - TEAL OVERRIDE */
 :root.dark.theme-teal {
-  --theme-hue: 177.3;
+  --theme-hue: 185;
+  --bg-stripes-dark-chroma: 0.05;
   --textHoverHeader: var(--color-teal-300);
   --cor2-dinamica: var(--color-teal-600);
   --primary: var(--color-teal-400);

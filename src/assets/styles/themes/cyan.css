@@ -1,6 +1,7 @@
 /* LIGHT MODE - CYAN OVERRIDE */
 :root.theme-cyan {
-  --theme-hue: 204.0;
+  --theme-hue: 210;
+  --bg-stripes-light-chroma: 0.025;
   --textHoverHeader: var(--color-cyan-600);
   --cor2-dinamica: var(--color-cyan-600);
   --primary: var(--color-cyan-600);
@@ -13,7 +14,8 @@
 
 /* DARK MODE - CYAN OVERRIDE */
 :root.dark.theme-cyan {
-  --theme-hue: 204.0;
+  --theme-hue: 210;
+  --bg-stripes-dark-chroma: 0.06;
   --textHoverHeader: var(--color-cyan-300);
   --cor2-dinamica: var(--color-cyan-600);
   --primary: var(--color-cyan-400);

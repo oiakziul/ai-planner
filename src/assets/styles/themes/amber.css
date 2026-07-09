@@ -2,8 +2,7 @@
 :root.theme-amber {
   --theme-hue: 40.0; 
 
-  --bg-stripes-light-chroma: 0.025; 
-  --bg-stripes-dark-chroma: 0.06;   
+  --bg-stripes-light-chroma: 0.030;
   --textHoverHeader: var(--color-orange-600);
   --cor2-dinamica: var(--color-orange-500);
   --primary: var(--color-orange-500);
@@ -17,7 +16,7 @@
 /* DARK MODE - AMBER-SALMON OVERRIDE */
 :root.dark.theme-amber {
   --theme-hue: 40.0;
-  --bg-stripes-dark-chroma: 0.06; 
+  --bg-stripes-dark-chroma: 0.060;
   --textHoverHeader: var(--color-orange-300);
   --cor2-dinamica: var(--color-orange-500);
   --primary: var(--color-orange-400);

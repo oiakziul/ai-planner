@@ -1,6 +1,7 @@
 /* LIGHT MODE - INDIGO OVERRIDE */
 :root.theme-indigo {
-  --theme-hue: 271.7;
+  --theme-hue: 280;
+  --bg-stripes-light-chroma: 0.025;
   --textHoverHeader: var(--color-indigo-600);
   --cor2-dinamica: var(--color-indigo-600);
   --primary: var(--color-indigo-600);
@@ -13,7 +14,8 @@
 
 /* DARK MODE - INDIGO OVERRIDE */
 :root.dark.theme-indigo {
-  --theme-hue: 271.7;
+  --theme-hue: 280;
+  --bg-stripes-dark-chroma: 0.055;
   --textHoverHeader: var(--color-indigo-300);
   --cor2-dinamica: var(--color-indigo-600);
   --primary: var(--color-indigo-400);

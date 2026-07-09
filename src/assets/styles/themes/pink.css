@@ -1,12 +1,7 @@
 /* LIGHT MODE - PINK OVERRIDE */
 :root.theme-pink {
-  --theme-hue: 345.2;
-  
-  /* Turbinando o Chroma (segundo parâmetro) para o rosa aparecer no fundo claro */
-  --bg-stripes-light-chroma: 0.025; 
-  
-  /* Deixando o dark mode do Pink um roxo-rosado um pouco mais aceso e vivo */
-  --bg-stripes-dark-chroma: 0.08;   
+  --theme-hue: 345;
+  --bg-stripes-light-chroma: 0.02;
 
   --textHoverHeader: var(--color-pink-600);
   --cor2-dinamica: var(--color-pink-500);
@@ -20,8 +15,8 @@
 
 /* DARK MODE - PINK OVERRIDE */
 :root.dark.theme-pink {
-  --theme-hue: 345.2;
-  --bg-stripes-dark-chroma: 0.08;
+  --theme-hue: 345;
+  --bg-stripes-dark-chroma: 0.05;
   --textHoverHeader: var(--color-pink-300);
   --cor2-dinamica: var(--color-pink-500);
   --primary: var(--color-pink-400);

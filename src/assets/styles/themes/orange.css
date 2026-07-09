@@ -1,6 +1,7 @@
 /* LIGHT MODE - ORANGE OVERRIDE */
 :root.theme-orange {
-  --theme-hue: 53.2;
+  --theme-hue: 45;
+  --bg-stripes-light-chroma: 0.025;
   --textHoverHeader: var(--color-orange-600);
   --cor2-dinamica: var(--color-orange-600);
   --primary: var(--color-orange-600);
@@ -13,7 +14,8 @@
 
 /* DARK MODE - ORANGE OVERRIDE */
 :root.dark.theme-orange {
-  --theme-hue: 53.2;
+  --theme-hue: 45;
+  --bg-stripes-dark-chroma: 0.06;
   --textHoverHeader: var(--color-orange-300);
   --cor2-dinamica: var(--color-orange-600);
   --primary: var(--color-orange-400);

@@ -1,6 +1,7 @@
 /* LIGHT MODE - BLUE OVERRIDE */
 :root.theme-blue {
-  --theme-hue: 252.6;
+  --theme-hue: 260;
+  --bg-stripes-light-chroma: 0.02;
   --textHoverHeader: var(--color-blue-600);
   --cor2-dinamica: var(--color-blue-600);
   --primary: var(--color-blue-600);
@@ -13,7 +14,8 @@
 
 /* DARK MODE - BLUE OVERRIDE */
 :root.dark.theme-blue {
-  --theme-hue: 252.6;
+  --theme-hue: 260;
+  --bg-stripes-dark-chroma: 0.05;
   --textHoverHeader: var(--color-blue-300);
   --cor2-dinamica: var(--color-blue-600);
   --primary: var(--color-blue-400);
