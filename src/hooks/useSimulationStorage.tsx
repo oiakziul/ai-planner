@@ -4,7 +4,31 @@ import { type InsightData } from "@/services/aiService";
 
 const LOCAL_STORAGE_KEY = "ai_planner_simulation_history";
 
+// Migração: adiciona timeUnit aos registros antigos que não possuem
+const migrateOldRecords = () => {
+  const storage = localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (!storage) return;
+
+  try {
+    const savedData = JSON.parse(storage) as SimulationRecord[];
+    const needsMigration = savedData.some(record => !record.timeUnit);
+
+    if (needsMigration) {
+      const migratedData = savedData.map(record => ({
+        ...record,
+        timeUnit: record.timeUnit || "years", // padrão: anos
+        createdAt: record.createdAt || new Date().toISOString()
+      }));
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(migratedData));
+    }
+  } catch (error) {
+    console.error("Erro ao migrar registros:", error);
+  }
+};
+
 export const useSimulationStorage = () => {
+  // Executa migração ao carregar o hook
+  migrateOldRecords();
   
   const saveFormData = (formData: SimulationFormData, timeUnit?: "years" | "months"): string => {
     const storage = localStorage.getItem(LOCAL_STORAGE_KEY);
