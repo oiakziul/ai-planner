@@ -1,11 +1,10 @@
 import { useTheme, type ColorTheme } from "@/context/ThemeContext";
 import { Palette } from "lucide-react";
 
-// Configuração das cores para renderizar as amostras visuais do botão
 interface ThemeOption {
   id: ColorTheme;
   name: string;
-  dotClass: string; // Amostra de cor usando classes nativas do Tailwind
+  dotClass: string; 
 }
 
 const THEME_OPTIONS: ThemeOption[] = [
@@ -35,7 +34,7 @@ const THEME_OPTIONS: ThemeOption[] = [
   { id: "purple", name: "Roxo", dotClass: "bg-purple-500" },
   { id: "fuchsia", name: "Fúcsia", dotClass: "bg-fuchsia-500" },
   { id: "pink", name: "Rosa", dotClass: "bg-pink-500" },
-  { id: "slate", name: "Cinza Minimalista", dotClass: "bg-slate-500" }, // Adicionado aqui
+  { id: "slate", name: "Cinza Minimalista", dotClass: "bg-slate-500" }, 
 ];
 
 export function ThemeColorSelector() {
@@ -48,7 +47,6 @@ export function ThemeColorSelector() {
         <span>Selecione o Tema de Cor</span>
       </div>
       
-      {/* Grid de seleção rápida de cores ajustado para 6 colunas para alinhar perfeitamente as 17 opções */}
       <div className="grid grid-cols-6 gap-2.5">
         {THEME_OPTIONS.map((theme) => {
           const isActive = colorTheme === theme.id;
@@ -64,7 +62,6 @@ export function ThemeColorSelector() {
               }`}
               title={theme.name}
             >
-              {/* Amostra Circular de Cor */}
               <span className={`h-5 w-5 rounded-full shadow-inner transition-transform ${theme.dotClass} ${
                 isActive ? "scale-110 ring-2 ring-primary/25" : ""
               }`} />

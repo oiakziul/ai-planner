@@ -24,7 +24,7 @@ const CARD_OUTER = (isExpanded: boolean) =>
     "relative w-full transition-all duration-300 flex flex-col rounded-3xl",
     "border border-border text-card-foreground shadow-2xl",
     isExpanded
-      ? "h-[calc(100dvh-200px)] 2xl:h-full max-h-full bg-background overflow-hidden"
+      ? "h-[calc(100dvh-200px)] 2xl:h-full xl:mt-10 max-h-full bg-background overflow-hidden" //mt-10 painel mt-0 corrige
       : "h-full min-h-[400px] max-h-[459.5px] bg-card/30 backdrop-blur-md overflow-hidden"
   );
 

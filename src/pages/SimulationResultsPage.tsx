@@ -86,9 +86,9 @@ export const SimulationResultsPage = () => {
 
   const aiCardOverlay = cn(
     "fixed inset-0 z-40",
-    "flex items-center justify-center",
+    "flex items-center justify-center ",
     "px-4 md:px-10 lg:px-16",
-    "pointer-events-none"
+    "pointer-events-none "
   );
 
   const aiCardWrapper = cn(
