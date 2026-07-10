@@ -11,9 +11,9 @@ export const ScrollProgress = ({ containerRef, activeColor }: ScrollProgressProp
         container: containerRef,
     });
 
-    const startAt5Percent = useTransform(scrollYProgress, [0, 1], [0.05, 1]);
+    const startAt3Percent = useTransform(scrollYProgress, [0, 1], [0.03, 1]);
 
-    const scaleX = useSpring(startAt5Percent, {
+    const scaleX = useSpring(startAt3Percent, {
         stiffness: 100,
         damping: 30,
         restDelta: 0.001
