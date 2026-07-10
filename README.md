@@ -15,13 +15,26 @@ Este projeto é a entrega final do bootcamp **Santander 2026 - AI React Front-en
 
 ## 🎯 Escopo & Regras de Negócio
 
-Este projeto foi desenhado sob premissas reais de educação financeira digital para investidores iniciantes. O sistema automatiza o planejamento de metas de aquisição ou aposentadoria, transformando grandes montantes em aportes mensais práticos.
+Este projeto foi desenhado sob premissas reais de educação financeira digital para investidores iniciantes. O sistema automatiza o planejamento de metas de aquisição ou aposentadoria, transformando grandes montantes em aportes mensais práticos. O fluxo principal consiste em:
 
-- **Cálculo Reverso e Diagnóstico:** Calcula a economia mensal necessária baseando-se na meta e no tempo. Confronta o valor com o orçamento livre do usuário (Renda vs Despesas + Dívidas).
-- **Aconselhamento e Ajustes por IA:** Avalia o orçamento do usuário y propõe caminhos de adequação (corte de custos supérfluos, geração de renda extra e veículos de investimento).
-- **Comunicação Interativa:** Painel de insights extenso com suporte a leitura em tela cheia (*Immersive Read Mode*) e chat de dúvidas.
+1. O usuário preenche um formulário de 6 etapas informando Renda, Custos, Dívidas e Meta.
+2. **Cálculo Reverso e Diagnóstico:** Calcula a economia mensal necessária baseando-se na meta e no tempo. Confronta o valor com o orçamento livre do usuário (Renda vs Despesas + Dívidas).
+3. **Aconselhamento e Ajustes por IA:** Avalia o orçamento do usuário e propõe caminhos de adequação (corte de custos supérfluos, geração de renda extra e veículos de investimento).
+4. **Comunicação Interativa:** Painel de insights extenso com suporte a leitura em tela cheia (*Immersive Read Mode*) e chat contínuo com o Educador.
 
-👉 Para ler as diretrizes de prompt e as premissas de cálculo enviadas para a IA, acesse o documento de [Escopo do Projeto](docs/escopo-do-projeto.md).
+👉 Para ler as diretrizes de prompt e as premissas de cálculo enviadas para a IA, acesse el documento de [Escopo do Projeto](docs/escopo-do-projeto.md).
+
+---
+
+## 🏆 Desafios e Melhorias Implementadas (Extra do Bootcamp)
+
+Além dos requisitos básicos, implementei os seguintes desafios propostos pela DIO e evoluções de arquitetura Sênior:
+
+* ✅ **Página de Histórico de Simulações:** Criação de uma página dedicada (`/historico`) com paginação numérica, deleção de simulações, barra de pesquisa dinâmica e filtro de ordenação.
+* ✅ **Conversando com o Educador Financeiro:** Adicionado um campo de texto no `AIInsightCard` permitindo chat contínuo com o modelo. O scroll acompanha automaticamente a resposta da IA.
+* ✅ **Histórico Salvo no LocalStorage:** As conversas e os laudos ficam guardados no aparelho do usuário, evitando gastos com a cota da API em re-visitas.
+* ✅ **Tratamento de Carregamento e Erros (Quota Exceeded):** Implementação de erro de API visual caso a cota do Gemini expire (`429 Quota ExceededError`).
+* 🌟 **Internacionalização (i18n):** O app possui 3 idiomas nativos (PT, EN, ES), convertendo instantaneamente não apenas os textos, mas os símbolos das moedas (R$, $, €) e os formatos de data.
 
 ---
 
@@ -31,10 +44,10 @@ Este projeto foi desenhado sob premissas reais de educação financeira digital 
 - **Linguagem:** TypeScript Rigoroso
 - **Estilização:** Tailwind CSS (v4) e Componentes Customizados Shadcn UI (Radix/Mira-style)
 - **Inteligência Artificial:** Integração REST com API do **Google Gemini 1.5 Flash**
-- **Internacionalização (i18n):** `react-i18next` com detecção de idioma do navegador e conversão síncrona de moedas (BRL, USD, EUR).
+- **Internacionalização (i18n):** `react-i18next` com detecção de idioma do navegador.
 - **Tipografia:** `@fontsource-variable/geist` e Inter
 - **Roteamento:** `react-router-dom`
-- **Persistência Local:** Gravação de Histórico de Consultas e Cache de Respostas da IA (evitando chamadas duplicadas à API e estouro de cota).
+- **Persistência Local:** Gravação de Histórico de Consultas e Cache via `localStorage`.
 
 ---
 
