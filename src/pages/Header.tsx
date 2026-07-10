@@ -356,7 +356,7 @@ export const Header: React.FC = () => {
               onClick={() => setIsColorOpen(!isColorOpen)} 
               aria-expanded={isColorOpen} 
               className={colorTriggerBtnClass} 
-              title="Mudar cor do tema"
+              title={t('toolpipColor')}
             >
               <ColorWheelIcon className={colorWheelIconClasses} />
             </button>
