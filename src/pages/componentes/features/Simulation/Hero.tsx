@@ -1,7 +1,10 @@
+// src/components/features/Simulation/Hero.tsx
 import { useTranslation } from "react-i18next";
 
 export function SimulationHero() {
-    const { t } = useTranslation("inicio");
+
+  const { t } = useTranslation("inicio");
+
   return (
     <div className="mb-6 text-center">
       <div className="flex flex-col justify-center items-center sm:flex-row">

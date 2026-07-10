@@ -1,6 +1,6 @@
 // src/hooks/useSimulationStorage.tsx
 import { type SimulationFormData, type SimulationRecord } from "../data/simulation";
-import { type InsightData } from "@/services/aiService"; // Importamos o tipo do laudo
+import { type InsightData } from "@/services/aiService"; 
 
 const LOCAL_STORAGE_KEY = "ai_planner_simulation_history";
 
@@ -33,7 +33,7 @@ export const useSimulationStorage = () => {
     return savedData[savedData.length - 1];
   };
 
-  // [NOVO]: Função que atualiza uma simulação específica injetando o laudo da IA!
+  // Função que atualiza uma simulação específica injetando o laudo da IA!
   const saveInsightData = (id: string, insight: InsightData) => {
     const storage = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (!storage) return;

@@ -247,7 +247,6 @@ export const Header: React.FC = () => {
     active ? "ring-primary/40 bg-primary/8 text-foreground font-bold" : "ring-ring/50 text-primary"
   );
 
-  // --- Elementos Comuns ---
   const activeDotClass = cn(
     "absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-1.5 w-1.5",
     "rounded-full bg-primary shadow-[0_0_6px_1px_var(--primary)] animate-pulse"
@@ -256,10 +255,6 @@ export const Header: React.FC = () => {
     "absolute bottom-0 left-6 right-6 h-0.5",
     "bg-linear-to-r from-transparent via-primary to-transparent opacity-80 animate-pulse"
   );
-
-  // ==========================================
-  // RENDERIZAÇÃO
-  // ==========================================
 
   return (
     <>

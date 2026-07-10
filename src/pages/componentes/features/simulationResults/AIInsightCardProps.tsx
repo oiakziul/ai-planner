@@ -19,10 +19,6 @@ import { ScrollProgress } from "@/assets/styles/componentes/ScrollProgress";
 import { Button } from "@/components/ui/button";
 import { callGeminiChatAPI, type ChatMessage, QuotaExceededError } from "@/services/aiService";
 
-// ==========================================
-// CONSTANTES DE ESTILO
-// ==========================================
-
 const CARD_OUTER = (isExpanded: boolean) =>
   cn(
     "relative w-full transition-all duration-300 flex flex-col rounded-3xl",
@@ -131,10 +127,6 @@ const STATUS_CONFIG = {
   },
 };
 
-// ==========================================
-// INTERFACE E FUNÇÕES AUXILIARES
-// ==========================================
-
 interface AIInsightCardProps {
   simulationId: string;
   isExpanded?: boolean;
@@ -160,13 +152,8 @@ const getErrorTranslationKey = (err: string | null): string => {
   ) {
     return "error_simulation_not_found";
   }
-  // Adicione outros mapeamentos aqui se necessário
   return "error_generic";
 };
-
-// ==========================================
-// COMPONENTE PRINCIPAL
-// ==========================================
 
 export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpand }: AIInsightCardProps) {
   const { t } = useTranslation("resultado");
@@ -184,7 +171,6 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
   const activeSimIdRef = useRef(simulationId);
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  // --- Efeitos ---
   useEffect(() => {
     activeSimIdRef.current = simulationId;
     abortControllerRef.current?.abort();
@@ -202,7 +188,6 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatHistory, isChatLoading]);
 
-  // --- Envio de mensagem ---
   const handleSendChat = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!chatInput.trim() || isChatLoading || !insight) return;
@@ -222,7 +207,6 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
     abortControllerRef.current = controller;
 
     try {
-      // Prompt do sistema traduzido
       const systemContextPrompt = t("chat_system_prompt", {
         insight: JSON.stringify(insight)
       });
@@ -266,18 +250,15 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
     }
   };
 
-  // --- Renderização ---
   return (
     <div className={CARD_OUTER(isExpanded)}>
-      {/* Barra de progresso */}
-      {insight && !isLoading && (
+        {insight && !isLoading && (
         <div className="absolute top-0 left-0 w-full z-50">
           <ScrollProgress containerRef={scrollContainerRef} activeColor={scrollActiveColor} />
         </div>
       )}
 
-      {/* Botão expandir/recolher */}
-      {onToggleExpand && (
+        {onToggleExpand && (
         <button
           type="button"
           onClick={onToggleExpand}
@@ -290,15 +271,13 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
 
       <div className="flex-1 min-h-0 relative">
         <div ref={scrollContainerRef} className={CARD_INNER_SCROLL}>
-          {/* Loading */}
-          {(isLoading || (!insight && !error)) && (
+            {(isLoading || (!insight && !error)) && (
             <div className="flex flex-col items-center justify-center h-full my-auto animate-pulse">
               <h2 className={LOADING_TITLE}>{t("loading_title")}</h2>
               <p className={LOADING_SUBTITLE}>{t("loading_subtitle")}</p>
             </div>
           )}
 
-          {/* Error */}
           {error && (
             <div className={ERROR_CONTAINER}>
               <h2 className="text-destructive font-bold text-xl">{t("error_title")}</h2>

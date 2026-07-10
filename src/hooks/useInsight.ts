@@ -11,7 +11,6 @@ export const useInsight = (id: string) => {
 
   const didFetch = useRef(false);
   const lastId = useRef<string | null>(null);
-  // Rastreia qual id está "em voo" para ignorar respostas atrasadas de um id antigo
   const requestIdRef = useRef<string | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -45,8 +44,6 @@ export const useInsight = (id: string) => {
         const prompt = buildAIPrompt(simulation);
         const data = await getInsight(prompt, controller.signal);
 
-        // Se, enquanto a API respondia, o usuário já trocou de simulação,
-        // essa resposta é "velha" e não deve sobrescrever o estado atual.
         if (requestIdRef.current !== simulationId) {
           return data;
         }
@@ -87,7 +84,6 @@ export const useInsight = (id: string) => {
 
   useEffect(() => {
     // Se o id realmente mudou, cancela qualquer request pendente da simulação
-    // anterior e reseta TUDO relacionado a ela.
     if (lastId.current !== id) {
       abortControllerRef.current?.abort();
       didFetch.current = false;
@@ -95,10 +91,6 @@ export const useInsight = (id: string) => {
       setInsight(null);
       setError(null);
       setIsLoading(false);
-      // IMPORTANTE: não retornamos aqui. Se os estados já estavam em seus
-      // valores padrão (ex: primeiro carregamento de uma simulação), o
-      // setState acima é um no-op e o React NÃO agenda um novo render —
-      // então o guard abaixo, nesta mesma execução, precisa decidir se busca.
     }
 
     if (didFetch.current || insight || isLoading || error) {

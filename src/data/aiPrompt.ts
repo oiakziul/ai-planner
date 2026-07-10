@@ -1,7 +1,7 @@
 // src/utils/prompt.ts
-import { parseCurrency } from "@/utils/currency"; // [CORRIGIDO]: Adicionado o '/' no alias [1]
-import { calcMonthlySavings } from "@/utils/simulation"; // [CORRIGIDO]: Adicionado o '/' no alias [1]
-import type { SimulationRecord } from "@/data/simulation"; // [CORRIGIDO]: Ajustado o caminho correto [1]
+import { parseCurrency } from "@/utils/currency"; 
+import { calcMonthlySavings } from "@/utils/simulation"; 
+import type { SimulationRecord } from "@/data/simulation";
 
 const RESPONSE_SCHEMA = `{
   "feasibility": {
@@ -26,20 +26,16 @@ const RESPONSE_SCHEMA = `{
 }`
 
 export function buildAIPrompt(simulation: SimulationRecord) {
-  // Puxamos o 'timeUnit' dinamicamente do histórico salvo para saber se o prazo é em Anos ou Meses [3]
-  const { income, expenses, debts, goalName, goalAmount, goalDeadline, timeUnit } =
-    simulation
-
+  // saber se o prazo é em Anos ou Meses
+  const { income, expenses, debts, goalName, goalAmount, goalDeadline, timeUnit } = simulation
   const monthlySavings = calcMonthlySavings(simulation)
   
-  // [NOVO]: Se a unidade for anos, multiplicamos por 12 para calcular a economia mensal correta! [3]
   const isYears = timeUnit === "years" || !timeUnit;
   const totalMonths = isYears ? parseInt(goalDeadline) * 12 : parseInt(goalDeadline);
 
   const monthlySavingsNeeded =
     parseCurrency(goalAmount) / totalMonths
 
-  // [CORRIGIDO]: Removido todas as barras invertidas '\' que estavam travando a leitura das variáveis reais!
   return `Você é um educador financeiro especializado em finanças pessoais.
   Analise os dados abaixo e gere um diagnóstico financeiro personalizado com linguagem clara, didática e encorajadora, voltado para pessoas sem conhecimento financeiro. O diagnóstico será exibido diretamente ao usuário no app, fale sempre em segunda pessoa ("você tem...", "sua meta...").
 

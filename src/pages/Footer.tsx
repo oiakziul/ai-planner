@@ -20,7 +20,7 @@ export const Footer = () => {
       });
     }
   };
-  
+
   const footerBase = cn(
     "relative py-8 px-6 w-full min-h-90 xl:min-h-80 transition-colors duration-300 select-none",
     "bg-background/60 backdrop-blur-md border-t border-border mt-2 overflow-hidden"
@@ -33,7 +33,7 @@ export const Footer = () => {
   );
 
   const footerContainer = cn("max-w-6xl mx-auto text-center pt-2 relative z-10");
-  
+
   const containerSeta = cn("flex justify-center items-center mx-auto mb-10");
 
   const botaoSeta = cn(
@@ -50,16 +50,15 @@ export const Footer = () => {
   );
 
   const footerDivider = cn("border-t border-border/60 pt-6");
-  
+
   const footerCopyright = cn("text-muted-foreground text-sm mb-4 font-medium");
-  
+
   const emailSection = cn("flex justify-center items-center w-full mt-4");
 
   const eMailLink = cn(
-    // 👇 "md:hidden" garante que este botão apareça apenas em telas pequenas (mobile/android/ios)
-    "lg:hidden rounded-full group relative overflow-hidden flex items-center justify-center mx-auto gap-2 text-lg font-medium py-3 w-48 h-12",
-    "text-primary active:scale-95 transition-transform duration-300",
-    "ring hover:bg-primary/10",
+    "lg:hidden rounded-full group relative overflow-hidden flex items-center",
+    "text-primary active:scale-95 transition-transform duration-300 py-3 w-48 h-12",
+    "ring hover:bg-primary/10 justify-center mx-auto gap-2 text-lg font-medium ",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring "
   );
 
@@ -68,8 +67,7 @@ export const Footer = () => {
       <div className={magicBackground} />
 
       <div className={footerContainer}>
-        
-        {/* Seta */}
+
         <div className={containerSeta}>
           <button
             onClick={handleScrollTop}
@@ -81,7 +79,6 @@ export const Footer = () => {
           </button>
         </div>
 
-        {/* Divisor e Copyright */}
         <div className={footerDivider}>
           <p className={footerCopyright}>
             © {new Date().getFullYear()} {t("copy_hight")}
@@ -91,7 +88,7 @@ export const Footer = () => {
             <div className="hidden lg:flex justify-center w-full mt-3">
               <ButtonDemo />
             </div>
-            
+
             <a className={eMailLink} href="mailto:kaioaac3@gmail.com">
               E-mail
             </a>

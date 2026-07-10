@@ -1,5 +1,5 @@
 import { type LucideIcon } from 'lucide-react'
-import { cn } from "@/lib/utils" // Importamos o cn para evitar os .join(' ') poluídos
+import { cn } from "@/lib/utils" 
 
 interface CardProps {
   icon: LucideIcon

@@ -3,5 +3,6 @@ export const footerPT = () => ({
   copy_hight: "Kaio Luiz - AI Planner. Todos os direitos reservados.",
   
   btn_copy: "Copiar",
-  msg_copied: "E-mail copiado!"
+  msg_copied: "E-mail copiado!",
+  back_to_top:'Voltar ao topo'
 });
