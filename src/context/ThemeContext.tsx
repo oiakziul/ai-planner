@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-// Tipagem das cores suportadas pelos seus arquivos .css
+// Tipagem das cores suportadas pelos arquivos .css
 export type ColorTheme = 
   // Padrão / Vinho
   | 'rose' 
@@ -40,7 +40,6 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // 1. Estado do modo de brilho (Claro/Escuro)
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window === 'undefined') return 'light';
     const saved = localStorage.getItem('theme');
@@ -49,14 +48,12 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     return systemPrefersDark ? 'dark' : 'light';
   });
 
-  // 2. Estado da paleta de cores (Rose por padrão)
   const [colorTheme, setColorThemeState] = useState<ColorTheme>(() => {
     if (typeof window === 'undefined') return 'rose';
     const saved = localStorage.getItem('theme-color') as ColorTheme;
-    return saved || 'rose'; // fallback para rose se não houver gravação anterior
+    return saved || 'rose';
   });
 
-  // Sincroniza a classe de brilho (light/dark) no <html>
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
@@ -67,7 +64,6 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   useEffect(() => {
     const root = window.document.documentElement;
     
-    // [CORRIGIDO]: Lista estendida para garantir a limpeza de todas as 17 classes existentes
     const themeClasses: string[] = [
       'theme-sky', 'theme-cyan', 'theme-blue', 'theme-indigo', 
       'theme-teal', 'theme-emerald', 'theme-green', 'theme-lime', 
@@ -78,7 +74,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     
     themeClasses.forEach((cls) => root.classList.remove(cls));
 
-    // O tema 'rose' é o padrão (sem classe extra)
+    // O tema 'Vinho' é o padrão
     if (colorTheme !== 'rose') {
       root.classList.add(`theme-${colorTheme}`);
     }

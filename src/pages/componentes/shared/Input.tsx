@@ -1,16 +1,15 @@
 // src/pages/componentes/shared/Input.tsx
 import type { InputHTMLAttributes } from 'react'
 import { Divider } from './Divider'
-import { cn } from '@/lib/utils' // [NOVO] Importando o utilitário de classes
+import { cn } from '@/lib/utils'
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   prefix?: string
   suffix?: string | React.ReactNode 
-  hasError?: boolean // [NOVO] Adicionado na tipagem para resolver o erro do TypeScript
+  hasError?: boolean
 }
 
 export function Input({ prefix, suffix, hasError, ...rest }: InputProps) {
-  // [NOVO] Classe dinâmica: se houver erro, adiciona borda vermelha e muda o ring
   const containerStyle = cn(
     "bg-input flex items-center rounded-2xl p-4 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] transition-all border",
     hasError 

@@ -211,7 +211,8 @@ export const SimulationHistoryPage: React.FC = () => {
   );
 
   const searchIconClass = cn("h-4.5 w-4.5 text-muted-foreground mr-2 shrink-0");
-  const searchInputClass = cn("w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none border-0 ring-0 h-full");
+  const searchInputClass = cn("w-full bg-transparent text-sm text-foreground", 
+    "placeholder:text-muted-foreground outline-none border-0 ring-0 h-full");
 
   const sortContainer = cn(
     "flex items-center gap-3 w-full sm:w-auto shrink-0 justify-end relative"
@@ -222,14 +223,18 @@ export const SimulationHistoryPage: React.FC = () => {
   );
 
   const sortTriggerBtn = cn(
-    "flex h-10 items-center justify-between gap-1.5 px-3 rounded-xl border border-border/50 font-medium text-sm cursor-pointer",
-    "bg-background/50 hover:bg-accent hover:text-accent-foreground transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary/35",
+    "flex h-10 items-center justify-between gap-1.5 px-3 rounded-xl", 
+    "border border-border/50 font-medium text-sm cursor-pointer",
+    "bg-background/50 hover:bg-accent hover:text-accent-foreground", 
+    "transition-all duration-200 outline-none", 
+    "focus-visible:ring-2 focus-visible:ring-primary/35",
     "w-[160px] text-left",
     isSortOpen && "bg-accent"
   );
 
   const sortDropdownMenu = cn(
-    "absolute top-[calc(100%+8px)] right-0 w-48 z-50 rounded-2xl p-1.5 border border-border/60 shadow-2xl bg-popover/98 backdrop-blur-xl overflow-hidden"
+    "absolute top-[calc(100%+8px)] right-0 w-48 z-50 rounded-2xl p-1.5 border", 
+    "border-border/60 shadow-2xl bg-popover/98 backdrop-blur-xl overflow-hidden"
   );
 
   const sortDropdownHeader = cn(

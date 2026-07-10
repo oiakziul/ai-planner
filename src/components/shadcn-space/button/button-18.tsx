@@ -2,20 +2,16 @@ import { useState, useEffect } from "react";
 import { Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useTranslation } from "react-i18next"; // Hook de tradução
-
+import { useTranslation } from "react-i18next"; 
+import clsx from "clsx";
 const ButtonDemo = () => {
-  // Ajuste "footer" para o namespace real onde você guardar as chaves deste botão
   const { t } = useTranslation("footer"); 
   
   const [copied, setCopied] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [progress, setProgress] = useState(0);
   
-  // 👇 Texto que será exibido na tela
   const DISPLAY_TEXT = "E-Mail";
-  
-  // 👇 Texto real que vai para a área de transferência do usuário
   const COPY_TEXT = "kaioaac3@gmail.com";
   
   const DURATION = 3500;
@@ -51,14 +47,16 @@ const ButtonDemo = () => {
   }, [copied]);
 
   const handleCopy = async () => {
-    // 👇 Copia o e-mail real em vez do texto de exibição
     await navigator.clipboard.writeText(COPY_TEXT);
     setCopied(true);
   };
 
   return (
-    <div className="relative overflow-hidden flex items-center justify-center bg-muted rounded-full px-6 min-w-64 h-12 border border-border">
-      {/* Background de Progresso */}
+    <div className={clsx(
+      "relative overflow-hidden flex items-center justify-center", 
+      "bg-muted rounded-full px-6 min-w-64 h-12 border border-border"
+      )}>
+
       <div
         className={cn(
           "absolute left-0 top-0 bottom-0 bg-primary/15 transition-opacity duration-500 ease-in-out",
@@ -67,7 +65,7 @@ const ButtonDemo = () => {
         style={{ width: `${progress}%` }}
       />
 
-      {/* Conteúdo Original — Nome e botão de copiar */}
+   
       <div
         className={cn(
           "absolute inset-0 flex items-center justify-between pl-6 pr-2 transition-all duration-500 ease-in-out",
@@ -81,16 +79,14 @@ const ButtonDemo = () => {
         </span>
         <Button
           onClick={handleCopy}
-          // 👇 "!rounded-full" força o botão a ficar totalmente arredondado passando por cima do shadcn
+
           className="gap-1.5 rounded-full! cursor-pointer select-none hover:bg-primary/80 px-4"
         >
           <Copy className="w-3.5 h-3.5" />
-          {/* 👇 Tradução aplicada ao botão Copiar */}
           {t("btn_copy", "Copiar")}
         </Button>
       </div>
 
-      {/* Conteúdo de Confirmação */}
       <div
         className={cn(
           "relative flex items-center gap-2 transition-all duration-700 ease-in-out pointer-events-none z-10",
@@ -110,7 +106,6 @@ const ButtonDemo = () => {
           />
         </div>
         <span className="text-sm font-semibold text-foreground">
-          {/* 👇 Tradução aplicada à mensagem de sucesso */}
           {t("msg_copied", "E-mail copiado!")}
         </span>
       </div>

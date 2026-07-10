@@ -20,7 +20,6 @@ interface AnimatedThemeTogglerProps extends React.ComponentPropsWithoutRef<"butt
   fromCenter?: boolean
 }
 
-// Funções de desenho (Polígonos)
 function polygonCollapsed(cx: number, cy: number, vertexCount: number): string {
   const pairs = Array.from({ length: vertexCount }, () => `${cx}px ${cy}px`).join(", ")
   return `polygon(${pairs})`
@@ -73,7 +72,7 @@ export const AnimatedThemeToggler = ({
   className,
   duration = 500,
   variant = "circle",
-  fromCenter = true, // Forçado para sempre tentar originar a transição de um ponto seguro
+  fromCenter = true,
   ...props
 }: AnimatedThemeTogglerProps) => {
   const shape = variant
@@ -85,14 +84,12 @@ export const AnimatedThemeToggler = ({
     const button = buttonRef.current
     if (!button) return
 
-    // Fallback absoluto contra o bug do Chrome Mobile (visualViewport retornando vazio)
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
     let x: number, y: number;
 
     if (fromCenter) {
-      // Arredondamento rígido forçando o eixo central. Chrome Mobile odeia floats no clip-path de ViewTransitions.
       x = Math.round(viewportWidth / 2);
       y = Math.round(viewportHeight / 2);
     } else {

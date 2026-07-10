@@ -5,6 +5,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { type VariantProps } from "class-variance-authority";
 import { type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import clsx from "clsx";
 
 interface Props
   extends React.ComponentProps<"button">,
@@ -59,14 +60,21 @@ const ButtonRipple = React.forwardRef<HTMLButtonElement, Props>(
         size={size}
         onMouseEnter={handleMouseEnter}
         className={cn(
-          "group relative overflow-hidden rounded-full border border-border px-6 py-3 font-sans font-semibold transition-all duration-300 active:scale-95 cursor-pointer select-none",
+          "group relative overflow-hidden rounded-full", 
+          "border border-border px-6 py-3 font-sans font-semibold", 
+          "transition-all duration-300 active:scale-95 cursor-pointer select-none",
           className
         )}
         {...props}
       >
         {/* Ripple */}
         <span
-          className="pointer-events-none absolute h-10 w-10 scale-0 rounded-full bg-primary transition-transform duration-700 ease-in-out group-hover:scale-(--ripple-scale)"
+          className={clsx(
+            "pointer-events-none absolute h-10 w-10 scale-0", 
+            "rounded-full bg-primary transition-transform", 
+            "duration-700 ease-in-out group-hover:scale-(--ripple-scale)"
+            
+          )}
           style={
             {
               left: pos.x - RIPPLE_SIZE / 2,
@@ -77,7 +85,11 @@ const ButtonRipple = React.forwardRef<HTMLButtonElement, Props>(
         />
 
         {/* Conteúdo */}
-        <span className="relative z-10 flex items-center justify-center gap-2 leading-none transition-colors duration-500 group-hover:text-primary-foreground">
+        <span className={clsx(
+          "relative z-10 flex items-center justify-center gap-2", 
+          "leading-none transition-colors duration-500", 
+          "group-hover:text-primary-foreground"
+          )}>
           {Icon && iconPlacement === "left" && (
             <Icon className="h-4 w-4 shrink-0" />
           )}

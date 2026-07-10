@@ -32,7 +32,7 @@ const STATE_CONFIG: Record<
 
   resultado: {
     scrollGradient:
-      "bg-[radial-gradient(circle_at_right,var(--primary)_15%,oklch(0.65_0.11_285)_45%,oklch(0.32_0.09_275)_100%)]", // Aço Violeta Metálico -> Obsidiana Azulada
+      "bg-[radial-gradient(circle_at_right,var(--primary)_15%,oklch(0.65_0.11_285)_45%,oklch(0.32_0.09_275)_100%)]", 
     ambientGlow:
       "bg-[radial-gradient(circle_at_top,oklch(0.65_0.11_285_/_0.40),oklch(0.32_0.09_275_/_0.20)_50%,transparent_75%)]",
     pulseGlow:
@@ -41,7 +41,7 @@ const STATE_CONFIG: Record<
 
   historico: {
    scrollGradient:
-      "bg-[radial-gradient(circle_at_right,var(--primary)_15%,oklch(0.68_0.19_315)_50%,oklch(0.38_0.14_305)_100%)]", // Ametista Viva -> Violeta Profundo
+      "bg-[radial-gradient(circle_at_right,var(--primary)_15%,oklch(0.68_0.19_315)_50%,oklch(0.38_0.14_305)_100%)]", 
     ambientGlow:
       "bg-[radial-gradient(circle_at_top,oklch(0.68_0.19_315_/_0.40),oklch(0.38_0.14_305_/_0.20)_50%,transparent_75%)]",
     pulseGlow:

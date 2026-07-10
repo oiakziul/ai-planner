@@ -29,10 +29,10 @@ export const ColorWheelIcon: React.FC<ColorWheelIconProps> = ({ className }) => 
       {/* Gomo 8: Rosa / Fúcsia */}
       <path d="M4.58 4.58 A10.5 10.5 0 0 1 12 1.5 L12 4.5 A7.5 7.5 0 0 0 6.7 6.7 Z" fill="#ec4899" />
 
-      {/* Anel de espaçamento interno (vaza o fundo do app automaticamente) */}
+      {/* Anel de espaçamento interno */}
       <circle cx="12" cy="12" r="4.5" fill="var(--background)" className="transition-colors duration-300" />
 
-      {/* Círculo central aumentado para destacar mais a cor ativa */}
+      {/* Círculo central para destacar a cor ativa */}
       <circle cx="12" cy="12" r="4.5" fill="var(--primary)" className="transition-all duration-300" />
     </svg>
   );

@@ -52,7 +52,7 @@ export class QuotaExceededError extends Error {
   }
 }
 
-// Analisa falhas HTTP e trata limite de requisições de forma robusta
+// Analisa falhas HTTP 
 async function throwForHttpError(
   response: Response, 
   contextLabel: string
@@ -73,7 +73,6 @@ async function throwForHttpError(
         retryAfterSeconds = parseInt(retryDelayStr.replace('s', ''), 10);
       }
     } catch {
-      // Ignora falhas de parse
     }
 
     throw new QuotaExceededError(

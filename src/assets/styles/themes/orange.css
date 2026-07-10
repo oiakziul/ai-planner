@@ -1,12 +1,3 @@
-/* ============================================================
-   THEME — ORANGE
-   Usa hue fixo em oklch() (55°) em vez do token --color-orange-*
-   do Tailwind, porque orange-600/700 do Tailwind tem hue real
-   ~41°, muito perto do red-600 (~27°) — por isso ficava parecido
-   com o tema vermelho. Hue fixo garante separação (55° vs 25°
-   do red.css = 30° de distância real).
-   ============================================================ */
-
 /* LIGHT MODE - ORANGE OVERRIDE */
 :root.theme-orange {
   --theme-hue: 55;

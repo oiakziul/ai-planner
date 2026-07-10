@@ -22,7 +22,6 @@ export const Footer = () => {
     }
   };
 
-  // Base compartilhada por todos os botões circulares (LinkedIn, e-mail mobile, seta)
   const circleButtonBase = cn(
     "inline-flex justify-center items-center rounded-full text-xl cursor-pointer shrink-0",
     "h-12 w-12 bg-accent/20 border border-border transition-all duration-500 ease-out",
@@ -58,12 +57,10 @@ export const Footer = () => {
 
   const footerCopyright = cn("text-muted-foreground text-sm mb-4 font-medium");
 
-  // Linha única, responsiva, com todos os botões alinhados e do mesmo tamanho
   const linksRow = cn(
     "flex items-center justify-center gap-4 w-full mt-4"
   );
 
-  // Botão de e-mail mobile: mesma altura/largura do círculo do LinkedIn
   const eMailLinkMobile = cn(circleButtonBase);
 
   return (
@@ -88,12 +85,10 @@ export const Footer = () => {
           </p>
 
           <section className={linksRow}>
-            {/* Desktop: botão de e-mail completo (com texto) */}
             <div className="hidden lg:flex">
               <ButtonDemo />
             </div>
 
-            {/* Mobile: e-mail vira ícone circular, igual ao LinkedIn */}
             <a
               className={cn(eMailLinkMobile, "lg:hidden")}
               href="mailto:kaioaac3@gmail.com"

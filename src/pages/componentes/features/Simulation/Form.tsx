@@ -26,8 +26,6 @@ export const SimulationForm = () => {
   const currentStep = simulationFormSteps[currentStepIndex];
 
   const [timeUnit, setTimeUnit] = useState<"years" | "months">("years");
-
-  // Controle de abertura/fechamento do dropdown customizado (só UI, não afeta o dado salvo)
   const [isTimeDropdownOpen, setIsTimeDropdownOpen] = useState(false);
   const timeDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -136,12 +134,6 @@ export const SimulationForm = () => {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
       handleInputChange(e.target.value),
   };
-
-  // ==========================================
-  // ESTILIZAÇÃO DO DROPDOWN CUSTOMIZADO
-  // Substitui o <select> nativo (impossível de estilizar o popup do SO)
-  // por um menu próprio, no mesmo padrão visual do Header
-  // ==========================================
 
   const dropdownTriggerClass = clsx(
     "flex items-center gap-1.5 h-full pl-3 pr-2 text-sm font-semibold",

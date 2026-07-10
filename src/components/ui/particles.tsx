@@ -171,7 +171,6 @@ export const Particles: React.FC<ParticlesProps> = ({
       canvasRef.current.style.height = `${canvasSize.current.h}px`
       context.current.scale(dpr, dpr)
 
-      // Clear existing particles and create new ones with exact quantity
       circles.current = []
       for (let i = 0; i < quantity; i++) {
         const circle = circleParams()
@@ -258,12 +257,11 @@ export const Particles: React.FC<ParticlesProps> = ({
   const animate = () => {
     clearContext()
     circles.current.forEach((circle: Circle, i: number) => {
-      // Handle the alpha value
       const edge = [
-        circle.x + circle.translateX - circle.size, // distance from left edge
-        canvasSize.current.w - circle.x - circle.translateX - circle.size, // distance from right edge
-        circle.y + circle.translateY - circle.size, // distance from top edge
-        canvasSize.current.h - circle.y - circle.translateY - circle.size, // distance from bottom edge
+        circle.x + circle.translateX - circle.size, 
+        canvasSize.current.w - circle.x - circle.translateX - circle.size,
+        circle.y + circle.translateY - circle.size, 
+        canvasSize.current.h - circle.y - circle.translateY - circle.size, 
       ]
       const closestEdge = edge.reduce((a, b) => Math.min(a, b))
       const remapClosestEdge = parseFloat(
@@ -288,16 +286,13 @@ export const Particles: React.FC<ParticlesProps> = ({
 
       drawCircle(circle, true)
 
-      // circle gets out of the canvas
       if (
         circle.x < -circle.size ||
         circle.x > canvasSize.current.w + circle.size ||
         circle.y < -circle.size ||
         circle.y > canvasSize.current.h + circle.size
       ) {
-        // remove the circle from the array
         circles.current.splice(i, 1)
-        // create a new circle
         const newCircle = circleParams()
         drawCircle(newCircle)
       }
