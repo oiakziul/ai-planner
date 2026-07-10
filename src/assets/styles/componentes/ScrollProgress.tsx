@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
 
 interface ScrollProgressProps {
@@ -15,7 +15,7 @@ export const ScrollProgress = ({ containerRef, activeColor }: ScrollProgressProp
     restDelta: 0.001,
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
@@ -23,6 +23,7 @@ export const ScrollProgress = ({ containerRef, activeColor }: ScrollProgressProp
       const { scrollTop, scrollHeight, clientHeight } = el;
       const maxScroll = scrollHeight - clientHeight;
 
+      // Se não houver rolagem, mantém o mínimo visual (3%)
       if (maxScroll <= 0) {
         rawProgress.set(0.03);
         return;
@@ -34,21 +35,31 @@ export const ScrollProgress = ({ containerRef, activeColor }: ScrollProgressProp
 
     updateProgress();
 
+    const timeout = setTimeout(updateProgress, 150);
+
     el.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
 
     const resizeObserver = new ResizeObserver(updateProgress);
     resizeObserver.observe(el);
 
-    el.addEventListener("transitionend", updateProgress);
+    const mutationObserver = new MutationObserver(updateProgress);
+    mutationObserver.observe(el, { 
+      childList: true, 
+      subtree: true, 
+      characterData: true 
+    });
 
     return () => {
+      clearTimeout(timeout);
       el.removeEventListener("scroll", updateProgress);
-      el.removeEventListener("transitionend", updateProgress);
+      window.removeEventListener("resize", updateProgress);
       resizeObserver.disconnect();
+      mutationObserver.disconnect();
     };
   }, [containerRef, rawProgress]);
 
-  return (
+return (
     <div className="w-full h-1.5 rounded-full overflow-hidden">
       <motion.div
         className={`h-full origin-left ${activeColor}`}

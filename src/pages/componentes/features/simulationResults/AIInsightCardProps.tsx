@@ -186,18 +186,14 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
     setIsChatLoading(false);
     isFirstLoadRef.current = true;
 
-    // Reset scroll do painel quando carrega novo insight
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = 0;
     }
   }, [simulationId]);
 
-  // Reset scroll quando insight carrega
   useEffect(() => {
     if (insight && scrollContainerRef.current) {
-      // Garante scroll no topo quando insight chega
       scrollContainerRef.current.scrollTop = 0;
-      // Força novamente em 50ms para garantir
       const timeoutId = setTimeout(() => {
         if (scrollContainerRef.current) {
           scrollContainerRef.current.scrollTop = 0;
@@ -212,8 +208,6 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
   }, [chatHistory, simulationId]);
 
   useEffect(() => {
-    // Scroll automático APENAS quando há NOVA mensagem da IA (não na primeira carga)
-    // NÃO faz scroll quando o usuário escreve (última mensagem é do usuário)
     if (chatHistory.length > initialChatHistoryLengthRef.current && scrollContainerRef.current) {
       const lastMessage = chatHistory[chatHistory.length - 1];
       if (lastMessage.role === "model") {
@@ -228,6 +222,8 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
       initialChatHistoryLengthRef.current = chatHistory.length;
     }
   }, [chatHistory]);
+
+  
 
   const handleSendChat = async (e: React.FormEvent) => {
     e.preventDefault();
