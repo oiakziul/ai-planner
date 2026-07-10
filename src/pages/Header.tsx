@@ -207,7 +207,7 @@ export const Header: React.FC = () => {
 
   const colorTriggerBtnClass = cn(
     "group flex items-center justify-center h-9 w-9 rounded-full transition-all cursor-pointer",
-    "outline-none focus-visible:ring-2 focus-visible:ring-primary/50 text-muted-foreground hover:text-primary",
+    "outline-none focus-visible:ring-2 pl-1 lg:pl-1.5 focus-visible:ring-primary/50 text-muted-foreground hover:text-primary",
     isColorOpen && "bg-accent text-primary ring-1 ring-primary/20"
   );
   const colorWheelIconClasses = "h-7.5 w-7.5 shrink-0 transition-transform duration-500 group-hover:rotate-45";
