@@ -1,0 +1,27 @@
+export const historicoPT = () => ({
+  history_title: "Histórico de simulações",
+  history_subtitle: "Acompanhe o histórico de seus planos financeiros.",
+  no_simulations: "Nenhuma simulação encontrada",
+  no_simulations_desc: "Você ainda não realizou simulações de metas. Crie seu primeiro planejamento para salvá-lo aqui.",
+  label_cost: "Custo da Meta",
+  label_deadline: "Prazo",
+  label_savings: "Economia Mensal",
+  btn_details: "Ver detalhes",
+  tooltip_delete: "Excluir simulação",
+  suffix_year: "ano",
+  suffix_years: "anos",
+  suffix_month: "mês",
+  suffix_months: "meses",
+  pagination_prev: "Anterior",
+  pagination_next: "Próximo",
+  pagination_info: "Página {{current}} de {{total}}",
+   search_placeholder: "Pesquisar meta...",
+  sort_by: "Ordenar por",
+  sort_date_desc: "Mais recentes",
+  sort_date_asc: "Mais antigas",
+  sort_alpha_asc: "Nome (A-Z)",
+  sort_alpha_desc: "Nome (Z-A)",
+  no_results: "Nenhum resultado encontrado",
+  no_results_desc: "Tente ajustar os termos da sua pesquisa ou filtre de outra forma."
+
+});

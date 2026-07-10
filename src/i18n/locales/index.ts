@@ -3,7 +3,7 @@ import { headerPT } from  './pt/header';
 import { inicioPT } from  './pt/inicio';
 import { simulationFormStepsPT } from './pt/simulationFormSteps';
 import { resultadoPT } from './pt/resultado';
-import { pagina3PT } from './pt/pagina3';
+import { historicoPT } from './pt/historico';
 import { footerPT } from  './pt/footer';
 
 // --- INGLÊS ---
@@ -11,7 +11,7 @@ import { headerEN } from  './en/header';
 import { inicioEN } from  './en/inicio';
 import { simulationFormStepsEN } from './en/simulationFormSteps';
 import { resultadoEN } from './en/resultado';
-import { pagina3EN } from './en/pagina3';
+import { historicoEN } from './en/historico';
 import { footerEN } from  './en/footer';
 
 // --- ESPANHOL ---
@@ -19,7 +19,7 @@ import { headerES } from  './es/header';
 import { inicioES } from  './es/inicio';
 import { simulationFormStepsES } from './es/simulationFormSteps';
 import { resultadoES } from './es/resultado';
-import { pagina3ES } from './es/pagina3';
+import { historicoES } from './es/historico';
 import { footerES } from  './es/footer';
 
 export const resources = {
@@ -28,7 +28,7 @@ export const resources = {
     inicio:  inicioPT(),
     pagina1: simulationFormStepsPT(),
     pagina2: resultadoPT(),
-    pagina3: pagina3PT(),
+    pagina3: historicoPT(),
     footer:  footerPT(),
   },
   en: { 
@@ -36,7 +36,7 @@ export const resources = {
     inicio:  inicioEN(),
     pagina1: simulationFormStepsEN(),
     pagina2: resultadoEN(),
-    pagina3: pagina3EN(),
+    pagina3: historicoEN(),
     footer:  footerEN(),
   },
   es: { 
@@ -44,7 +44,7 @@ export const resources = {
     inicio:  inicioES(),
     pagina1: simulationFormStepsES(),
     pagina2: resultadoES(),
-    pagina3: pagina3ES(),
+    pagina3: historicoES(),
     footer:  footerES(),      
   },
 };

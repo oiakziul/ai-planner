@@ -1,0 +1,27 @@
+export const historicoEN = () => ({
+  history_title: "Simulation History",
+  history_subtitle: "Track the history of your financial plans.",
+  no_simulations: "No simulations found",
+  no_simulations_desc:
+    "You have not simulated any goals yet. Create your first plan to save it here.",
+  label_cost: "Goal Cost",
+  label_deadline: "Deadline",
+  label_savings: "Monthly Savings",
+  btn_details: "View details",
+  tooltip_delete: "Delete simulation",
+  suffix_year: "year",
+  suffix_years: "years",
+  suffix_month: "month",
+  suffix_months: "months",
+  pagination_prev: "Previous",
+  pagination_next: "Next",
+  pagination_info: "Page {{current}} of {{total}}",
+    search_placeholder: "Search goal...",
+  sort_by: "Sort by",
+  sort_date_desc: "Newest first",
+  sort_date_asc: "Oldest first",
+  sort_alpha_asc: "Alphabetical (A-Z)",
+  sort_alpha_desc: "Alphabetical (Z-A)",
+  no_results: "No results found",
+  no_results_desc: "Try adjusting your search terms or filter in another way."
+});
