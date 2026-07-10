@@ -22,28 +22,33 @@ const STATE_CONFIG: Record<
   { scrollGradient: string; ambientGlow: string; pulseGlow: string }
 > = {
   criacao: {
+    // OURO PURO – primary → dourado radiante → bronze intenso
     scrollGradient:
-      "bg-[radial-gradient(circle_at_right,var(--primary)_15%,#f59e0b_50%,#b45309_100%)]",
+      "bg-[radial-gradient(circle_at_right,var(--primary)_20%,#fbbf24_55%,#d97706_100%)]",
     ambientGlow:
-      "bg-[radial-gradient(circle_at_top,rgba(245,158,11,0.45),rgba(180,83,9,0.25)_50%,transparent_75%)]",
+      "bg-[radial-gradient(circle_at_top,rgba(251,191,36,0.55),rgba(217,119,6,0.25)_50%,transparent_75%)]",
     pulseGlow:
-      "bg-[radial-gradient(circle_at_top,rgba(251,191,36,0.8),rgba(245,158,11,0.4)_50%,transparent_75%)]",
+      "bg-[radial-gradient(circle_at_top,rgba(253,224,71,0.95),rgba(251,191,36,0.50)_50%,transparent_75%)]",
   },
+
   resultado: {
+    // VIDRO CRISTALINO – primary → ciano gelo → azul profundo (efeito refração)
     scrollGradient:
-      "bg-[radial-gradient(circle_at_right,var(--primary)_10%,#94a3b8_45%,#475569_100%)]",
+      "bg-[radial-gradient(circle_at_right,var(--primary)_20%,#67e8f9_55%,#1d4ed8_100%)]",
     ambientGlow:
-      "bg-[radial-gradient(circle_at_top,rgba(148,163,184,0.55),rgba(71,85,105,0.3)_50%,transparent_75%)]",
+      "bg-[radial-gradient(circle_at_top,rgba(103,232,249,0.40),rgba(29,78,216,0.15)_50%,transparent_75%)]",
     pulseGlow:
-      "bg-[radial-gradient(circle_at_top,rgba(226,232,240,0.85),rgba(100,116,139,0.45)_50%,transparent_75%)]",
+      "bg-[radial-gradient(circle_at_top,rgba(165,243,252,0.90),rgba(103,232,249,0.40)_50%,transparent_75%)]",
   },
+
   historico: {
+    // PRATA LUXUOSA – primary → prata metálica → grafite fumê
     scrollGradient:
-      "bg-[radial-gradient(circle_at_right,var(--primary)_10%,#c2703c_45%,#7c3f23_100%)]",
+      "bg-[radial-gradient(circle_at_right,var(--primary)_20%,#e2e8f0_55%,#475569_100%)]",
     ambientGlow:
-      "bg-[radial-gradient(circle_at_top,rgba(194,112,60,0.4),rgba(124,63,35,0.22)_50%,transparent_75%)]",
+      "bg-[radial-gradient(circle_at_top,rgba(226,232,240,0.55),rgba(71,85,105,0.25)_50%,transparent_75%)]",
     pulseGlow:
-      "bg-[radial-gradient(circle_at_top,rgba(224,137,79,0.75),rgba(124,63,35,0.35)_50%,transparent_75%)]",
+      "bg-[radial-gradient(circle_at_top,rgba(248,250,252,0.95),rgba(203,213,225,0.50)_50%,transparent_75%)]",
   },
 };
 
@@ -120,11 +125,13 @@ export const Home = () => {
 
       <div key={pageState} className={pulseGlowClass} />
 
-      <ScrollProgress
-        key={`${colorTheme}-${theme}-${location.pathname}`}
-        containerRef={mainRef}
-        activeColor={scrollGradient}
-      />
+      <div className="absolute top-0 left-0 w-full z-50">
+        <ScrollProgress
+          key={`${colorTheme}-${theme}-${location.pathname}`}
+          containerRef={mainRef}
+          activeColor={scrollGradient}
+        />
+      </div>
 
       <main
         ref={mainRef}
