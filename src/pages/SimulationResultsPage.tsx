@@ -41,7 +41,6 @@ export const SimulationResultsPage = () => {
   const monthlySavings = calcMonthlySavings(data);
   const activeCurrency = getCurrencyByLanguage(i18n.language);
 
-  // Formata o valor calculado da capacidade de poupança no padrão do país selecionado
   const formattedSavings = monthlySavings.toLocaleString(
     activeCurrency === "USD" ? "en-US" : activeCurrency === "EUR" ? "de-DE" : "pt-BR",
     {
@@ -50,15 +49,10 @@ export const SimulationResultsPage = () => {
     }
   );
 
-  // Função utilitária para limpar caracteres antigos e formatar com a moeda certa do i18n
   const formatCardValue = (rawString: string) => {
     const rawDigits = rawString.replace(/\D/g, "");
     return formatCurrencyMask(rawDigits, activeCurrency);
   };
-
-  // ==========================================
-  // EXTRAÇÃO DE CLASSES (CLEAN CODE)
-  // ==========================================
 
   const mainLayout = cn(
     "mx-auto max-w-[89rem] h-auto px-4 py-10 sm:py-14 font-sans select-none"
@@ -76,7 +70,6 @@ export const SimulationResultsPage = () => {
   const card5Wrapper = cn("lg:col-start-3 lg:row-start-3");
   const card6Wrapper = cn("lg:col-start-3 lg:row-start-4");
 
-  // z-30 para o backdrop ficar abaixo do header principal do app (z-50)
   const aiCardWrapper = cn(
     isAIPanelExpanded
       ? "fixed top-20 sm:top-24 bottom-6 left-4 right-4 md:left-10 md:right-10 lg:left-16 lg:right-16 z-40 transition-all duration-300 ease-in-out"

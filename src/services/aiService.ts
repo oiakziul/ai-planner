@@ -36,17 +36,12 @@ interface GeminiResponse {
   }
 }
 
-// [MUITO IMPORTANTE]: Exportamos a interface das mensagens para o Chat [1]
 export interface ChatMessage {
   role: "user" | "model";
   parts: { text: string }[];
 }
 
-/**
- * Erro específico para quando a cota gratuita do Gemini é excedida (HTTP 429).
- * Permite que a UI mostre uma mensagem amigável em vez do erro genérico,
- * e carrega o tempo sugerido de espera quando o Google o informa.
- */
+// Classe de erro customizada para estouro de cota (Erro 429)
 export class QuotaExceededError extends Error {
   retryAfterSeconds?: number;
 
@@ -57,25 +52,28 @@ export class QuotaExceededError extends Error {
   }
 }
 
-/**
- * Verifica se a resposta HTTP indica erro e lança o tipo de erro apropriado.
- * Para 429, tenta extrair o retryDelay do corpo para dar uma estimativa de espera.
- */
-async function throwForHttpError(response: Response, contextLabel: string): Promise<never> {
+// Analisa falhas HTTP e trata limite de requisições de forma robusta
+async function throwForHttpError(
+  response: Response, 
+  contextLabel: string
+): Promise<never> {
   const bodyText = await response.text().catch(() => '');
 
   if (response.status === 429) {
     let retryAfterSeconds: number | undefined;
     try {
       const parsed = JSON.parse(bodyText);
-      const retryDelayStr: string | undefined = parsed?.error?.details
-        ?.find((d: { '@type'?: string }) => d['@type']?.includes('RetryInfo'))
-        ?.retryDelay; // ex: "7s"
+      const details = parsed?.error?.details || [];
+      const retryInfo = details.find(
+        (d: { '@type'?: string }) => d['@type']?.includes('RetryInfo')
+      );
+      
+      const retryDelayStr = retryInfo?.retryDelay; // ex: "7s"
       if (retryDelayStr) {
         retryAfterSeconds = parseInt(retryDelayStr.replace('s', ''), 10);
       }
     } catch {
-      // corpo não é JSON ou não tem o formato esperado; segue sem retryAfterSeconds
+      // Ignora falhas de parse
     }
 
     throw new QuotaExceededError(
@@ -84,25 +82,17 @@ async function throwForHttpError(response: Response, contextLabel: string): Prom
     );
   }
 
-  throw new Error(`${contextLabel}: ${response.status}${bodyText ? ` - ${bodyText}` : ''}`);
+  const errMsg = bodyText ? ` - ${bodyText}` : '';
+  throw new Error(`${contextLabel}: ${response.status}${errMsg}`);
 }
 
-// Nome exato da sua chave no .env.local [1]
 const API_KEY = String(import.meta.env.VITE_AI_API_KEY)
-
-// Usando o Flash-Lite: modelo com a cota gratuita mais generosa atualmente
-// (evitamos o alias "-latest" pois ele pode apontar para modelos preview
-// recém-lançados com cotas bem mais restritas no tier gratuito).
 const MODEL_NAME = 'gemini-flash-lite-latest'
 
 const GEMINI_API_URL =
   `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`
 
-/**
- * Extrai o texto de uma resposta do Gemini, validando cada nível do payload.
- * Lança erros descritivos em vez de deixar o JS quebrar com "Cannot read
- * properties of undefined" quando a IA bloqueia, corta ou não retorna nada.
- */
+// Garante o recebimento seguro e tratamento de erros no retorno da IA
 function extractTextFromGeminiResponse(data: GeminiResponse): string {
   if (data.promptFeedback?.blockReason) {
     throw new Error(
@@ -129,6 +119,7 @@ function extractTextFromGeminiResponse(data: GeminiResponse): string {
   return text;
 }
 
+// Executa a chamada bruta de geração de conteúdo para o endpoint do Gemini
 export const callGeminiAPI = async (
   prompt: string,
   signal?: AbortSignal,
@@ -159,6 +150,7 @@ export const callGeminiAPI = async (
   return (await response.json()) as GeminiResponse
 }
 
+// Geração de laudos estruturados com limpeza de tags Markdown de código
 export const getInsight = async (
   prompt: string,
   signal?: AbortSignal,
@@ -174,7 +166,7 @@ export const getInsight = async (
   }
 }
 
-// [MUITO IMPORTANTE]: Exportamos a função de requisição de chat do Gemini [1]
+// Canal de conversação contínua para o Chat de dúvidas
 export const callGeminiChatAPI = async (
   chatHistory: ChatMessage[],
   signal?: AbortSignal,

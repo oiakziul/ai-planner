@@ -27,5 +27,6 @@ export const headerES = () => ({
   theme_purple: "Púrpura",
   theme_fuchsia: "Fucsia",
   theme_pink: "Rosa",
-  theme_slate: "Minimalista"
+  theme_slate: "Minimalista",
+  loading_fallback: "Cargando . . ."
 });

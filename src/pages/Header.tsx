@@ -92,8 +92,9 @@ export const Header: React.FC = () => {
     const mainScroll = document.querySelector("main");
     const handleScroll = () => {
       if (mainScroll) {
-        setIsAtTop(mainScroll.scrollTop < 5);
-        setIsScrolled(mainScroll.scrollTop > 8);
+        const scrollTop = mainScroll.scrollTop;
+        setIsAtTop(scrollTop < 5);
+        setIsScrolled(scrollTop > 8);
       }
     };
     mainScroll?.addEventListener("scroll", handleScroll);
@@ -110,6 +111,19 @@ export const Header: React.FC = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    const activeLang = i18n.language?.split("-")[0] || "pt";
+    
+    document.documentElement.setAttribute("lang", activeLang);
+
+    // Altera dinamicamente o título da aba do navegador em tempo real
+    document.title = activeLang === "en" 
+      ? "AI Planner - Financial Intelligence" 
+      : activeLang === "es"
+      ? "AI Planner - Inteligencia Financiera"
+      : "AI Planner - Inteligência Financeira";
+  }, [i18n.language]);
 
   const supportedLanguages = [
     { code: "pt", flag: <BR className="h-5 w-auto rounded-sm shadow-sm" />, name: t("portuguese") },
@@ -144,7 +158,6 @@ export const Header: React.FC = () => {
     "h-5 w-px bg-linear-to-b from-transparent via-border to-transparent shrink-0"
   );
 
-  // --- Logo ---
   const logoLinkClasses = cn(
     "group flex items-center gap-3 font-bold text-foreground tracking-tight shrink-0"
   );
@@ -158,14 +171,12 @@ export const Header: React.FC = () => {
     "duration-500 group-hover:bg-position-[100%_0]"
   );
 
-  // --- Botões de Ícones Genéricos ---
   const getIconTriggerClass = (active: boolean) => cn(
     "flex items-center justify-center h-9 w-9 rounded-full transition-all cursor-pointer",
     "hover:scale-105 active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
     active && "bg-accent text-primary ring-1 ring-primary/20"
   );
 
-  // --- Menu Dropdown Base ---
   const dropdownBaseClasses = cn(
     "absolute top-[calc(100%+8px)] z-50 rounded-2xl border border-border/60",
     "shadow-2xl bg-popover/98 backdrop-blur-xl overflow-hidden"
@@ -175,7 +186,6 @@ export const Header: React.FC = () => {
     "text-[10px] font-semibold uppercase tracking-widest text-muted-foreground"
   );
 
-  // --- Botão "Páginas" ---
   const menuTriggerBtn = cn(
     "flex h-8.5 sm:h-10 items-center justify-between px-2 sm:px-3 rounded-xl",
     "border border-border/50 font-medium text-sm cursor-pointer",
@@ -195,7 +205,6 @@ export const Header: React.FC = () => {
       : "text-foreground/80 hover:bg-accent hover:text-accent-foreground"
   );
 
-  // --- Botão "Paleta de Cores" ---
   const colorTriggerBtnClass = cn(
     "group flex items-center justify-center h-9 w-9 rounded-full transition-all cursor-pointer",
     "outline-none focus-visible:ring-2 focus-visible:ring-primary/50 text-muted-foreground hover:text-primary",
@@ -212,7 +221,6 @@ export const Header: React.FC = () => {
     active ? "border-primary scale-125 ring-2 ring-primary/25 z-10" : "border-transparent hover:scale-110"
   );
 
-  // --- Botão "Idioma" ---
   const langDropdownClass = cn(dropdownBaseClasses, "right-0 w-48 p-1.5");
   const getLangItemClasses = (active: boolean) => cn(
     "flex items-center gap-3 px-3 py-2.5 cursor-pointer rounded-xl transition-all text-sm",
@@ -220,7 +228,6 @@ export const Header: React.FC = () => {
     active ? "bg-primary/10 text-primary font-semibold" : "hover:bg-accent hover:text-accent-foreground"
   );
 
-  // --- Botões de Navegação Desktop ---
   const desktopNavWrapper = cn("hidden lg:flex items-center gap-2");
   const getDesktopBtnClasses = (active: boolean) => cn(
     "shadow-sm active:scale-95 ring transition-all",
@@ -232,7 +239,6 @@ export const Header: React.FC = () => {
       : "ring-ring/50 text-foreground"
   );
 
-  // --- Botões Dock Mobile ---
   const mobileDockWrapper = cn(
     "fixed bottom-0 left-0 right-0 z-50 lg:hidden pb-[env(safe-area-inset-bottom)]"
   );

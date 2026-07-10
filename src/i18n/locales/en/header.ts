@@ -27,5 +27,6 @@ export const headerEN = () => ({
   theme_purple: "Purple",
   theme_fuchsia: "Fuchsia",
   theme_pink: "Pink",
-  theme_slate: "Minimalist"
+  theme_slate: "Minimalist",
+  loading_fallback: "Loading . . ."
 });

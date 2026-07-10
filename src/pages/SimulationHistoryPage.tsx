@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { 
-  Trash2, 
-  ExternalLink, 
-  Target, 
-  ChevronLeft, 
-  ChevronRight, 
+import {
+  Trash2,
+  ExternalLink,
+  Target,
+  ChevronLeft,
+  ChevronRight,
   Search,
   ChevronDown
-} from "lucide-react"; 
-import { Button } from "@/components/ui/button"; 
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { type SimulationRecord } from "@/data/simulation";
 import { calcMonthlySavings } from "@/utils/simulation";
@@ -22,7 +22,6 @@ const ITEMS_PER_PAGE = 5;
 type Currency = "BRL" | "USD" | "EUR";
 type SortOption = "date-desc" | "date-asc" | "alpha-asc" | "alpha-desc";
 
-// Estrutura das opções de ordenação
 const SORT_OPTIONS: { id: SortOption; labelKey: string }[] = [
   { id: "date-desc", labelKey: "sort_date_desc" },
   { id: "date-asc", labelKey: "sort_date_asc" },
@@ -42,14 +41,12 @@ export const SimulationHistoryPage: React.FC = () => {
   const [history, setHistory] = useState<SimulationRecord[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Estados de Busca, Ordenação e Menu Dropdown
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("date-desc");
   const [isSortOpen, setIsSortOpen] = useState(false);
 
   const sortRef = useRef<HTMLDivElement>(null);
 
-  // 1. [LEITURA]: Carrega o histórico do Local Storage
   useEffect(() => {
     const storage = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (storage) {
@@ -57,7 +54,6 @@ export const SimulationHistoryPage: React.FC = () => {
     }
   }, []);
 
-  // Fecha o dropdown de filtros ao clicar fora dele
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as Node;
@@ -69,12 +65,10 @@ export const SimulationHistoryPage: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Reseta para a página 1 ao digitar uma busca ou mudar o filtro
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, sortBy]);
 
-  // 2. [EXCLUSÃO BLINDADA]: Remove o item e recua a página se a atual ficar vazia
   const handleDelete = (id: string) => {
     const confirmMessage = t("confirm_delete", "Deseja realmente excluir esta simulação?");
     if (confirm(confirmMessage)) {
@@ -91,7 +85,6 @@ export const SimulationHistoryPage: React.FC = () => {
 
   const activeCurrency = getCurrencyByLanguage(i18n.language);
 
-  // 3. [LÓGICA DE FILTRAGEM E ORDENAÇÃO]
   const filteredHistory = history.filter((item) =>
     item.goalName.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -112,7 +105,6 @@ export const SimulationHistoryPage: React.FC = () => {
     return 0;
   });
 
-  // 4. [LÓGICA DA PAGINAÇÃO]
   const totalItems = sortedHistory.length;
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -121,18 +113,16 @@ export const SimulationHistoryPage: React.FC = () => {
 
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-  // 5. [FORMATADOR DE DATA LOCALIZADA COM 2 DÍGITOS] (Mantido intacto)
   const getFormattedDate = (createdAt?: string): string => {
     const date = createdAt ? new Date(createdAt) : new Date();
     const validDate = isNaN(date.getTime()) ? new Date() : date;
-    
+
     return validDate.toLocaleDateString(
       i18n.language === "en" ? "en-US" : i18n.language === "es" ? "es-ES" : "pt-BR",
       { day: "2-digit", month: "2-digit", year: "numeric" }
     );
   };
 
-  // Encontra o rótulo ativo para exibir no botão
   const activeSortOption = SORT_OPTIONS.find((opt) => opt.id === sortBy) || SORT_OPTIONS[0];
 
   // ==========================================
@@ -210,11 +200,10 @@ export const SimulationHistoryPage: React.FC = () => {
     "bg-card/30 backdrop-blur-md shadow-2xl text-card-foreground text-center"
   );
 
-// --- Classes da Barra de Filtro e Busca ---
   const filterBarWrapper = cn(
     "flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 p-4",
     "bg-card/20 backdrop-blur-md rounded-2xl border border-border/80 w-full",
-    "relative z-20" // <-- [CORRIGIDO]: relative z-20 força o dropdown a flutuar na frente dos cards de simulação!
+    "relative z-20"
   );
 
   const searchContainer = cn(
@@ -225,16 +214,14 @@ export const SimulationHistoryPage: React.FC = () => {
   const searchIconClass = cn("h-4.5 w-4.5 text-muted-foreground mr-2 shrink-0");
   const searchInputClass = cn("w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none border-0 ring-0 h-full");
 
-  // --- Classes do NOVO Dropdown de Ordenação (Anti-Dancing) ---
   const sortContainer = cn(
     "flex items-center gap-3 w-full sm:w-auto shrink-0 justify-end relative"
   );
-  
+
   const sortLabelClass = cn(
     "text-[10px] font-bold uppercase tracking-widest text-muted-foreground shrink-0"
   );
 
-  // Botão gatilho com largura travada em 160px para impedir flutuações ao mudar de idioma
   const sortTriggerBtn = cn(
     "flex h-10 items-center justify-between gap-1.5 px-3 rounded-xl border border-border/50 font-medium text-sm cursor-pointer",
     "bg-background/50 hover:bg-accent hover:text-accent-foreground transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary/35",
@@ -259,7 +246,6 @@ export const SimulationHistoryPage: React.FC = () => {
     "ml-auto h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_6px_1px_var(--primary)] animate-pulse"
   );
 
-  // --- Classes da Paginação ---
   const paginationWrapper = cn(
     "flex items-center justify-center gap-6 mt-10 w-full"
   );
@@ -281,8 +267,31 @@ export const SimulationHistoryPage: React.FC = () => {
       : "border-border/80 bg-secondary/40 text-muted-foreground hover:text-foreground hover:bg-secondary cursor-pointer active:scale-95"
   );
 
+  // --- Classes Novas (Para remover todo e qualquer CSS Inline do return) ---
+  const brandIconClass = cn("h-5 w-5");
+  const trashIconClass = cn("h-4 w-4");
+  const detailsIconClass = cn("h-4 w-4");
+  const paginationArrowIconClass = cn("h-4 w-4");
+
+  const sortChevronClass = cn(
+    "h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform duration-200",
+    isSortOpen && "rotate-180"
+  );
+
+  const sortHeaderTitleClass = cn(
+    "text-[10px] font-semibold uppercase tracking-widest text-muted-foreground"
+  );
+
+  const fallbackTitleClass = cn(
+    "drop-shadow-sm px-4 font-sans font-bold text-xl md:text-2xl text-foreground mb-2"
+  );
+
+  const fallbackTextClass = cn(
+    "text-sm text-muted-foreground max-w-sm font-medium"
+  );
+
   // ==========================================
-  // RENDERIZAÇÃO
+  // RENDERIZAÇÃO 
   // ==========================================
 
   return (
@@ -297,6 +306,7 @@ export const SimulationHistoryPage: React.FC = () => {
         <>
           {/* BARRA DE PESQUISA E FILTROS DINÂMICOS */}
           <div className={filterBarWrapper}>
+
             <div className={searchContainer}>
               <Search className={searchIconClass} />
               <input
@@ -308,31 +318,30 @@ export const SimulationHistoryPage: React.FC = () => {
               />
             </div>
 
-            {/* SELETOR CUSTOMIZADO DE ORDENAÇÃO (FOTO 1 STYLE) */}
+            {/* SELETOR CUSTOMIZADO DE ORDENAÇÃO */}
             <div className={sortContainer} ref={sortRef}>
               <span className={sortLabelClass}>
                 {t("sort_by", "Ordenar por")}:
               </span>
-              
-              <button 
-                onClick={() => setIsSortOpen(!isSortOpen)} 
+
+              <button
+                onClick={() => setIsSortOpen(!isSortOpen)}
                 className={sortTriggerBtn}
               >
                 <span className="truncate flex-1">
                   {t(activeSortOption.labelKey)}
                 </span>
-                <ChevronDown className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                <ChevronDown className={sortChevronClass} />
               </button>
 
-              {/* Menu suspenso de vidro */}
               {isSortOpen && (
                 <div className={sortDropdownMenu}>
                   <div className={sortDropdownHeader}>
-                    <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                    <p className={sortHeaderTitleClass}>
                       {t("sort_by", "Ordenar por")}
                     </p>
                   </div>
-                  
+
                   <ul className="space-y-0.5">
                     {SORT_OPTIONS.map((option) => {
                       const isActive = sortBy === option.id;
@@ -369,17 +378,17 @@ export const SimulationHistoryPage: React.FC = () => {
                   { style: "currency", currency: activeCurrency }
                 );
 
-                const deadlineSuffix = record.timeUnit === "years" 
-                  ? t("suffix_years", "anos") 
+                const deadlineSuffix = record.timeUnit === "years"
+                  ? t("suffix_years", "anos")
                   : t("suffix_months", "meses");
 
                 return (
                   <div key={record.id} className={historyCardStyle}>
-                    
-                    {/* Identidade do Item (Coluna Estabilizada com Data Formatada) */}
+
+                    {/* Identidade do Item */}
                     <div className={leftBrandingStyle}>
                       <div className={iconContainer}>
-                        <Target className="h-5 w-5" />
+                        <Target className={brandIconClass} />
                       </div>
                       <div className={textGroup}>
                         <span className={metaTitleStyle} title={record.goalName}>
@@ -391,7 +400,6 @@ export const SimulationHistoryPage: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Métricas */}
                     <div className={metricsGridStyle}>
                       <div className={metricBoxStyle}>
                         <span className={metricLabelStyle}>
@@ -421,19 +429,18 @@ export const SimulationHistoryPage: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Ações */}
                     <div className={actionsWrapperStyle}>
                       <button
                         onClick={() => handleDelete(record.id)}
                         className={deleteBtnStyle}
                         title={t("tooltip_delete", "Excluir simulação")}
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className={trashIconClass} />
                       </button>
 
                       <Button asChild variant="outline" className={detailsBtnStyle}>
                         <Link to={`/resultado/${record.id}`}>
-                          <ExternalLink className="h-4 w-4" />
+                          <ExternalLink className={detailsIconClass} />
                           <span>
                             {t("btn_details", "Ver detalhes")}
                           </span>
@@ -447,26 +454,25 @@ export const SimulationHistoryPage: React.FC = () => {
             </div>
           ) : (
             <div className={fallbackEmptyStyle}>
-              <h2 className="drop-shadow-sm px-4 font-sans font-bold text-xl md:text-2xl text-foreground mb-2">
+              <h2 className={fallbackTitleClass}>
                 {t("no_results")}
               </h2>
-              <p className="text-sm text-muted-foreground max-w-sm font-medium">
+              <p className={fallbackTextClass}>
                 {t("no_results_desc")}
               </p>
             </div>
           )}
 
-          {/* Paginação Numérica Reativa */}
           {totalPages > 1 && (
             <div className={paginationWrapper}>
-              
+
               <button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 className={paginationArrowBtn}
                 title={t("pagination_prev", "Anterior")}
               >
-                <ChevronLeft className="h-4 w-4" />
+                <ChevronLeft className={paginationArrowIconClass} />
               </button>
 
               <div className={paginationNumbersContainer}>
@@ -490,7 +496,7 @@ export const SimulationHistoryPage: React.FC = () => {
                 className={paginationArrowBtn}
                 title={t("pagination_next", "Próximo")}
               >
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="paginationArrowIconClass" />
               </button>
 
             </div>
@@ -498,11 +504,13 @@ export const SimulationHistoryPage: React.FC = () => {
         </>
       ) : (
         <div className={fallbackEmptyStyle}>
-          <h2 className="drop-shadow-sm px-4 font-sans font-bold text-xl md:text-2xl text-foreground mb-2">
+          <h2 className={fallbackTitleClass}>
             {t("no_simulations", "Nenhuma simulação no histórico")}
           </h2>
-          <p className="text-sm text-muted-foreground max-w-sm font-medium">
-            {t("no_simulations_desc", "Você ainda não completou nenhuma simulação. Vá até a aba 'Início' e crie o seu primeiro plano financeiro!")}
+          <p className={fallbackTextClass}>
+            {t("no_simulations_desc",
+              "Você ainda não completou nenhuma simulação. Vá até a aba 'Início' e crie o seu primeiro plano financeiro!"
+            )}
           </p>
         </div>
       )}
