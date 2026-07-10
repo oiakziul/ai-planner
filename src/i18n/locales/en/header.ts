@@ -28,5 +28,6 @@ export const headerEN = () => ({
   theme_fuchsia: "Fuchsia",
   theme_pink: "Pink",
   theme_slate: "Minimalist",
-  loading_fallback: "Loading . . ."
+  loading_fallback: "Loading . . .",
+  toolpipColor: "Change theme color"
 });

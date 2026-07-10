@@ -30,5 +30,6 @@ export const headerPT = () => ({
   theme_fuchsia: "Fúcsia",
   theme_pink: "Rosa",
   theme_slate: "Minimalista",
-   loading_fallback: "Carregando . . ."
+   loading_fallback: "Carregando . . .",
+   toolpipColor: "Mudar cor do tema"
 });
