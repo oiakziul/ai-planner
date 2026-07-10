@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { ChevronsUp } from "lucide-react";
+import { ChevronsUp, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ButtonDemo from "@/components/shadcn-space/button/button-18";
+import { LuLinkedin } from "react-icons/lu";
 
 export const Footer = () => {
   const { t } = useTranslation("footer");
@@ -21,6 +22,17 @@ export const Footer = () => {
     }
   };
 
+  // Base compartilhada por todos os botões circulares (LinkedIn, e-mail mobile, seta)
+  const circleButtonBase = cn(
+    "inline-flex justify-center items-center rounded-full text-xl cursor-pointer shrink-0",
+    "h-12 w-12 bg-accent/20 border border-border transition-all duration-500 ease-out",
+    "text-foreground",
+    "hover:text-primary-foreground hover:border-primary hover:bg-primary hover:-translate-y-2",
+    "hover:shadow-lg hover:shadow-primary/30",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+    "active:scale-95"
+  );
+
   const footerBase = cn(
     "relative py-8 px-6 w-full min-h-90 xl:min-h-80 transition-colors duration-300 select-none",
     "bg-background/60 backdrop-blur-md border-t border-border mt-2 overflow-hidden"
@@ -36,14 +48,7 @@ export const Footer = () => {
 
   const containerSeta = cn("flex justify-center items-center mx-auto mb-10");
 
-  const botaoSeta = cn(
-    "group flex justify-center items-center rounded-full text-xl cursor-pointer",
-    "h-12 w-12 bg-accent/20 border border-border transition-all duration-500 ease-out",
-    "text-foreground",
-    "hover:text-primary-foreground hover:border-primary hover:bg-primary hover:-translate-y-2",
-    "hover:shadow-lg hover:shadow-primary/30",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-  );
+  const botaoSeta = cn(circleButtonBase, "group");
 
   const iconeSetaAnimado = cn(
     "transition-transform duration-300 group-hover:-translate-y-1"
@@ -53,21 +58,19 @@ export const Footer = () => {
 
   const footerCopyright = cn("text-muted-foreground text-sm mb-4 font-medium");
 
-  const emailSection = cn("flex justify-center items-center w-full mt-4");
-
-  const eMailLink = cn(
-    "lg:hidden rounded-full group relative overflow-hidden flex items-center",
-    "text-primary active:scale-95 transition-transform duration-300 py-3 w-48 h-12",
-    "ring hover:bg-primary/10 justify-center mx-auto gap-2 text-lg font-medium ",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring "
+  // Linha única, responsiva, com todos os botões alinhados e do mesmo tamanho
+  const linksRow = cn(
+    "flex items-center justify-center gap-4 w-full mt-4"
   );
+
+  // Botão de e-mail mobile: mesma altura/largura do círculo do LinkedIn
+  const eMailLinkMobile = cn(circleButtonBase);
 
   return (
     <footer className={footerBase}>
       <div className={magicBackground} />
 
       <div className={footerContainer}>
-
         <div className={containerSeta}>
           <button
             onClick={handleScrollTop}
@@ -84,17 +87,34 @@ export const Footer = () => {
             © {new Date().getFullYear()} {t("copy_hight")}
           </p>
 
-          <section className={emailSection}>
-            <div className="hidden lg:flex justify-center w-full mt-3">
+          <section className={linksRow}>
+            {/* Desktop: botão de e-mail completo (com texto) */}
+            <div className="hidden lg:flex">
               <ButtonDemo />
             </div>
 
-            <a className={eMailLink} href="mailto:kaioaac3@gmail.com">
-              E-mail
+            {/* Mobile: e-mail vira ícone circular, igual ao LinkedIn */}
+            <a
+              className={cn(eMailLinkMobile, "lg:hidden")}
+              href="mailto:kaioaac3@gmail.com"
+              aria-label="E-mail"
+              title="E-mail"
+            >
+              <Mail className="w-5 h-5" />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/kaioluizcarmodebrito/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={circleButtonBase}
+              aria-label="LinkedIn"
+              title="LinkedIn"
+            >
+              <LuLinkedin className="w-5 h-5" />
             </a>
           </section>
         </div>
-
       </div>
     </footer>
   );
