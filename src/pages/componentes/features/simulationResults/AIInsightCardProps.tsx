@@ -22,15 +22,17 @@ import { callGeminiChatAPI, type ChatMessage, QuotaExceededError } from "@/servi
 const CARD_OUTER = (isExpanded: boolean) =>
   cn(
     "relative w-full transition-all duration-300 flex flex-col rounded-3xl",
-    "border border-border text-card-foreground overflow-hidden shadow-2xl",
+    "border border-border text-card-foreground shadow-2xl",
     isExpanded
-      ? "h-[calc(100dvh-220px)] 2xl:h-full max-h-full bg-background"
-      : "h-full min-h-[400px] max-h-[459.5px] bg-card/30 backdrop-blur-md"
+      ? "h-[calc(100dvh-220px)] 2xl:h-full max-h-full bg-background overflow-hidden"
+      : "h-full min-h-[400px] max-h-[459.5px] bg-card/30 backdrop-blur-md overflow-hidden"
   );
 
-const CARD_INNER_SCROLL = cn(
-  "flex-1 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-hide p-8 flex flex-col"
-);
+const CARD_INNER_SCROLL = (isExpanded: boolean) =>
+  cn(
+    "flex-1 w-full h-full overflow-y-auto scrollbar-hide p-8 flex flex-col relative",
+    isExpanded ? "overflow-x-hidden" : "overflow-x-hidden"
+  );
 
 const TOGGLE_BTN = cn(
   "absolute top-4 right-4 z-50 p-2 rounded-xl bg-secondary/80 hover:bg-secondary",
@@ -53,7 +55,7 @@ const ERROR_CONTAINER = cn(
 
 const CONTENT_WRAPPER = cn(
   "w-full flex flex-col items-start text-left",
-  "animate-in fade-in slide-in-from-bottom-4 duration-700 gap-8 pr-8 pb-4"
+  "animate-in fade-in slide-in-from-bottom-4 duration-700 gap-8 pr-4 sm:pr-8 pb-2"
 );
 
 const HEADER_TITLE = cn(
@@ -91,9 +93,9 @@ const getChatBubbleClass = (isUser: boolean) =>
 
 const CHAT_FORM = (isExpanded: boolean) =>
   cn(
-    "border-t border-border/40 px-4 pt-4 pb-8 md:pb-4",
+    "border-t border-border/40 px-4 pt-4 pb-4 sm:pb-4",
     "flex items-center justify-between gap-3 relative z-30 shrink-0",
-    isExpanded ? "bg-background pb-4" : "bg-card/90 backdrop-blur-md"
+    isExpanded ? "bg-background" : "bg-card/90 backdrop-blur-md"
   );
 
 const CHAT_INPUT_CONTAINER = cn(
@@ -170,6 +172,7 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
 
   const activeSimIdRef = useRef(simulationId);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const isFirstLoadRef = useRef(true);
 
   useEffect(() => {
     activeSimIdRef.current = simulationId;
@@ -178,15 +181,48 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
     setChatInput("");
     setChatError(null);
     setIsChatLoading(false);
+    isFirstLoadRef.current = true;
+    
+    // Reset scroll do painel quando carrega novo insight
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
   }, [simulationId]);
+
+  // Reset scroll quando insight carrega
+  useEffect(() => {
+    if (insight && scrollContainerRef.current) {
+      // Garante scroll no topo quando insight chega
+      scrollContainerRef.current.scrollTop = 0;
+      // Força novamente em 50ms para garantir
+      const timeoutId = setTimeout(() => {
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.scrollTop = 0;
+        }
+      }, 50);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [insight]);
 
   useEffect(() => {
     localStorage.setItem(`chat_history_${simulationId}`, JSON.stringify(chatHistory));
   }, [chatHistory, simulationId]);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatHistory, isChatLoading]);
+    // Não faz scroll automático no carregamento inicial
+    if (isFirstLoadRef.current) {
+      isFirstLoadRef.current = false;
+      return;
+    }
+    
+    // Só faz scroll pro chat se houver nova mensagem do usuário (chatHistory mudou com nova mensagem)
+    // E apenas se houver histórico de chat
+    if (chatHistory.length > 0) {
+      setTimeout(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 0);
+    }
+  }, [chatHistory]);
 
   const handleSendChat = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -253,7 +289,10 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
   return (
     <div className={CARD_OUTER(isExpanded)}>
         {insight && !isLoading && (
-        <div className="absolute top-0 left-0 w-full z-50">
+        <div className={cn(
+          "absolute top-0 left-0 w-full z-50",
+          isExpanded && "fixed top-20 md:top-24 left-0 right-0 w-full"
+        )}>
           <ScrollProgress containerRef={scrollContainerRef} activeColor={scrollActiveColor} />
         </div>
       )}
@@ -270,7 +309,7 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
       )}
 
       <div className="flex-1 min-h-0 relative">
-        <div ref={scrollContainerRef} className={CARD_INNER_SCROLL}>
+        <div ref={scrollContainerRef} className={CARD_INNER_SCROLL(isExpanded)}>
             {(isLoading || (!insight && !error)) && (
             <div className="flex flex-col items-center justify-center h-full my-auto animate-pulse">
               <h2 className={LOADING_TITLE}>{t("loading_title")}</h2>
