@@ -207,7 +207,7 @@ export const SimulationHistoryPage: React.FC = () => {
   );
 
   const searchContainer = cn(
-    "flex-1 flex items-center h-10 w-full rounded-xl border border-border/50 bg-background/50 px-3",
+    "flex-1 flex items-center h-10 w-full rounded-xl border border-border/50 bg-background/50 p-3",
     "transition-all duration-200 focus-within:ring-2 focus-within:ring-primary/35 focus-within:border-primary"
   );
 
@@ -289,10 +289,6 @@ export const SimulationHistoryPage: React.FC = () => {
   const fallbackTextClass = cn(
     "text-sm text-muted-foreground max-w-sm font-medium"
   );
-
-  // ==========================================
-  // RENDERIZAÇÃO 
-  // ==========================================
 
   return (
     <main className={mainLayout}>
