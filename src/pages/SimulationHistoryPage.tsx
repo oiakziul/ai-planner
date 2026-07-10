@@ -125,27 +125,24 @@ export const SimulationHistoryPage: React.FC = () => {
 
   const activeSortOption = SORT_OPTIONS.find((opt) => opt.id === sortBy) || SORT_OPTIONS[0];
 
-  // ==========================================
-  // EXTRAÇÃO DE CLASSES (CLEAN CODE UI)
-  // ==========================================
-
   const mainLayout = cn(
-    "mx-auto max-w-6xl px-4 py-10 sm:py-14 font-sans select-none"
+    "mx-auto max-w-6xl px-4 py-10 sm:py-14 xl:py-0 font-sans select-none"
   );
 
   const historyListContainer = cn(
-    "flex flex-col gap-4 mt-6",
+    "flex flex-col gap-4 mt-6 xl:mt-4",
     "min-h-[440px] lg:min-h-[580px]"
   );
 
   const historyCardStyle = cn(
     "relative w-full overflow-hidden transition-all duration-300",
-    "flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6",
+    "flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 lg:gap-6",
     "rounded-2xl p-6 border border-border bg-card/30 backdrop-blur-md shadow-lg text-card-foreground"
   );
 
   const leftBrandingStyle = cn(
-    "flex items-center gap-4 w-full lg:w-[280px] shrink-0"
+    "flex flex-col items-start gap-3 w-full",
+    "lg:flex-row lg:items-center lg:gap-4 lg:w-[280px] shrink-0"
   );
 
   const iconContainer = cn(
@@ -181,7 +178,9 @@ export const SimulationHistoryPage: React.FC = () => {
   );
 
   const actionsWrapperStyle = cn(
-    "flex items-center justify-end gap-3 shrink-0"
+    "flex items-center justify-between gap-3 shrink-0 w-full",
+    "pt-4 border-t border-border/50",
+    "lg:justify-end lg:w-auto lg:pt-0 lg:border-t-0"
   );
 
   const deleteBtnStyle = cn(
@@ -267,7 +266,6 @@ export const SimulationHistoryPage: React.FC = () => {
       : "border-border/80 bg-secondary/40 text-muted-foreground hover:text-foreground hover:bg-secondary cursor-pointer active:scale-95"
   );
 
-  // --- Classes Novas (Para remover todo e qualquer CSS Inline do return) ---
   const brandIconClass = cn("h-5 w-5");
   const trashIconClass = cn("h-4 w-4");
   const detailsIconClass = cn("h-4 w-4");
@@ -492,7 +490,7 @@ export const SimulationHistoryPage: React.FC = () => {
                 className={paginationArrowBtn}
                 title={t("pagination_next", "Próximo")}
               >
-                <ChevronRight className="paginationArrowIconClass" />
+                <ChevronRight className={paginationArrowIconClass} />
               </button>
 
             </div>
