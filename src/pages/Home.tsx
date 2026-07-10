@@ -22,33 +22,30 @@ const STATE_CONFIG: Record<
   { scrollGradient: string; ambientGlow: string; pulseGlow: string }
 > = {
   criacao: {
-    // OURO PURO – primary → dourado radiante → bronze intenso
     scrollGradient:
-      "bg-[radial-gradient(circle_at_right,var(--primary)_20%,#fbbf24_55%,#d97706_100%)]",
+      "bg-[radial-gradient(circle_at_right,var(--primary)_15%,oklch(0.82_0.19_78)_50%,oklch(0.58_0.21_45)_100%)]", 
     ambientGlow:
-      "bg-[radial-gradient(circle_at_top,rgba(251,191,36,0.55),rgba(217,119,6,0.25)_50%,transparent_75%)]",
+      "bg-[radial-gradient(circle_at_top,oklch(0.82_0.19_78_/_0.45),oklch(0.58_0.21_45_/_0.20)_50%,transparent_75%)]",
     pulseGlow:
-      "bg-[radial-gradient(circle_at_top,rgba(253,224,71,0.95),rgba(251,191,36,0.50)_50%,transparent_75%)]",
+      "bg-[radial-gradient(circle_at_top,oklch(0.90_0.15_85_/_0.90),oklch(0.75_0.18_70_/_0.40)_50%,transparent_75%)]",
   },
 
   resultado: {
-    // VIDRO CRISTALINO – primary → ciano gelo → azul profundo (efeito refração)
     scrollGradient:
-      "bg-[radial-gradient(circle_at_right,var(--primary)_20%,#67e8f9_55%,#1d4ed8_100%)]",
+      "bg-[radial-gradient(circle_at_right,var(--primary)_15%,oklch(0.65_0.11_285)_45%,oklch(0.32_0.09_275)_100%)]", // Aço Violeta Metálico -> Obsidiana Azulada
     ambientGlow:
-      "bg-[radial-gradient(circle_at_top,rgba(103,232,249,0.40),rgba(29,78,216,0.15)_50%,transparent_75%)]",
+      "bg-[radial-gradient(circle_at_top,oklch(0.65_0.11_285_/_0.40),oklch(0.32_0.09_275_/_0.20)_50%,transparent_75%)]",
     pulseGlow:
-      "bg-[radial-gradient(circle_at_top,rgba(165,243,252,0.90),rgba(103,232,249,0.40)_50%,transparent_75%)]",
+      "bg-[radial-gradient(circle_at_top,oklch(0.75_0.13_290_/_0.80),oklch(0.50_0.10_280_/_0.40)_50%,transparent_75%)]",
   },
 
   historico: {
-    // PRATA LUXUOSA – primary → prata metálica → grafite fumê
-    scrollGradient:
-      "bg-[radial-gradient(circle_at_right,var(--primary)_20%,#e2e8f0_55%,#475569_100%)]",
+   scrollGradient:
+      "bg-[radial-gradient(circle_at_right,var(--primary)_15%,oklch(0.68_0.19_315)_50%,oklch(0.38_0.14_305)_100%)]", // Ametista Viva -> Violeta Profundo
     ambientGlow:
-      "bg-[radial-gradient(circle_at_top,rgba(226,232,240,0.55),rgba(71,85,105,0.25)_50%,transparent_75%)]",
+      "bg-[radial-gradient(circle_at_top,oklch(0.68_0.19_315_/_0.40),oklch(0.38_0.14_305_/_0.20)_50%,transparent_75%)]",
     pulseGlow:
-      "bg-[radial-gradient(circle_at_top,rgba(248,250,252,0.95),rgba(203,213,225,0.50)_50%,transparent_75%)]",
+      "bg-[radial-gradient(circle_at_top,oklch(0.82_0.16_310_/_0.85),oklch(0.55_0.15_308_/_0.40)_50%,transparent_75%)]",
   },
 };
 
