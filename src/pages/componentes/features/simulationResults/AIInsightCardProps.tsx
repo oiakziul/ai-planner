@@ -173,11 +173,14 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
   const activeSimIdRef = useRef(simulationId);
   const abortControllerRef = useRef<AbortController | null>(null);
   const isFirstLoadRef = useRef(true);
+  const initialChatHistoryLengthRef = useRef(0);
 
   useEffect(() => {
     activeSimIdRef.current = simulationId;
     abortControllerRef.current?.abort();
-    setChatHistory(loadChatHistory(simulationId));
+    const loadedChat = loadChatHistory(simulationId);
+    setChatHistory(loadedChat);
+    initialChatHistoryLengthRef.current = loadedChat.length;
     setChatInput("");
     setChatError(null);
     setIsChatLoading(false);
@@ -209,18 +212,20 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
   }, [chatHistory, simulationId]);
 
   useEffect(() => {
-    // Não faz scroll automático no carregamento inicial
-    if (isFirstLoadRef.current) {
-      isFirstLoadRef.current = false;
-      return;
-    }
-    
-    // Só faz scroll pro chat se houver nova mensagem do usuário (chatHistory mudou com nova mensagem)
-    // E apenas se houver histórico de chat
-    if (chatHistory.length > 0) {
-      setTimeout(() => {
-        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-      }, 0);
+    // Scroll automático APENAS quando há NOVA mensagem da IA (não na primeira carga)
+    // NÃO faz scroll quando o usuário escreve (última mensagem é do usuário)
+    if (chatHistory.length > initialChatHistoryLengthRef.current && scrollContainerRef.current) {
+      const lastMessage = chatHistory[chatHistory.length - 1];
+      if (lastMessage.role === "model") {
+        // IA respondeu com nova mensagem, rola para baixo
+        setTimeout(() => {
+          if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
+          }
+        }, 100);
+      }
+      // Atualiza o tamanho inicial para próximas comparações
+      initialChatHistoryLengthRef.current = chatHistory.length;
     }
   }, [chatHistory]);
 

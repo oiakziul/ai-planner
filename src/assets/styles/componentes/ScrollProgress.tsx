@@ -1,22 +1,22 @@
-import { motion, useScroll, useSpring, useTransform } from "framer-motion"; // importa ferramentas de animação
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 interface ScrollProgressProps {
-    containerRef: React.RefObject<HTMLElement | null>; // ref do elemento que terá o scroll observado
-    activeColor: string; // classe de cor dinâmica (ex: bg-blue-500)
+    containerRef: React.RefObject<HTMLElement | null>;
+    activeColor: string;
 }
 
 export const ScrollProgress = ({ containerRef, activeColor }: ScrollProgressProps) => {
 
-    const { scrollYProgress } = useScroll({ // hook que monitora o scroll
-        container: containerRef, // define qual elemento será observado (não precisa ser a página inteira)
+    const { scrollYProgress } = useScroll({
+        container: containerRef,
     });
 
-    const startAtTen = useTransform(scrollYProgress, [0, 1], [0.1, 1]); // mapeia 0→0.1 e 1→1 (não começa invisível)
+    const startAt5Percent = useTransform(scrollYProgress, [0, 1], [0.05, 1]);
 
-    const scaleX = useSpring(startAtTen, { // suaviza o valor com física de mola
-        stiffness: 100, // rigidez (maior = mais rápido)
-        damping: 30, // amortecimento (maior = menos "quique")
-        restDelta: 0.001 // precisão mínima pra parar a animação
+    const scaleX = useSpring(startAt5Percent, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
     });
 
     return (
