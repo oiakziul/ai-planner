@@ -104,6 +104,7 @@ export type SimulationFormData = Record<
 // Tipagem para os registros salvos no histórico
 export type SimulationRecord = SimulationFormData & { 
   id: string; 
+  createdAt?: string;
   timeUnit?: "years" | "months";
   insightData?: InsightData;
 };

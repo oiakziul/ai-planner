@@ -54,6 +54,21 @@ export const SimulationResultsPage = () => {
     return formatCurrencyMask(rawDigits, activeCurrency);
   };
 
+  const getDeadlineSuffix = () => {
+    const isYears = data.timeUnit === "months" ? false : true;
+    const isDone = data.goalDeadline === "1";
+    
+    if (isYears) {
+      return isDone 
+        ? t("simulationFormSteps:goalDeadline_suffix_years", "ano")
+        : t("simulationFormSteps:goalDeadline_suffix_years", "anos");
+    } else {
+      return isDone
+        ? t("simulationFormSteps:goalDeadline_suffix_months", "mês")
+        : t("simulationFormSteps:goalDeadline_suffix_months", "meses");
+    }
+  };
+
   const mainLayout = cn(
     "mx-auto max-w-[89rem] h-auto px-4 py-10 sm:py-14 font-sans select-none"
   );
@@ -114,11 +129,7 @@ export const SimulationResultsPage = () => {
             <Card
               icon={CalendarClock}
               label={t("simulationFormSteps:goalDeadline_title", "Prazo")}
-              value={`${data.goalDeadline} ${
-                data.goalDeadline === "1" 
-                  ? t("simulationFormSteps:goalDeadline_suffix_years", "ano") 
-                  : t("simulationFormSteps:goalDeadline_suffix_years", "anos")
-              }`}
+              value={`${data.goalDeadline} ${getDeadlineSuffix()}`}
               subtitle={t("resultado:card_deadline_subtitle", "Tempo estimado para atingir o objetivo")}
             />
           </div>

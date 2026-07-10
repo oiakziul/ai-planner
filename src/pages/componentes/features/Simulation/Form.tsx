@@ -97,7 +97,7 @@ export const SimulationForm = () => {
     setShowError(false);
 
     if (currentStepIndex + 1 > totalSteps - 1) {
-      const newSimulationId = saveFormData(formData);
+      const newSimulationId = saveFormData(formData, timeUnit);
       localStorage.removeItem("ai_planner_simulation_data");
       navigate(`/resultado/${newSimulationId}`);
       return;

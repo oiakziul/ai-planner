@@ -6,11 +6,16 @@ const LOCAL_STORAGE_KEY = "ai_planner_simulation_history";
 
 export const useSimulationStorage = () => {
   
-  const saveFormData = (formData: SimulationFormData): string => {
+  const saveFormData = (formData: SimulationFormData, timeUnit?: "years" | "months"): string => {
     const storage = localStorage.getItem(LOCAL_STORAGE_KEY);
     const savedData = storage ? JSON.parse(storage) : [];
     const id = crypto.randomUUID();
-    const record: SimulationRecord = { ...formData, id };
+    const record: SimulationRecord = { 
+      ...formData, 
+      id, 
+      createdAt: new Date().toISOString(),
+      timeUnit: timeUnit || "years" 
+    };
 
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([...savedData, record]));
     return id;
