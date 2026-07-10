@@ -24,7 +24,7 @@ const CARD_OUTER = (isExpanded: boolean) =>
     "relative w-full transition-all duration-300 flex flex-col rounded-3xl",
     "border border-border text-card-foreground shadow-2xl",
     isExpanded
-      ? "h-[calc(100dvh-220px)] 2xl:h-full max-h-full bg-background overflow-hidden"
+      ? "h-[calc(100dvh-200px)] 2xl:h-full max-h-full bg-background overflow-hidden"
       : "h-full min-h-[400px] max-h-[459.5px] bg-card/30 backdrop-blur-md overflow-hidden"
   );
 
@@ -185,7 +185,7 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
     setChatError(null);
     setIsChatLoading(false);
     isFirstLoadRef.current = true;
-    
+
     // Reset scroll do painel quando carrega novo insight
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = 0;
@@ -293,16 +293,13 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
 
   return (
     <div className={CARD_OUTER(isExpanded)}>
-        {insight && !isLoading && (
-        <div className={cn(
-          "absolute top-0 left-0 w-full z-50",
-          isExpanded && "fixed top-20 md:top-24 left-0 right-0 w-full"
-        )}>
+      {insight && !isLoading && (
+        <div className="absolute top-0 left-0 w-full z-50">
           <ScrollProgress containerRef={scrollContainerRef} activeColor={scrollActiveColor} />
         </div>
       )}
 
-        {onToggleExpand && (
+      {onToggleExpand && (
         <button
           type="button"
           onClick={onToggleExpand}
@@ -315,7 +312,7 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
 
       <div className="flex-1 min-h-0 relative">
         <div ref={scrollContainerRef} className={CARD_INNER_SCROLL(isExpanded)}>
-            {(isLoading || (!insight && !error)) && (
+          {(isLoading || (!insight && !error)) && (
             <div className="flex flex-col items-center justify-center h-full my-auto animate-pulse">
               <h2 className={LOADING_TITLE}>{t("loading_title")}</h2>
               <p className={LOADING_SUBTITLE}>{t("loading_subtitle")}</p>

@@ -29,7 +29,6 @@ const getCurrencyByLanguage = (langCode: string): Currency => {
 };
 
 export const SimulationResultsPage = () => {
-  // Carrega as traduções da página de resultados e reaproveita as chaves dos inputs
   const { t, i18n } = useTranslation(["resultado", "simulationFormSteps"]);
   const { id } = useParams<{ id: string }>();
   const { getFormData } = useSimulationStorage();
@@ -57,9 +56,9 @@ export const SimulationResultsPage = () => {
   const getDeadlineSuffix = () => {
     const isYears = data.timeUnit === "months" ? false : true;
     const isDone = data.goalDeadline === "1";
-    
+
     if (isYears) {
-      return isDone 
+      return isDone
         ? t("simulationFormSteps:goalDeadline_suffix_years", "ano")
         : t("simulationFormSteps:goalDeadline_suffix_years", "anos");
     } else {
@@ -85,23 +84,55 @@ export const SimulationResultsPage = () => {
   const card5Wrapper = cn("lg:col-start-3 lg:row-start-3");
   const card6Wrapper = cn("lg:col-start-3 lg:row-start-4");
 
+  const aiCardOverlay = cn(
+    "fixed inset-0 z-40",
+    "flex items-center justify-center",
+    "px-4 md:px-10 lg:px-16",
+    "pointer-events-none"
+  );
+
   const aiCardWrapper = cn(
     isAIPanelExpanded
-      ? "fixed top-20 sm:top-24 bottom-6 left-4 right-4 md:left-10 md:right-10 lg:left-16 lg:right-16 z-40 transition-all duration-300 ease-in-out"
-      : "lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:row-span-3 h-full transition-all duration-200"
+      ? cn(
+          "w-full h-[min(85dvh,900px)] max-h-[calc(100dvh-2rem)]",
+          "pointer-events-auto",
+          "transition-all duration-300 ease-in-out"
+        )
+      : cn(
+          "lg:col-span-2 lg:col-start-1",
+          "lg:row-start-2 lg:row-span-3",
+          "h-full transition-all duration-200"
+        )
   );
 
   const backdropClass = cn(
-    "fixed inset-0 bg-black/75 backdrop-blur-md z-30 transition-opacity duration-300"
+    "fixed inset-0 bg-black/75 backdrop-blur-md", 
+    "z-30 transition-opacity duration-300"
+  );
+
+  const aiInsightsCardElement = (
+    <AIInsightsCard
+      simulationId={data.id}
+      isExpanded={isAIPanelExpanded}
+      onToggleExpand={() => setIsAIPanelExpanded(!isAIPanelExpanded)}
+    />
   );
 
   return (
     <>
       {isAIPanelExpanded && (
-        <div 
+        <div
           className={backdropClass}
           onClick={() => setIsAIPanelExpanded(false)}
         />
+      )}
+
+      {isAIPanelExpanded && (
+        <div className={aiCardOverlay}>
+          <div className={aiCardWrapper}>
+            {aiInsightsCardElement}
+          </div>
+        </div>
       )}
 
       <main className={mainLayout}>
@@ -175,14 +206,12 @@ export const SimulationResultsPage = () => {
             />
           </div>
 
-          {/* [Item 7]: Painel de Insights do Gemini */}
-          <div className={aiCardWrapper}>
-            <AIInsightsCard 
-              simulationId={data.id} 
-              isExpanded={isAIPanelExpanded}
-              onToggleExpand={() => setIsAIPanelExpanded(!isAIPanelExpanded)}
-            />
-          </div>
+          {/* [Item 7]: Painel de Insights do Gemini (estado fechado, dentro do grid) */}
+          {!isAIPanelExpanded && (
+            <div className={aiCardWrapper}>
+              {aiInsightsCardElement}
+            </div>
+          )}
 
         </div>
       </main>
