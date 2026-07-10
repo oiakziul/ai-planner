@@ -48,8 +48,6 @@ export const ScrollProgress = ({ containerRef, activeColor }: ScrollProgressProp
     };
   }, [containerRef, rawProgress]);
 
-  // Sem position própria: quem posiciona (fixed/absolute, top, z-index)
-  // é sempre o elemento pai que renderiza este componente.
   return (
     <div className="w-full h-1.5 rounded-full overflow-hidden">
       <motion.div
