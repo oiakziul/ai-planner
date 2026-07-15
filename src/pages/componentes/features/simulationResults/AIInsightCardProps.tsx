@@ -300,7 +300,7 @@ export function AIInsightsCard({ simulationId, isExpanded = false, onToggleExpan
           type="button"
           onClick={onToggleExpand}
           className={TOGGLE_BTN}
-          title={isExpanded ? "Recolher painel" : "Expandir leitura"}
+          title={isExpanded ? t("recolher") : t("expandir")}
         >
           {isExpanded ? <Minimize2 className="h-4.5 w-4.5" /> : <Maximize2 className="h-4.5 w-4.5" />}
         </button>

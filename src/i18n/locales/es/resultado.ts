@@ -1,15 +1,11 @@
 export const resultadoES = () => ({
-  loading_title:
-    "Su análisis inteligente se está generando...",
+  loading_title: "Su análisis inteligente se está generando...",
   loading_subtitle:
     "Nuestros consultores de Inteligencia Artificial están calculando el interés compuesto necesario para alcanzar su objetivo. ¡El informe aparecerá aquí en breve!",
   error_title: "⚠️ ¡Ups! Algo salió mal.",
-  error_subtitle:
-    "Error de conexión. Intente nuevamente.",
-  error_generic:
-    "Ocurrió un error inesperado. Intente nuevamente.",
-  error_simulation_not_found:
-    "Simulación no encontrada.",
+  error_subtitle: "Error de conexión. Intente nuevamente.",
+  error_generic: "Ocurrió un error inesperado. Intente nuevamente.",
+  error_simulation_not_found: "Simulación no encontrada.",
   quota_exceeded:
     "Límite de uso gratuito de IA alcanzado. Intente nuevamente en {{seconds}}s o más tarde.",
   quota_exceeded_day:
@@ -24,12 +20,10 @@ export const resultadoES = () => ({
 
   chat_title: "Hable con su Educador",
   chat_analyzing: "El educador está analizando...",
-  chat_placeholder:
-    "Pregunte al Educador (ej. '¿Cómo ahorrar?')",
+  chat_placeholder: "Pregunte al Educador (ej. '¿Cómo ahorrar?')",
   chat_initial_model_message:
     "¡Entendido! Seré su educador financiero personal en esta simulación. ¡Pregúnteme cualquier duda sobre su planificación!",
-  chat_system_prompt:
-    `Eres el educador financiero personal de la app AI Planner.
+  chat_system_prompt: `Eres el educador financiero personal de la app AI Planner.
     Responde dudas sobre el informe de simulación que generaste.
     Informe de simulación activo: {{insight}}.
     Mantén las respuestas cortas (máximo 3 párrafos), didácticas,
@@ -48,4 +42,6 @@ export const resultadoES = () => ({
   card_income_subtitle: "Ingresos brutos totales al mes",
   card_expenses_subtitle: "Gastos esenciales por mes",
   card_debts_subtitle: "Monto comprometido en cuotas",
+  recolher: "Contraer panel",
+  expandir: "Expandir lectura",
 });

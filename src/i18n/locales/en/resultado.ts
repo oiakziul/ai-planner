@@ -1,15 +1,11 @@
 export const resultadoEN = () => ({
-  loading_title:
-    "Your intelligent analysis is being generated...",
+  loading_title: "Your intelligent analysis is being generated...",
   loading_subtitle:
     "Our Artificial Intelligence consultants are calculating the compound interest needed to achieve your goal. The report will appear here shortly!",
   error_title: "⚠️ Oops! Something went wrong.",
-  error_subtitle:
-    "Connection error. Please try again.",
-  error_generic:
-    "An unexpected error occurred. Please try again.",
-  error_simulation_not_found:
-    "Simulation not found.",
+  error_subtitle: "Connection error. Please try again.",
+  error_generic: "An unexpected error occurred. Please try again.",
+  error_simulation_not_found: "Simulation not found.",
   quota_exceeded:
     "Free AI usage limit reached. Please try again in {{seconds}}s or later.",
   quota_exceeded_day:
@@ -24,12 +20,10 @@ export const resultadoEN = () => ({
 
   chat_title: "Chat with your Educator",
   chat_analyzing: "Educator is analyzing...",
-  chat_placeholder:
-    "Ask the Educator (e.g. 'How to save?')",
+  chat_placeholder: "Ask the Educator (e.g. 'How to save?')",
   chat_initial_model_message:
     "Understood! I will be your personal financial educator for this simulation. Ask me anything about your planning!",
-  chat_system_prompt:
-    `You are the personal financial educator for the AI Planner app.
+  chat_system_prompt: `You are the personal financial educator for the AI Planner app.
     Answer questions about the simulation report you generated.
     Active simulation report: {{insight}}.
     Keep responses short (max 3 paragraphs), didactic, professional,
@@ -48,4 +42,6 @@ export const resultadoEN = () => ({
   card_income_subtitle: "Total gross income per month",
   card_expenses_subtitle: "Essential spending per month",
   card_debts_subtitle: "Amount committed to installments",
+  recolher: "Collapse panel",
+  expandir: "Expand reading",
 });

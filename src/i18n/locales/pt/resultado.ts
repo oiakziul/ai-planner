@@ -42,5 +42,6 @@ export const resultadoPT = () => ({
   card_income_subtitle: "Renda total bruta por mês",
   card_expenses_subtitle: "Gastos essenciais por mês",
   card_debts_subtitle: "Valor comprometido em parcelas/depósito",
-
+  recolher: "Recolher Painel",
+  expandir: "Expandir Painel"
 });
