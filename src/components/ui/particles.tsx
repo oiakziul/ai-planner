@@ -3,7 +3,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { GPUComputationRenderer } from 'three/addons/misc/GPUComputationRenderer.js'
 const isMobile1 = typeof window !== 'undefined' && window.innerWidth < 768
-const WIDTH = isMobile1 ? 24 : 14
+const WIDTH = isMobile1 ? 28 : 14
 const DIAMONDS = WIDTH * WIDTH
 const BOUNDS = 800
 
@@ -454,7 +454,6 @@ function DiamondsScene() {
 
 export const Particles = () => {
   return (
-    // Mudamos para 'fixed', 'inset-0' (preenche 100% sem falhas) e '-z-10' (joga pro fundo)
     <div className="fixed inset-0 overflow-hidden bg-stripes-custom0 transition-colors duration-500 -z-10">
       <Canvas
         camera={{ position: [0, 0, 350], fov: 75, near: 1, far: 3000 }}
