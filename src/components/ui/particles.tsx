@@ -105,7 +105,7 @@ const fragmentShaderVelocity = `
     }
   `
 
-  const diamondVS = `
+const diamondVS = `
     attribute vec2 reference;
     attribute vec3 diamondColor;
     attribute float facetSeed;
@@ -335,7 +335,7 @@ function DiamondsScene() {
 
     velVar.material.uniforms['delta'] = { value: 0.0 }
     velVar.material.uniforms['time'] = { value: 0.0 }
-    velVar.material.uniforms['separationDistance'] = { value: 140.0 } 
+    velVar.material.uniforms['separationDistance'] = { value: 140.0 }
     velVar.material.uniforms['predator'] = { value: new THREE.Vector3() }
 
     posVar.material.uniforms['delta'] = { value: 0.0 }
