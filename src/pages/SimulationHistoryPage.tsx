@@ -126,16 +126,16 @@ export const SimulationHistoryPage: React.FC = () => {
   const activeSortOption = SORT_OPTIONS.find((opt) => opt.id === sortBy) || SORT_OPTIONS[0];
 
   const mainLayout = cn(
-    "mx-auto max-w-6xl px-4 py-10 sm:py-14 xl:py-0 font-sans select-none"
+    "mx-auto max-w-6xl px-4 py-10 sm:py-14 xl:py-0 font-sans select-none ",
   );
 
   const historyListContainer = cn(
-    "flex flex-col gap-4 mt-6 xl:mt-4",
+    "flex flex-col gap-4 mt-6 xl:mt-4 ",
     "min-h-[440px] lg:min-h-[580px]"
   );
 
   const historyCardStyle = cn(
-    "relative w-full overflow-hidden transition-all duration-300",
+    "relative w-full overflow-hidden transition-all duration-300 backdrop-blur-lg rounded-lg",
     "flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 lg:gap-6",
     "rounded-2xl p-6 border border-border bg-card/30 backdrop-blur-md shadow-lg text-card-foreground"
   );
@@ -295,8 +295,8 @@ export const SimulationHistoryPage: React.FC = () => {
 
   return (
     <main className={mainLayout}>
-
-      <PageHero
+      
+      <PageHero 
         title={t("history_title", "Histórico de simulações")}
         subtitle={t("history_subtitle", "Acompanhe o histórico de seus planos financeiros.")}
       />

@@ -6,7 +6,7 @@ export function SimulationHero() {
   const { t } = useTranslation("inicio");
 
   return (
-    <div className="mb-6 text-center">
+    <div className="mb-6 text-center backdrop-blur-md rounded-2xl">
       <div className="flex flex-col justify-center items-center sm:flex-row">
         <h1 className="text-foreground text-2xl font-semibold sm:text-4xl mb-2">
           {t('msg_1')}

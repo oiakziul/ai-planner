@@ -13,7 +13,7 @@ export function StepProgress({ currentStep, totalSteps }: StepProgressProps) {
 
   return (
     <div className="mb-4">
-      <p className="text-muted-foreground mb-2 text-sm font-sans select-none">
+      <p className="text-muted-foreground mb-2 text-sm font-sans select-none backdrop-blur-md rounded-full">
         {stepLabel}
       </p>
       

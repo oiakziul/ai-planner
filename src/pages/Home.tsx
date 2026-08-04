@@ -78,9 +78,6 @@ export const Home = () => {
     "h-screen absolute inset-0 overflow-hidden pointer-events-none"
   );
 
-  const particlesElementClass = clsx(
-    "absolute inset-0"
-  );
 
   const pageWrapper = clsx(
     "w-full h-full scroll-auto duration-100",
@@ -122,7 +119,7 @@ export const Home = () => {
 
       <div key={pageState} className={pulseGlowClass} />
 
-      <div className="absolute top-0 left-0 w-full z-50">
+      <div className="absolute top-0 left-0 w-full z-50 ">
         <ScrollProgress
           key={`${colorTheme}-${theme}-${location.pathname}`}
           containerRef={mainRef}
@@ -133,13 +130,11 @@ export const Home = () => {
       <main
         ref={mainRef}
         id="inicio"
-        className={clsx(layoutMain, pageWrapper, "border-border")}
+        className={clsx(layoutMain, pageWrapper, "border-border ")}
       >
         <div className={particlesContainerClass}>
           <Particles
-            className={particlesElementClass}
-            color={theme === "light" ? "#000000" : "#ffffff"}
-            quantity={100}
+
           />
         </div>
 

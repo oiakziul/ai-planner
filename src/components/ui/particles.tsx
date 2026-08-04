@@ -2,224 +2,220 @@ import { useEffect, useMemo, useRef } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { GPUComputationRenderer } from 'three/addons/misc/GPUComputationRenderer.js'
-
-const WIDTH = 40
+const isMobile1 = typeof window !== 'undefined' && window.innerWidth < 768
+const WIDTH = isMobile1 ? 24 : 14
 const DIAMONDS = WIDTH * WIDTH
 const BOUNDS = 800
 
-// --- SHADERS GPGPU (flocking) — inalterados ---
+// --- SHADERS GPGPU (Posição) ---
 const fragmentShaderPosition = `
-  uniform float time;
-  uniform float delta;
-  void main() {
-    vec2 uv = gl_FragCoord.xy / resolution.xy;
-    vec4 tmpPos = texture2D( texturePosition, uv );
-    vec3 position = tmpPos.xyz;
-    vec3 velocity = texture2D( textureVelocity, uv ).xyz;
-    float phase = tmpPos.w;
-    phase = mod( ( phase + delta + length( velocity.xz ) * delta * 3. + max( velocity.y, 0.0 ) * delta * 6. ), 62.83 );
-    gl_FragColor = vec4( position + velocity * delta * 15. , phase );
-  }
-`
-
-const fragmentShaderVelocity = `
-  uniform float time;
-  uniform float delta;
-  uniform float separationDistance;
-  uniform float alignmentDistance;
-  uniform float cohesionDistance;
-  uniform vec3 predator;
-
-  const float width = resolution.x;
-  const float height = resolution.y;
-  const float PI = 3.141592653589793;
-  const float PI_2 = PI * 2.0;
-  const float UPPER_BOUNDS = ${BOUNDS.toFixed(2)};
-  const float SPEED_LIMIT = 0.1;
-
-  void main() {
-    float zoneRadius = separationDistance + alignmentDistance + cohesionDistance;
-    float separationThresh = separationDistance / zoneRadius;
-    float alignmentThresh = ( separationDistance + alignmentDistance ) / zoneRadius;
-    float zoneRadiusSquared = zoneRadius * zoneRadius;
-
-    vec2 uv = gl_FragCoord.xy / resolution.xy;
-    vec3 selfPosition = texture2D( texturePosition, uv ).xyz;
-    vec3 selfVelocity = texture2D( textureVelocity, uv ).xyz;
-
-    vec3 velocity = selfVelocity;
-    float limit = SPEED_LIMIT;
-
-    vec3 dir = predator * UPPER_BOUNDS - selfPosition;
-    dir.z = 0.;
-    float dist = length( dir );
-    float preyRadius = 150.0;
-
-    if ( dist < preyRadius ) {
-      float f = ( (dist * dist) / (preyRadius * preyRadius) - 1.0 ) * delta * 100.;
-      velocity += normalize( dir ) * f;
-      limit += 5.0;
+    uniform float delta;
+    void main() {
+      vec2 uv = gl_FragCoord.xy / resolution.xy;
+      vec4 tmpPos = texture2D( texturePosition, uv );
+      vec3 position = tmpPos.xyz;
+      vec3 velocity = texture2D( textureVelocity, uv ).xyz;
+      float phase = tmpPos.w;
+      // Fase dita a velocidade do giro do diamante
+      phase = mod( ( phase + delta + length( velocity.xz ) * delta * 3.0 ), 62.83 );
+      gl_FragColor = vec4( position + velocity * delta * 15. , phase );
     }
+  `
 
-    vec3 central = vec3( 0., 0., 0. );
-    dir = selfPosition - central;
-    dir.y *= 2.5;
-    velocity -= normalize( dir ) * delta * 5.;
+// --- SHADERS GPGPU (NOVA FÍSICA: Gás Magnético Perfeitamente Distribuído) ---
+const fragmentShaderVelocity = `
+    uniform float time;
+    uniform float delta;
+    uniform float separationDistance;
+    uniform vec3 predator;
 
-    for ( float y = 0.0; y < height; y++ ) {
-      for ( float x = 0.0; x < width; x++ ) {
-        vec2 ref = vec2( x + 0.5, y + 0.5 ) / resolution.xy;
-        vec3 birdPosition = texture2D( texturePosition, ref ).xyz;
-        dir = birdPosition - selfPosition;
-        dist = length( dir );
+    const float width = resolution.x;
+    const float height = resolution.y;
+    const float UPPER_BOUNDS = ${BOUNDS.toFixed(2)};
+    
+    const float SPEED_LIMIT = 2.5; 
 
-        if ( dist < 0.0001 ) continue;
-        float distSquared = dist * dist;
-        if ( distSquared > zoneRadiusSquared ) continue;
+    void main() {
+      vec2 uv = gl_FragCoord.xy / resolution.xy;
+      vec3 selfPosition = texture2D( texturePosition, uv ).xyz;
+      vec3 selfVelocity = texture2D( textureVelocity, uv ).xyz;
 
-        float percent = distSquared / zoneRadiusSquared;
+      vec3 velocity = selfVelocity;
+      float limit = SPEED_LIMIT;
 
-        if ( percent < separationThresh ) {
-          float f = ( separationThresh / percent - 1.0 ) * delta;
-          velocity -= normalize( dir ) * f;
-        } else if ( percent < alignmentThresh ) {
-          float threshDelta = alignmentThresh - separationThresh;
-          float adjustedPercent = ( percent - separationThresh ) / threshDelta;
-          vec3 birdVelocity = texture2D( textureVelocity, ref ).xyz;
-          float f = ( 0.5 - cos( adjustedPercent * PI_2 ) * 0.5 + 0.5 ) * delta;
-          velocity += normalize( birdVelocity ) * f;
-        } else {
-          float threshDelta = 1.0 - alignmentThresh;
-          float adjustedPercent = threshDelta == 0. ? 1. : ( percent - alignmentThresh ) / threshDelta;
-          float f = ( 0.5 - ( cos( adjustedPercent * PI_2 ) * -0.5 + 0.5 ) ) * delta;
-          velocity += normalize( dir ) * f;
+      // 1. FUGIR DO MOUSE (Predador)
+      vec3 predatorPos = predator * (UPPER_BOUNDS * 0.5); 
+      predatorPos.z = 0.0;
+      
+      vec3 dirToPredator = predatorPos - selfPosition;
+      dirToPredator.z = 0.0;
+      float distToPredator = length(dirToPredator);
+      float preyRadius = 250.0; // Distância do susto
+
+      if (distToPredator < preyRadius && distToPredator > 0.0) {
+        // Empurra para longe do mouse proporcionalmente à proximidade
+        float force = (1.0 - (distToPredator / preyRadius)) * delta * 200.0;
+        velocity -= normalize(dirToPredator) * force;
+        limit += 5.0; // Acelera o diamante na fuga
+      }
+
+      // 2. CAIXA DE CONTENÇÃO (Mantém eles sempre visíveis na tela)
+      float edgeX = 600.0; // Limite horizontal
+      float edgeY = 350.0; // Limite vertical
+      float edgeZ = 150.0; // Profundidade 3D
+      
+      if (selfPosition.x > edgeX) velocity.x -= (selfPosition.x - edgeX) * delta * 0.5;
+      if (selfPosition.x < -edgeX) velocity.x += (-selfPosition.x - edgeX) * delta * 0.5;
+      
+      if (selfPosition.y > edgeY) velocity.y -= (selfPosition.y - edgeY) * delta * 0.5;
+      if (selfPosition.y < -edgeY) velocity.y += (-selfPosition.y - edgeY) * delta * 0.5;
+
+      if (selfPosition.z > edgeZ) velocity.z -= (selfPosition.z - edgeZ) * delta * 0.5;
+      if (selfPosition.z < -edgeZ) velocity.z += (-selfPosition.z - edgeZ) * delta * 0.5;
+
+      // 3. FLUTUAÇÃO ORGÂNICA (Evita que parem de se mover se ninguém mexer no mouse)
+      velocity.x += sin(time * 0.5 + uv.x * 100.0) * delta * 1.5;
+      velocity.y += cos(time * 0.6 + uv.y * 100.0) * delta * 1.5;
+      velocity.z += sin(time * 0.7 + (uv.x + uv.y) * 100.0) * delta * 1.5;
+
+      // 4. SEPARAÇÃO TOTAL (Eles se empurram, garantindo preenchimento igual de toda a tela!)
+      float zoneRadiusSquared = separationDistance * separationDistance;
+      for ( float y = 0.0; y < height; y++ ) {
+        for ( float x = 0.0; x < width; x++ ) {
+          vec2 ref = vec2( x + 0.5, y + 0.5 ) / resolution.xy;
+          vec3 otherPosition = texture2D( texturePosition, ref ).xyz;
+          
+          vec3 diff = selfPosition - otherPosition;
+          float dist = length( diff );
+
+          if ( dist > 0.0001 && dist < separationDistance ) {
+            float force = (1.0 - (dist / separationDistance)) * delta * 10.0;
+            velocity += normalize(diff) * force;
+          }
         }
       }
+
+      // 5. LIMITES E ATRITO
+      if ( length( velocity ) > limit ) {
+        velocity = normalize( velocity ) * limit;
+      }
+      
+      // Suaviza o movimento ao longo do tempo
+      velocity *= 0.98;
+
+      gl_FragColor = vec4( velocity, 1.0 );
     }
+  `
 
-    if ( length( velocity ) > limit ) {
-      velocity = normalize( velocity ) * limit;
-    }
-
-    gl_FragColor = vec4( velocity, 1.0 );
-  }
-`
-
-// --- VERTEX SHADER: rotação de voo + giro próprio (spin horizontal + leve wobble vertical) ---
+// --- VERTEX SHADER: (Inalterado) Rotação + Giro Próprio ---
 const diamondVS = `
-  attribute vec2 reference;
-  attribute vec3 diamondColor;
-  attribute float facetSeed;
+    attribute vec2 reference;
+    attribute vec3 diamondColor;
+    attribute float facetSeed;
 
-  uniform sampler2D texturePosition;
-  uniform sampler2D textureVelocity;
-  uniform float uTime;
+    uniform sampler2D texturePosition;
+    uniform sampler2D textureVelocity;
+    uniform float uTime;
 
-  varying vec4 vColor;
-  varying vec3 vNormal;
-  varying vec3 vViewDir;
-  varying float vFacetSeed;
-  varying float z;
+    varying vec4 vColor;
+    varying vec3 vNormal;
+    varying vec3 vViewDir;
+    varying float vFacetSeed;
+    varying float z;
 
-  void main() {
-    vec4 tmpPos = texture2D( texturePosition, reference );
-    vec3 pos = tmpPos.xyz;
-    vec3 velocity = normalize(texture2D( textureVelocity, reference ).xyz);
-    vec3 newPosition = position;
+    void main() {
+      vec4 tmpPos = texture2D( texturePosition, reference );
+      vec3 pos = tmpPos.xyz;
+      vec3 velocity = normalize(texture2D( textureVelocity, reference ).xyz);
+      vec3 newPosition = position;
 
-    newPosition = mat3( modelMatrix ) * newPosition;
+      newPosition = mat3( modelMatrix ) * newPosition;
 
-    // semente única por diamante (igual para todas as facetas dele, senão ele "desmonta")
-    float diamondSeed = fract( sin( dot( reference, vec2( 12.9898, 78.233 ) ) ) * 43758.5453 );
+      float diamondSeed = fract( sin( dot( reference, vec2( 12.9898, 78.233 ) ) ) * 43758.5453 );
 
-    // giro próprio: horizontal contínuo (spin) + leve balanço vertical (wobble)
-    float spinAngle = uTime * ( 0.6 + diamondSeed * 0.6 ) + diamondSeed * 6.28318;
-    float wobbleAngle = sin( uTime * 0.5 + diamondSeed * 6.28318 ) * 0.12;
+      float spinAngle = uTime * ( 0.6 + diamondSeed * 0.6 ) + diamondSeed * 6.28318;
+      float wobbleAngle = sin( uTime * 0.5 + diamondSeed * 6.28318 ) * 0.12;
 
-    mat3 matSpin = mat3(
-      cos( spinAngle ), 0.0, sin( spinAngle ),
-      0.0, 1.0, 0.0,
-      -sin( spinAngle ), 0.0, cos( spinAngle )
-    );
+      mat3 matSpin = mat3(
+        cos( spinAngle ), 0.0, sin( spinAngle ),
+        0.0, 1.0, 0.0,
+        -sin( spinAngle ), 0.0, cos( spinAngle )
+      );
 
-    mat3 matWobble = mat3(
-      1.0, 0.0, 0.0,
-      0.0, cos( wobbleAngle ), -sin( wobbleAngle ),
-      0.0, sin( wobbleAngle ), cos( wobbleAngle )
-    );
+      mat3 matWobble = mat3(
+        1.0, 0.0, 0.0,
+        0.0, cos( wobbleAngle ), -sin( wobbleAngle ),
+        0.0, sin( wobbleAngle ), cos( wobbleAngle )
+      );
 
-    newPosition = matWobble * matSpin * newPosition;
-    vec3 spunNormal = matWobble * matSpin * normal;
+      newPosition = matWobble * matSpin * newPosition;
+      vec3 spunNormal = matWobble * matSpin * normal;
 
-    velocity.z *= -1.;
-    float xz = length( velocity.xz );
-    float x = sqrt( 1. - velocity.y * velocity.y );
+      velocity.z *= -1.;
+      float xz = length( velocity.xz );
+      float x = sqrt( 1. - velocity.y * velocity.y );
 
-    float cosry = velocity.x / xz;
-    float sinry = velocity.z / xz;
-    float cosrz = x;
-    float sinrz = velocity.y;
+      float cosry = velocity.x / xz;
+      float sinry = velocity.z / xz;
+      float cosrz = x;
+      float sinrz = velocity.y;
 
-    mat3 maty = mat3( cosry, 0, -sinry, 0, 1, 0, sinry, 0, cosry );
-    mat3 matz = mat3( cosrz, sinrz, 0, -sinrz, cosrz, 0, 0, 0, 1 );
+      mat3 maty = mat3( cosry, 0, -sinry, 0, 1, 0, sinry, 0, cosry );
+      mat3 matz = mat3( cosrz, sinrz, 0, -sinrz, cosrz, 0, 0, 0, 1 );
 
-    newPosition = maty * matz * newPosition;
+      newPosition = maty * matz * newPosition;
 
-    vNormal = normalMatrix * (maty * matz * spunNormal);
+      vNormal = normalMatrix * (maty * matz * spunNormal);
+      newPosition += pos;
 
-    newPosition += pos;
+      vec4 mvPosition = viewMatrix * vec4( newPosition, 1.0 );
+      vViewDir = normalize( -mvPosition.xyz );
 
-    vec4 mvPosition = viewMatrix * vec4( newPosition, 1.0 );
-    vViewDir = normalize( -mvPosition.xyz );
+      z = newPosition.z;
+      vColor = vec4( diamondColor, 1.0 );
+      vFacetSeed = facetSeed;
+      gl_Position = projectionMatrix * mvPosition;
+    }
+  `
 
-    z = newPosition.z;
-    vColor = vec4( diamondColor, 1.0 );
-    vFacetSeed = facetSeed;
-    gl_Position = projectionMatrix * mvPosition;
-  }
-`
-
-// --- FRAGMENT SHADER: vidro translúcido com fresnel + sparkle ---
+// --- FRAGMENT SHADER: Vidro translúcido ---
 const diamondFS = `
-  varying vec4 vColor;
-  varying vec3 vNormal;
-  varying vec3 vViewDir;
-  varying float vFacetSeed;
-  varying float z;
+    varying vec4 vColor;
+    varying vec3 vNormal;
+    varying vec3 vViewDir;
+    varying float vFacetSeed;
+    varying float z;
 
-  uniform vec3 uPrimaryColor;
-  uniform float uTime;
+    uniform vec3 uPrimaryColor;
+    uniform float uTime;
 
-  void main() {
-    vec3 normal = normalize( vNormal );
-    vec3 viewDir = normalize( vViewDir );
-    vec3 lightDir = normalize( vec3( 0.5, 1.0, 0.8 ) );
+    void main() {
+      vec3 normal = normalize( vNormal );
+      vec3 viewDir = normalize( vViewDir );
+      vec3 lightDir = normalize( vec3( 0.5, 1.0, 0.8 ) );
 
-    float diffuse = max( dot( normal, lightDir ), 0.2 );
+      float diffuse = max( dot( normal, lightDir ), 0.2 );
 
-    vec3 halfDir = normalize( lightDir + viewDir );
-    float specular = pow( max( dot( normal, halfDir ), 0.0 ), 50.0 );
+      vec3 halfDir = normalize( lightDir + viewDir );
+      float specular = pow( max( dot( normal, halfDir ), 0.0 ), 50.0 );
 
-    // fresnel: quase invisível de frente, mais opaco/brilhante na borda (como vidro)
-    float fresnel = pow( 1.0 - max( dot( normal, viewDir ), 0.0 ), 3.0 );
+      float fresnel = pow( 1.0 - max( dot( normal, viewDir ), 0.0 ), 3.0 );
+      float sparkle = pow( max( sin( uTime * 3.0 + vFacetSeed * 62.83 ), 0.0 ), 14.0 );
 
-    float sparkle = pow( max( sin( uTime * 3.0 + vFacetSeed * 62.83 ), 0.0 ), 14.0 );
+      float zFactor = 0.4 + ( 1000. - z ) / 1000. * 0.6;
 
-    float zFactor = 0.4 + ( 1000. - z ) / 1000. * 0.6;
+      vec3 base = uPrimaryColor * diffuse * zFactor;
+      vec3 highlight = vec3( 1.0 ) * ( specular * 1.2 + sparkle * 1.6 );
+      vec3 finalColor = base + highlight + uPrimaryColor * fresnel * 0.8;
 
-    vec3 base = uPrimaryColor * diffuse * zFactor;
-    vec3 highlight = vec3( 1.0 ) * ( specular * 1.2 + sparkle * 1.6 );
-    vec3 finalColor = base + highlight + uPrimaryColor * fresnel * 0.8;
+      float alpha = clamp( 0.22 + fresnel * 0.55 + specular * 0.5 + sparkle * 0.6, 0.0, 1.0 );
 
-    float alpha = clamp( 0.22 + fresnel * 0.55 + specular * 0.5 + sparkle * 0.6, 0.0, 1.0 );
+      gl_FragColor = vec4( finalColor, alpha );
+    }
+  `
 
-    gl_FragColor = vec4( finalColor, alpha );
-  }
-`
-
-// --- GEOMETRIA: brilhante redondo estilizado (mesa + coroa + cintura + pavilhão) ---
-const FACETS = 8 // lados da cintura
-// triangulos por diamante: mesa (fan) + coroa (2 tri por lado) + pavilhão (fan)
+// --- GEOMETRIA: Brilhante redondo ---
+const FACETS = 6
 const TRIANGLES_PER_DIAMOND = FACETS + FACETS * 2 + FACETS
 
 class DiamondGeometry extends THREE.BufferGeometry {
@@ -245,10 +241,10 @@ class DiamondGeometry extends THREE.BufferGeometry {
       for (let i = 0; i < args.length; i++) vertices.array[v++] = args[i]
     }
 
-    const R = 10 // raio da cintura (girdle)
-    const TABLE_R = 4.5 // raio da mesa (topo plano)
-    const CROWN_H = 6 // altura da coroa
-    const PAVILION_H = 16 // altura do pavilhão (ponta debaixo)
+    const R = 10
+    const TABLE_R = 4.5
+    const CROWN_H = 6
+    const PAVILION_H = 16
 
     const girdle: [number, number][] = []
     const table: [number, number][] = []
@@ -259,25 +255,21 @@ class DiamondGeometry extends THREE.BufferGeometry {
     }
 
     for (let f = 0; f < DIAMONDS; f++) {
-      // Mesa: leque de triângulos a partir do centro do topo
       for (let i = 0; i < FACETS; i++) {
         const [tx0, tz0] = table[i]
         const [tx1, tz1] = table[(i + 1) % FACETS]
         vertsPush(0, CROWN_H, 0, tx1, CROWN_H, tz1, tx0, CROWN_H, tz0)
       }
 
-      // Coroa: uma faixa trapezoidal (2 triângulos) entre mesa e cintura, por lado
       for (let i = 0; i < FACETS; i++) {
         const [tx0, tz0] = table[i]
         const [tx1, tz1] = table[(i + 1) % FACETS]
         const [gx0, gz0] = girdle[i]
         const [gx1, gz1] = girdle[(i + 1) % FACETS]
-
         vertsPush(tx0, CROWN_H, tz0, gx1, 0, gz1, gx0, 0, gz0)
         vertsPush(tx0, CROWN_H, tz0, tx1, CROWN_H, tz1, gx1, 0, gz1)
       }
 
-      // Pavilhão: leque de triângulos até a ponta debaixo
       for (let i = 0; i < FACETS; i++) {
         const [gx0, gz0] = girdle[i]
         const [gx1, gz1] = girdle[(i + 1) % FACETS]
@@ -293,7 +285,6 @@ class DiamondGeometry extends THREE.BufferGeometry {
       diamondColors.array[i * 3 + 0] = 1.0
       diamondColors.array[i * 3 + 1] = 1.0
       diamondColors.array[i * 3 + 2] = 1.0
-
       references.array[i * 2] = x
       references.array[i * 2 + 1] = y
 
@@ -302,7 +293,11 @@ class DiamondGeometry extends THREE.BufferGeometry {
     }
 
     this.computeVertexNormals()
-    this.scale(0.18, 0.18, 0.18)
+
+    // TAMANHO AJUSTADO (Mobile mantido bem grande para visibilidade)
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+    const scaleSize = isMobile ? 0.30 : 0.26
+    this.scale(scaleSize, scaleSize, scaleSize)
   }
 }
 
@@ -323,18 +318,19 @@ function DiamondsScene() {
 
     if (posArray) {
       for (let k = 0; k < posArray.length; k += 4) {
-        posArray[k + 0] = Math.random() * BOUNDS - BOUNDS / 2
-        posArray[k + 1] = Math.random() * BOUNDS - BOUNDS / 2
-        posArray[k + 2] = Math.random() * BOUNDS - BOUNDS / 2
+        // Espalhamento inicial perfeito em todo o quadro da tela
+        posArray[k + 0] = (Math.random() - 0.5) * 1200
+        posArray[k + 1] = (Math.random() - 0.5) * 700
+        posArray[k + 2] = (Math.random() - 0.5) * 300
         posArray[k + 3] = 1
       }
     }
 
     if (velArray) {
       for (let k = 0; k < velArray.length; k += 4) {
-        velArray[k + 0] = (Math.random() - 0.5) * 10
-        velArray[k + 1] = (Math.random() - 0.5) * 10
-        velArray[k + 2] = (Math.random() - 0.5) * 10
+        velArray[k + 0] = (Math.random() - 0.5) * 4
+        velArray[k + 1] = (Math.random() - 0.5) * 4
+        velArray[k + 2] = (Math.random() - 0.5) * 4
         velArray[k + 3] = 1
       }
     }
@@ -345,10 +341,10 @@ function DiamondsScene() {
     gpu.setVariableDependencies(velVar, [posVar, velVar])
     gpu.setVariableDependencies(posVar, [posVar, velVar])
 
+    // Limpei as antigas variáveis do Flock (Boids) e deixei só a Separação
     velVar.material.uniforms['delta'] = { value: 0.0 }
-    velVar.material.uniforms['separationDistance'] = { value: 20.0 }
-    velVar.material.uniforms['alignmentDistance'] = { value: 20.0 }
-    velVar.material.uniforms['cohesionDistance'] = { value: 20.0 }
+    velVar.material.uniforms['time'] = { value: 0.0 }
+    velVar.material.uniforms['separationDistance'] = { value: 140.0 } // 140 garante que se empurrem e espalhem por toda a tela
     velVar.material.uniforms['predator'] = { value: new THREE.Vector3() }
 
     posVar.material.uniforms['delta'] = { value: 0.0 }
@@ -419,6 +415,9 @@ function DiamondsScene() {
 
     positionVariable.material.uniforms['delta'].value = safeDelta
     velocityVariable.material.uniforms['delta'].value = safeDelta
+
+    // Alimenta o tempo para flutuação do Shader de Velocidade
+    velocityVariable.material.uniforms['time'].value = state.clock.elapsedTime
 
     const predator = velocityVariable.material.uniforms['predator'].value
     predator.set(

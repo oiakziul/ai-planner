@@ -69,7 +69,7 @@ export const SimulationResultsPage = () => {
   };
 
   const mainLayout = cn(
-    "mx-auto max-w-[89rem] h-auto px-4 py-10 sm:py-14 font-sans select-none"
+    "mx-auto max-w-[89rem] h-auto px-4 py-10 sm:py-14 font-sans select-none backdrop-blur-md rounded-lg"
   );
 
   const pageGridLayout = cn(
@@ -88,7 +88,7 @@ export const SimulationResultsPage = () => {
     "fixed inset-0 z-40",
     "flex items-center justify-center ",
     "px-4 md:px-10 lg:px-16",
-    "pointer-events-none "
+    "pointer-events-none ",
   );
 
   const aiCardWrapper = cn(
