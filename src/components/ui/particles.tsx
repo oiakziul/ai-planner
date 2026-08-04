@@ -454,7 +454,8 @@ function DiamondsScene() {
 
 export const Particles = () => {
   return (
-    <div className="relative h-screen w-screen overflow-hidden bg-stripes-custom0 transition-colors duration-500">
+    // Mudamos para 'fixed', 'inset-0' (preenche 100% sem falhas) e '-z-10' (joga pro fundo)
+    <div className="fixed inset-0 overflow-hidden bg-stripes-custom0 transition-colors duration-500 -z-10">
       <Canvas
         camera={{ position: [0, 0, 350], fov: 75, near: 1, far: 3000 }}
         gl={{ alpha: true, antialias: true }}
@@ -471,3 +472,4 @@ export const Particles = () => {
 }
 
 export default Particles
+
