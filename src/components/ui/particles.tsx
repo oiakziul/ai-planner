@@ -7,7 +7,6 @@ const WIDTH = isMobile1 ? 28 : 14
 const DIAMONDS = WIDTH * WIDTH
 const BOUNDS = 800
 
-// --- SHADERS GPGPU (Posição) ---
 const fragmentShaderPosition = `
     uniform float delta;
     void main() {
@@ -22,7 +21,6 @@ const fragmentShaderPosition = `
     }
   `
 
-// --- SHADERS GPGPU (NOVA FÍSICA: Gás Magnético Perfeitamente Distribuído) ---
 const fragmentShaderVelocity = `
     uniform float time;
     uniform float delta;
@@ -107,8 +105,7 @@ const fragmentShaderVelocity = `
     }
   `
 
-// --- VERTEX SHADER: (Inalterado) Rotação + Giro Próprio ---
-const diamondVS = `
+  const diamondVS = `
     attribute vec2 reference;
     attribute vec3 diamondColor;
     attribute float facetSeed;
@@ -178,7 +175,6 @@ const diamondVS = `
     }
   `
 
-// --- FRAGMENT SHADER: Vidro translúcido ---
 const diamondFS = `
     varying vec4 vColor;
     varying vec3 vNormal;
@@ -214,7 +210,6 @@ const diamondFS = `
     }
   `
 
-// --- GEOMETRIA: Brilhante redondo ---
 const FACETS = 6
 const TRIANGLES_PER_DIAMOND = FACETS + FACETS * 2 + FACETS
 
@@ -294,14 +289,12 @@ class DiamondGeometry extends THREE.BufferGeometry {
 
     this.computeVertexNormals()
 
-    // TAMANHO AJUSTADO (Mobile mantido bem grande para visibilidade)
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
     const scaleSize = isMobile ? 0.40 : 0.26
     this.scale(scaleSize, scaleSize, scaleSize)
   }
 }
 
-// --- CENA PRINCIPAL ---
 function DiamondsScene() {
   const { gl, size } = useThree()
   const meshRef = useRef<THREE.Mesh>(null!)
@@ -318,7 +311,6 @@ function DiamondsScene() {
 
     if (posArray) {
       for (let k = 0; k < posArray.length; k += 4) {
-        // Espalhamento inicial perfeito em todo o quadro da tela
         posArray[k + 0] = (Math.random() - 0.5) * 1200
         posArray[k + 1] = (Math.random() - 0.5) * 700
         posArray[k + 2] = (Math.random() - 0.5) * 300
@@ -341,10 +333,9 @@ function DiamondsScene() {
     gpu.setVariableDependencies(velVar, [posVar, velVar])
     gpu.setVariableDependencies(posVar, [posVar, velVar])
 
-    // Limpei as antigas variáveis do Flock (Boids) e deixei só a Separação
     velVar.material.uniforms['delta'] = { value: 0.0 }
     velVar.material.uniforms['time'] = { value: 0.0 }
-    velVar.material.uniforms['separationDistance'] = { value: 140.0 } // 140 garante que se empurrem e espalhem por toda a tela
+    velVar.material.uniforms['separationDistance'] = { value: 140.0 } 
     velVar.material.uniforms['predator'] = { value: new THREE.Vector3() }
 
     posVar.material.uniforms['delta'] = { value: 0.0 }
@@ -416,7 +407,6 @@ function DiamondsScene() {
     positionVariable.material.uniforms['delta'].value = safeDelta
     velocityVariable.material.uniforms['delta'].value = safeDelta
 
-    // Alimenta o tempo para flutuação do Shader de Velocidade
     velocityVariable.material.uniforms['time'].value = state.clock.elapsedTime
 
     const predator = velocityVariable.material.uniforms['predator'].value
