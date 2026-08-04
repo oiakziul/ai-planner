@@ -296,7 +296,7 @@ class DiamondGeometry extends THREE.BufferGeometry {
 
     // TAMANHO AJUSTADO (Mobile mantido bem grande para visibilidade)
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
-    const scaleSize = isMobile ? 0.30 : 0.26
+    const scaleSize = isMobile ? 0.40 : 0.26
     this.scale(scaleSize, scaleSize, scaleSize)
   }
 }
